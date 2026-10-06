@@ -165,6 +165,7 @@ export async function addRound(formData: FormData) {
   if (!user) redirect("/sign-in");
   if (!user.email_verified_at) redirect("/verify-email?error=required");
   const facilityId = String(formData.get("facilityId") ?? "");
+  const returnTo = safeReturn(formData.get("returnTo"), `/courses/${facilityId}`);
   const result = applyManualRound(getDb(), {
     userId: user.id,
     facilityId,
@@ -175,10 +176,14 @@ export async function addRound(formData: FormData) {
     newId: randomUUID(),
   });
   revalidatePath("/");
+  revalidatePath("/directory");
   revalidatePath(`/courses/${facilityId}`);
   revalidatePath("/season");
-  if (!result.ok) redirect(`/courses/${facilityId}?error=${result.reason}`);
-  redirect(`/courses/${facilityId}`);
+  if (!result.ok) {
+    const join = returnTo.includes("?") ? "&" : "?";
+    redirect(`${returnTo}${join}error=${result.reason}`);
+  }
+  redirect(returnTo);
 }
 
 export async function uploadCsv(formData: FormData) {

@@ -185,3 +185,70 @@ input:not([type="radio"]):not([type="checkbox"]), select {
 .rounds li { padding: 0.45rem 0; border-bottom: 1px solid var(--line); }
 .inline { display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; min-height: 44px; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+.skip-map {
+  justify-self: start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.map-legend { list-style: none; margin: 0; padding: 0; }
+.map-legend li { display: inline-flex; align-items: center; gap: 0.4rem; }
+.pin-glyph { display: block; flex: none; }
+.pin-map {
+  height: min(70vh, 32rem);
+  min-height: 18rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: #d7e4d4;
+}
+.pin-map .leaflet-container {
+  height: 100%;
+  width: 100%;
+  font: inherit;
+  background: #d7e4d4;
+  z-index: 0;
+}
+.pin-map .leaflet-bar a {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 1.15rem;
+}
+.pin-map .leaflet-control-attribution {
+  font-size: 0.7rem;
+  max-width: 16rem;
+}
+.leaflet-div-icon.pin-marker {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.pin-marker svg { display: block; filter: drop-shadow(0 1px 1px rgba(27, 36, 24, 0.35)); }
+.pin-map-fallback {
+  min-height: 18rem;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #e7efe4;
+}
+.pin-popup { display: grid; gap: 0.45rem; }
+.pin-popup p, .pin-title { margin: 0; }
+.pin-title { font-size: 1.05rem; }
+.pin-label { font-weight: 650; margin: 0; }
+.pin-round { display: grid; gap: 0.4rem; }
+.pin-popup .rounds { margin: 0; }
+.pin-popup .pill { min-height: 36px; }
+.leaflet-popup.pin-popup-root .leaflet-popup-content-wrapper {
+  border-radius: 14px;
+  background: var(--card);
+  color: var(--ink);
+}
+.leaflet-popup.pin-popup-root .leaflet-popup-content { margin: 0.75rem 0.85rem; }
+.leaflet-container .pin-popup a { color: var(--green-ink); }
+#course-lists:focus { outline: none; }

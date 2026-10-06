@@ -307,6 +307,15 @@ export function listFacilityRounds(db: Database.Database, userId: string, facili
   return rows.map(mapRound);
 }
 
+export function listAccountRounds(db: Database.Database, userId: string): Round[] {
+  const rows = db
+    .prepare(
+      "SELECT * FROM rounds WHERE user_id = ? AND facility_id IS NOT NULL ORDER BY facility_id, played_on, holes",
+    )
+    .all(userId) as RoundRow[];
+  return rows.map(mapRound);
+}
+
 export function listUnmatched(db: Database.Database, userId: string): Round[] {
   const rows = db
     .prepare("SELECT * FROM rounds WHERE user_id = ? AND facility_id IS NULL ORDER BY played_on")

@@ -1,8 +1,13 @@
 import { setPlayed } from "@/app/actions";
 import { provinceLabel } from "@/components/coverage-block";
+import { CoursePinMap } from "@/components/course-pin-map";
+import { OpenPinGlyph, PlayedPinGlyph } from "@/components/pin-glyphs";
+import type { PinCourse, PinMapLabels } from "@/components/pin-course";
 import { distanceKm, placeById, PLACES } from "@/lib/distance";
+import { halifaxToday } from "@/lib/dates";
 import { translate } from "@/lib/i18n";
-import { getDb, listFacilities, readStatuses } from "@/lib/db";
+import { getDb, listAccountRounds, listFacilities, readStatuses } from "@/lib/db";
+import { splitMapFacilities } from "@/lib/map-pins";
 import { currentLocale, currentUser } from "@/lib/session";
 import type { Facility, Province } from "@/lib/types";
 
@@ -66,6 +71,62 @@ export default async function DirectoryPage({
   if (sort === "distance") query.set("sort", "distance");
   if (place) query.set("place", place.id);
 
+  const returnTo = `/directory${query.toString() ? `?${query.toString()}` : ""}`;
+  const personal = Boolean(user?.email_verified_at);
+  const roundsByFacility = new Map<string, PinCourse["rounds"]>();
+  if (personal && user) {
+    for (const round of listAccountRounds(db, user.id)) {
+      if (!round.facilityId) continue;
+      const line = {
+        id: round.id,
+        playedOn: round.playedOn,
+        score: round.score,
+        holesLabel: t("course.holes", { count: round.holes }),
+      };
+      const bucket = roundsByFacility.get(round.facilityId);
+      if (bucket) bucket.push(line);
+      else roundsByFacility.set(round.facilityId, [line]);
+    }
+  }
+  const { pinned, unpinned } = splitMapFacilities(ranked.map((row) => row.facility));
+  const pins: PinCourse[] = pinned.map((facility) => {
+    const accessLabel = facility.access === "public" ? t("access.public") : t("access.private");
+    const placeLine = [facility.place, provinceLabel(locale, facility.province as Province)].filter(Boolean).join(", ");
+    return {
+      facilityId: facility.facilityId,
+      name: facility.officialName,
+      placeLine: `${placeLine} · ${accessLabel}`,
+      played: statuses.has(facility.facilityId),
+      latitude: facility.latitude,
+      longitude: facility.longitude,
+      defaultHoles: facility.holeCount >= 18 ? "18" : "9",
+      markRoundId: statuses.get(facility.facilityId)?.markRoundId ?? null,
+      rounds: roundsByFacility.get(facility.facilityId) ?? [],
+      personal,
+    };
+  });
+  const labels: PinMapLabels = {
+    played: t("home.played"),
+    notPlayed: t("home.notPlayed"),
+    markOn: t("home.markOn"),
+    markOff: t("home.markOff"),
+    playedKeep: t("home.playedKeep"),
+    rounds: t("course.rounds"),
+    noRounds: t("course.noRounds"),
+    addRound: t("course.addRound"),
+    date: t("course.date"),
+    holes: t("directory.holes"),
+    score: t("course.score"),
+    scoreOptional: t("course.scoreOptional"),
+    secondRound: t("course.secondRound"),
+    courseLink: t("map.courseLink"),
+    loading: t("map.loading"),
+    failed: t("map.failed"),
+    region: t("directory.title"),
+    empty: t("map.empty"),
+    signIn: t("nav.signIn"),
+  };
+
   return (
     <div className="stack">
       <h1>{t("directory.title")}</h1>
@@ -124,8 +185,21 @@ export default async function DirectoryPage({
           })}
         </div>
       </div>
+      <section className="stack" aria-label={t("map.region")}>
+        <a className="skip-map" href="#directory-list">{t("map.skip")}</a>
+        {personal ? (
+          <ul className="legend map-legend" aria-label={t("map.legend")}>
+            <li><PlayedPinGlyph /> {t("home.played")}</li>
+            <li><OpenPinGlyph /> {t("home.notPlayed")}</li>
+          </ul>
+        ) : null}
+        <CoursePinMap key={pins.map((pin) => pin.facilityId).join("|")} courses={pins} labels={labels} today={halifaxToday()} returnTo={returnTo} />
+        {unpinned.length > 0 ? (
+          <p className="help">{t("map.unpinned")} {unpinned.map((facility) => facility.officialName).join(", ")}</p>
+        ) : null}
+      </section>
       {ranked.length === 0 ? <p>{t("directory.empty")}</p> : null}
-      <ul className="course-list">
+      <ul id="directory-list" className="course-list">
         {ranked.map(({ facility, km }) => (
           <DirectoryRow
             key={facility.facilityId}
@@ -136,7 +210,7 @@ export default async function DirectoryPage({
             markRoundId={statuses.get(facility.facilityId)?.markRoundId ?? null}
             signedIn={Boolean(user?.email_verified_at)}
             locale={locale}
-            returnTo={`/directory?${query.toString()}`}
+            returnTo={returnTo}
           />
         ))}
       </ul>
