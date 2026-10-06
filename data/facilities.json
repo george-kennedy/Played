@@ -1,0 +1,2814 @@
+{
+  "generated_on": "2026-10-06",
+  "notes": "Names are the provincial list names. Cabot Cliffs and Cabot Links, and Ashburn Old and New, are separate facilities because the Golf Nova Scotia list names them separately. A facility with more than one routing of the same published name is one row; hole_count is the longest routing. Indoor-only listings with no outdoor routing are omitted.",
+  "counts": {
+    "NB": 49,
+    "NL": 17,
+    "NS": 57,
+    "PEI": 18
+  },
+  "facilities": [
+    {
+      "facility_id": "nb-algonquin-golf-course",
+      "official_name": "Algonquin Golf Course",
+      "province": "NB",
+      "place": "St. Andrews",
+      "latitude": 45.0826,
+      "longitude": -67.0759,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19060",
+      "association_course_ids": [
+        "19060"
+      ],
+      "rating": 75.2,
+      "slope": 131,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Algonquin Golf Course",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-aroostook-valley-country-club",
+      "official_name": "Aroostook Valley Country Club",
+      "province": "NB",
+      "place": "Four Falls",
+      "latitude": 46.7499,
+      "longitude": -67.7002,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19068",
+      "association_course_ids": [
+        "19068"
+      ],
+      "rating": 70.5,
+      "slope": 124,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Aroostook Valley Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-country-meadows-golf-club",
+      "official_name": "Country Meadows Golf Club",
+      "province": "NB",
+      "place": "Indian Mountain",
+      "latitude": 46.160498,
+      "longitude": -64.957652,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "32955",
+      "association_course_ids": [
+        "32955"
+      ],
+      "rating": 72.5,
+      "slope": 125,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Country Meadows Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-covered-bridge-golf-and-country-club",
+      "official_name": "Covered Bridge Golf & Country Club",
+      "province": "NB",
+      "place": "Hartland",
+      "latitude": 46.3024,
+      "longitude": -67.5545,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19084",
+      "association_course_ids": [
+        "19084"
+      ],
+      "rating": 71.8,
+      "slope": 134,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Covered Bridge Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-fox-creek-golf-club",
+      "official_name": "Fox Creek Golf Club",
+      "province": "NB",
+      "place": "Dieppe",
+      "latitude": 46.0844,
+      "longitude": -64.6968,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "20032",
+      "association_course_ids": [
+        "20032"
+      ],
+      "rating": 74.8,
+      "slope": 140,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Fox Creek Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-fraser-edmundston-golf-club",
+      "official_name": "Fraser Edmundston Golf Club",
+      "province": "NB",
+      "place": "Edmundston",
+      "latitude": 47.3772,
+      "longitude": -68.3392,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19072",
+      "association_course_ids": [
+        "19072"
+      ],
+      "rating": 72.4,
+      "slope": 131,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Fraser Edmundston Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-fredericton-golf-club",
+      "official_name": "Fredericton Golf Club",
+      "province": "NB",
+      "place": "Fredericton",
+      "latitude": 45.9592,
+      "longitude": -66.6846,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "19064",
+      "association_course_ids": [
+        "19064"
+      ],
+      "rating": 70,
+      "slope": 126,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Fredericton Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-fundy-national-park-golf-club",
+      "official_name": "Fundy National Park Golf Club",
+      "province": "NB",
+      "place": "Alma",
+      "latitude": 45.5904,
+      "longitude": -64.9635,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19074",
+      "association_course_ids": [
+        "19074"
+      ],
+      "rating": 70.2,
+      "slope": 126,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Fundy National Park Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-gage-golf-and-curling-club",
+      "official_name": "Gage Golf & Curling Club",
+      "province": "NB",
+      "place": "Oromocto",
+      "latitude": 45.8455,
+      "longitude": -66.4932,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19080",
+      "association_course_ids": [
+        "19080"
+      ],
+      "rating": 69,
+      "slope": 121,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Gage Golf & Curling Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-golf-bouctouche",
+      "official_name": "Golf Bouctouche",
+      "province": "NB",
+      "place": "Bouctouche",
+      "latitude": 46.4822,
+      "longitude": -64.76,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19056",
+      "association_course_ids": [
+        "19056"
+      ],
+      "rating": 69.7,
+      "slope": 115,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Golf Bouctouche",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-golf-pokemouche",
+      "official_name": "Golf Pokemouche",
+      "province": "NB",
+      "place": "Landry Office",
+      "latitude": 47.659903,
+      "longitude": -64.987044,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19050",
+      "association_course_ids": [
+        "19050"
+      ],
+      "rating": 69.8,
+      "slope": 131,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Golf Pokemouche",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-gowan-brae-golf-and-country-club",
+      "official_name": "Gowan Brae Golf & Country Club",
+      "province": "NB",
+      "place": "Bathurst",
+      "latitude": 47.6473,
+      "longitude": -65.6611,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19083",
+      "association_course_ids": [
+        "19083"
+      ],
+      "rating": 72.1,
+      "slope": 129,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Gowan Brae Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-grand-falls-golf-club-inc",
+      "official_name": "Grand Falls Golf Club Inc.",
+      "province": "NB",
+      "place": "Grand Falls",
+      "latitude": 47.0549,
+      "longitude": -67.7766,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19078",
+      "association_course_ids": [
+        "19078"
+      ],
+      "rating": 72.3,
+      "slope": 127,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Grand Falls Golf Club Inc.",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-hampton-golf-club",
+      "official_name": "Hampton Golf Club",
+      "province": "NB",
+      "place": "Hampton",
+      "latitude": 45.5058,
+      "longitude": -65.8353,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19063",
+      "association_course_ids": [
+        "19063"
+      ],
+      "rating": 72,
+      "slope": 130,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Hampton Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-herring-cove-provincial-park-golf-club",
+      "official_name": "Herring Cove Provincial Park Golf Club",
+      "province": "NB",
+      "place": "Welshpool",
+      "latitude": 44.877282,
+      "longitude": -66.927898,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19059",
+      "association_course_ids": [
+        "19059"
+      ],
+      "rating": 71.5,
+      "slope": 136,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Herring Cove Provincial Park Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-hillsborough-golf-club",
+      "official_name": "Hillsborough Golf Club",
+      "province": "NB",
+      "place": "Hillsborough",
+      "latitude": 45.9075,
+      "longitude": -64.6601,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19067",
+      "association_course_ids": [
+        "19067"
+      ],
+      "rating": 70.2,
+      "slope": 138,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Hillsborough Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-kingswood-golf",
+      "official_name": "Kingswood Golf",
+      "province": "NB",
+      "place": "Hanwell",
+      "latitude": 45.9298,
+      "longitude": -66.7116,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "23287",
+      "association_course_ids": [
+        "23287"
+      ],
+      "rating": 74.1,
+      "slope": 129,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Kingswood Golf",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-lakeside-golf-and-country-club",
+      "official_name": "Lakeside Golf & Country Club",
+      "province": "NB",
+      "place": "Lakeville Westmorland Co.",
+      "latitude": 46.1402,
+      "longitude": -64.6825,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20182",
+      "association_course_ids": [
+        "20182"
+      ],
+      "rating": 67.2,
+      "slope": 119,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Lakeside Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-mactaquac-provincial-park-golf-club",
+      "official_name": "Mactaquac Provincial Park Golf Club",
+      "province": "NB",
+      "place": "Mactaquac",
+      "latitude": 45.9582,
+      "longitude": -66.8974,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19055",
+      "association_course_ids": [
+        "19055"
+      ],
+      "rating": 73.7,
+      "slope": 130,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Mactaquac Provincial Park Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-maplewood-golf-and-country-club",
+      "official_name": "Maplewood Golf & Country Club",
+      "province": "NB",
+      "place": "Irishtown",
+      "latitude": 46.2081,
+      "longitude": -64.8037,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19077",
+      "association_course_ids": [
+        "19077"
+      ],
+      "rating": 69.3,
+      "slope": 110,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Maplewood Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-memramcook-valley-golf-club",
+      "official_name": "Memramcook Valley Golf Club",
+      "province": "NB",
+      "place": "Memramcook",
+      "latitude": 45.9765,
+      "longitude": -64.5708,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19073",
+      "association_course_ids": [
+        "19073"
+      ],
+      "rating": 69,
+      "slope": 120,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Memramcook Valley Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-midland-meadows-golf-club",
+      "official_name": "Midland Meadows Golf Club",
+      "province": "NB",
+      "place": "Norton",
+      "latitude": 45.6485,
+      "longitude": -65.7842,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "18000",
+      "association_course_ids": [
+        "18000"
+      ],
+      "rating": 62.3,
+      "slope": 99,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Midland Meadows Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-miramichi-golf-and-country-club",
+      "official_name": "Miramichi Golf & Country Club",
+      "province": "NB",
+      "place": "Miramichi",
+      "latitude": 47.0127,
+      "longitude": -65.516,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19054",
+      "association_course_ids": [
+        "19054"
+      ],
+      "rating": 70.1,
+      "slope": 123,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Miramichi Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-moncton-golf-club",
+      "official_name": "Moncton Golf Club",
+      "province": "NB",
+      "place": "Riverview",
+      "latitude": 46.0671,
+      "longitude": -64.786,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19765",
+      "association_course_ids": [
+        "19765"
+      ],
+      "rating": 70,
+      "slope": 119,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Moncton Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-mountain-woods-golf-club",
+      "official_name": "Mountain Woods Golf Club",
+      "province": "NB",
+      "place": "Moncton",
+      "latitude": 46.1333,
+      "longitude": -64.8771,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19071",
+      "association_course_ids": [
+        "19071"
+      ],
+      "rating": 70,
+      "slope": 123,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Mountain Woods Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-nackawic-golf-and-country-club",
+      "official_name": "Nackawic Golf & Country Club",
+      "province": "NB",
+      "place": "Nackawic",
+      "latitude": 46.0083,
+      "longitude": -67.2401,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19095",
+      "association_course_ids": [
+        "19095"
+      ],
+      "rating": 68.3,
+      "slope": 128,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Nackawic Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-old-mill-pond-golf-and-country-club",
+      "official_name": "Old Mill Pond Golf & Country Club",
+      "province": "NB",
+      "place": "Doaktown",
+      "latitude": 46.5497,
+      "longitude": -66.1292,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19058",
+      "association_course_ids": [
+        "19058"
+      ],
+      "rating": 70,
+      "slope": 128,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Old Mill Pond Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-par94-bar-and-lounge",
+      "official_name": "Par94 Bar & Lounge",
+      "province": "NB",
+      "place": "Fredericton",
+      "latitude": 45.9637,
+      "longitude": -66.645,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "34092",
+      "association_course_ids": [
+        "34092"
+      ],
+      "rating": 70,
+      "slope": 114,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Par 94 Bar and Golf Lounge",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-petitcodiac-valley-golf-and-country-club",
+      "official_name": "Petitcodiac Valley Golf & Country Club",
+      "province": "NB",
+      "place": "Petitcodiac",
+      "latitude": 45.9496,
+      "longitude": -65.2078,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19076",
+      "association_course_ids": [
+        "19076"
+      ],
+      "rating": 69.1,
+      "slope": 131,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Petitcodiac Valley Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-pine-needles-golf-and-country-club",
+      "official_name": "Pine Needles Golf & Country Club",
+      "province": "NB",
+      "place": "Haute-Aboujagane",
+      "latitude": 46.1909,
+      "longitude": -64.4163,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19089",
+      "association_course_ids": [
+        "19089",
+        "19093"
+      ],
+      "rating": 68.4,
+      "slope": 113,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": true,
+      "record_name": "Pine Needles Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-plaster-rock-golf-club",
+      "official_name": "Plaster Rock Golf Club",
+      "province": "NB",
+      "place": "Plaster Rock",
+      "latitude": 46.9029,
+      "longitude": -67.3805,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19086",
+      "association_course_ids": [
+        "19086"
+      ],
+      "rating": 68.6,
+      "slope": 117,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Plaster Rock Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-restigouche-golf-club",
+      "official_name": "Restigouche Golf Club",
+      "province": "NB",
+      "place": "Campbellton",
+      "latitude": 48.0138,
+      "longitude": -66.5863,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19082",
+      "association_course_ids": [
+        "19082"
+      ],
+      "rating": 67.8,
+      "slope": 112,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Restigouche Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-riverbend-golf-and-fishing-club",
+      "official_name": "Riverbend Golf & Fishing Club",
+      "province": "NB",
+      "place": "Durham Bridge",
+      "latitude": 46.1031,
+      "longitude": -66.6045,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19057",
+      "association_course_ids": [
+        "19057"
+      ],
+      "rating": 69.8,
+      "slope": 123,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Riverbend Golf & Fishing Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-rockwood-park-golf-club",
+      "official_name": "Rockwood Park Golf Club",
+      "province": "NB",
+      "place": "Saint John",
+      "latitude": 45.3126,
+      "longitude": -66.0736,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19053",
+      "association_course_ids": [
+        "19053"
+      ],
+      "rating": 69.3,
+      "slope": 127,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Rockwood Park Golf Course",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-royal-oaks-golf-club",
+      "official_name": "Royal Oaks Golf Club",
+      "province": "NB",
+      "place": "Moncton",
+      "latitude": 46.1596,
+      "longitude": -64.7907,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17869",
+      "association_course_ids": [
+        "17869"
+      ],
+      "rating": 74.8,
+      "slope": 138,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Royal Oaks Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-sackville-golf-and-country-club",
+      "official_name": "Sackville Golf & Country Club",
+      "province": "NB",
+      "place": "Sackville",
+      "latitude": 45.8889,
+      "longitude": -64.3853,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19085",
+      "association_course_ids": [
+        "19085"
+      ],
+      "rating": 67.9,
+      "slope": 113,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Sackville Golf & Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-saint-quentin-golf-club",
+      "official_name": "Saint-Quentin Golf Club",
+      "province": "NB",
+      "place": "Saint-Quentin",
+      "latitude": 47.5012,
+      "longitude": -67.3984,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19066",
+      "association_course_ids": [
+        "19066"
+      ],
+      "rating": 71,
+      "slope": 125,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Saint-Quentin Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-squire-green-golf-club",
+      "official_name": "Squire Green Golf Club",
+      "province": "NB",
+      "place": "Bathurst",
+      "latitude": 47.6129,
+      "longitude": -65.6769,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17797",
+      "association_course_ids": [
+        "17797"
+      ],
+      "rating": 72,
+      "slope": 123,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Squire Green Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-st-ignace-ltee-club-de-golf",
+      "official_name": "St-Ignace Ltee Club de Golf",
+      "province": "NB",
+      "place": "St-Ignace",
+      "latitude": 46.7052,
+      "longitude": -65.0893,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19081",
+      "association_course_ids": [
+        "19081"
+      ],
+      "rating": 71.8,
+      "slope": 133,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "St-Ignace Ltee Club de Golf",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-st-margarets-golf-club",
+      "official_name": "St. Margaret’s Golf Club",
+      "province": "NB",
+      "place": "Saint Margarets",
+      "latitude": 46.9122,
+      "longitude": -65.2095,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19051",
+      "association_course_ids": [
+        "19051"
+      ],
+      "rating": 67.4,
+      "slope": 108,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "St. Margaret's Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-st-stephen-golf-club",
+      "official_name": "St. Stephen Golf Club",
+      "province": "NB",
+      "place": "Oak Bay",
+      "latitude": 45.1997,
+      "longitude": -67.246,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19062",
+      "association_course_ids": [
+        "19062"
+      ],
+      "rating": 69.4,
+      "slope": 119,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "St. Stephen Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-sussex-golf-and-curling-club",
+      "official_name": "Sussex Golf & Curling Club",
+      "province": "NB",
+      "place": "Picadilly",
+      "latitude": 45.7171,
+      "longitude": -65.4407,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19049",
+      "association_course_ids": [
+        "19049"
+      ],
+      "rating": 71.5,
+      "slope": 120,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Sussex Golf & Curling Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-the-hollows-golf-club",
+      "official_name": "The Hollows Golf Club",
+      "province": "NB",
+      "place": "Utopia",
+      "latitude": 45.1432,
+      "longitude": -66.7818,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "21119",
+      "association_course_ids": [
+        "21119"
+      ],
+      "rating": 67,
+      "slope": 118,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "The Hollows Golf Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-the-riverside-country-club",
+      "official_name": "The Riverside Country Club",
+      "province": "NB",
+      "place": "Rothesay",
+      "latitude": 45.3701,
+      "longitude": -66.0079,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "19087",
+      "association_course_ids": [
+        "19087"
+      ],
+      "rating": 72.3,
+      "slope": 128,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "The Riverside Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-under-par-golf-and-academy",
+      "official_name": "Under Par Golf & Academy",
+      "province": "NB",
+      "place": "Saint John",
+      "hole_count": 9,
+      "access": "public",
+      "association_course_id": "34215",
+      "association_course_ids": [
+        "34215"
+      ],
+      "rating": 71,
+      "slope": 122,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Under Par Golf",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-welsford-golf-course",
+      "official_name": "Welsford Golf Course",
+      "province": "NB",
+      "place": "Welsford",
+      "latitude": 45.4566,
+      "longitude": -66.3403,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19088",
+      "association_course_ids": [
+        "19088"
+      ],
+      "rating": 65.6,
+      "slope": 110,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Welsford Golf Course",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-west-hills-golf-course",
+      "official_name": "West Hills Golf Course",
+      "province": "NB",
+      "place": "Fredericton",
+      "latitude": 45.9975,
+      "longitude": -66.6411,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "33356",
+      "association_course_ids": [
+        "33356"
+      ],
+      "rating": 73.4,
+      "slope": 140,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "West Hills Golf Course",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-westfield-golf-and-country-club",
+      "official_name": "Westfield Golf and Country Club",
+      "province": "NB",
+      "place": "Grand Bay-Westfield",
+      "latitude": 45.3364,
+      "longitude": -66.2212,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19061",
+      "association_course_ids": [
+        "19061"
+      ],
+      "rating": 67.9,
+      "slope": 124,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Westfield Golf and Country Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nb-woodstock-golf-and-curling-club",
+      "official_name": "Woodstock Golf & Curling Club",
+      "province": "NB",
+      "place": "Woodstock",
+      "latitude": 46.1573,
+      "longitude": -67.5783,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19069",
+      "association_course_ids": [
+        "19069"
+      ],
+      "rating": 64.6,
+      "slope": 110,
+      "source_url": "https://www.golfnb.ca/member-facilities/",
+      "merged_routings": false,
+      "record_name": "Woodstock Golf & Curling Club",
+      "published_list": "https://www.golfnb.ca/member-facilities/"
+    },
+    {
+      "facility_id": "nl-amaruk-golf-and-sports-club",
+      "official_name": "Amaruk Golf & Sports Club",
+      "province": "NL",
+      "place": "Goose Bay",
+      "latitude": 53.3039,
+      "longitude": -60.3745,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19108",
+      "association_course_ids": [
+        "19108"
+      ],
+      "rating": 69.9,
+      "slope": 116,
+      "source_url": "https://www.golfnl.ca/location/amaruk-golf-sports-club/",
+      "merged_routings": false,
+      "record_name": "Amaruk Golf& Sports Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-bally-hally-country-club",
+      "official_name": "Bally Hally Country Club",
+      "province": "NL",
+      "place": "St. John's",
+      "latitude": 47.627,
+      "longitude": -52.7112,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17818",
+      "association_course_ids": [
+        "17818",
+        "24224"
+      ],
+      "rating": 72.9,
+      "slope": 128,
+      "source_url": "https://www.golfnl.ca/location/bally-hally-country-club/",
+      "merged_routings": true,
+      "record_name": "Bally Haly Country Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-blomidon-golf-club",
+      "official_name": "Blomidon Golf Club",
+      "province": "NL",
+      "place": "Corner Brook",
+      "latitude": 48.9413,
+      "longitude": -57.9211,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19107",
+      "association_course_ids": [
+        "19107"
+      ],
+      "rating": 69.3,
+      "slope": 119,
+      "source_url": "https://www.golfnl.ca/location/blomidon-golf-club/",
+      "merged_routings": false,
+      "record_name": "Blomidon Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-gander-golf-club",
+      "official_name": "Gander Golf Club",
+      "province": "NL",
+      "place": "Gander",
+      "latitude": 48.9556,
+      "longitude": -54.6314,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19106",
+      "association_course_ids": [
+        "19106"
+      ],
+      "rating": 71.2,
+      "slope": 136,
+      "source_url": "https://www.golfnl.ca/location/gander-golf-club/",
+      "merged_routings": false,
+      "record_name": "Gander Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-glendenning-golf",
+      "official_name": "Glendenning Golf",
+      "province": "NL",
+      "place": "St. John's",
+      "latitude": 47.4866,
+      "longitude": -52.8302,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17937",
+      "association_course_ids": [
+        "17937"
+      ],
+      "rating": 71.2,
+      "slope": 123,
+      "source_url": "https://www.golfnl.ca/location/glendenning-golf/",
+      "merged_routings": false,
+      "record_name": "GlenDenning Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-grand-falls-golf-club",
+      "official_name": "Grand Falls Golf Club",
+      "province": "NL",
+      "place": "Grand Falls",
+      "latitude": 48.9394,
+      "longitude": -55.7215,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19104",
+      "association_course_ids": [
+        "19104"
+      ],
+      "rating": 70.7,
+      "slope": 127,
+      "source_url": "https://www.golfnl.ca/location/grand-falls-golf-club/",
+      "merged_routings": false,
+      "record_name": "Grand Falls Golf Club (NL)",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-grande-meadows-golf-club",
+      "official_name": "Grande Meadows Golf Club",
+      "province": "NL",
+      "place": "Frenchman's Cove",
+      "latitude": 47.211,
+      "longitude": -55.4041,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19096",
+      "association_course_ids": [
+        "19096"
+      ],
+      "rating": 69.6,
+      "slope": 121,
+      "source_url": "https://www.golfnl.ca/location/grande-meadows-golf-club/",
+      "merged_routings": false,
+      "record_name": "Grande Meadows Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-gros-morne-golf-course",
+      "official_name": "Gros Morne Golf Course",
+      "province": "NL",
+      "place": "St. Paul's Inlet",
+      "latitude": 49.867,
+      "longitude": -57.8159,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "24899",
+      "association_course_ids": [
+        "24899"
+      ],
+      "rating": 74.1,
+      "slope": 132,
+      "source_url": "https://www.golfnl.ca/location/gros-morne-golf-course/",
+      "merged_routings": false,
+      "record_name": "Gros Morne Resort",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-harmon-seaside-links",
+      "official_name": "Harmon Seaside Links",
+      "province": "NL",
+      "place": "Stephenville",
+      "latitude": 48.53,
+      "longitude": -58.5533,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19097",
+      "association_course_ids": [
+        "19097"
+      ],
+      "rating": 72.6,
+      "slope": 122,
+      "source_url": "https://www.golfnl.ca/location/harmon-seaside-links/",
+      "merged_routings": false,
+      "record_name": "Harmon Seaside Links",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-humber-river-golf-club",
+      "official_name": "Humber River Golf Club",
+      "province": "NL",
+      "place": "Deer Lake",
+      "latitude": 49.2085,
+      "longitude": -57.417,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20437",
+      "association_course_ids": [
+        "20437"
+      ],
+      "rating": 70.8,
+      "slope": 124,
+      "source_url": "https://www.golfnl.ca/location/humber-river-golf-club/",
+      "merged_routings": false,
+      "record_name": "Humber River Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-humber-valley-resort",
+      "official_name": "Humber Valley Resort",
+      "province": "NL",
+      "place": "Subd. F",
+      "latitude": 49.0126,
+      "longitude": -57.6879,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19105",
+      "association_course_ids": [
+        "19105"
+      ],
+      "rating": 74.5,
+      "slope": 129,
+      "source_url": "https://www.golfnl.ca/location/humber-valley-golf-course/",
+      "merged_routings": false,
+      "record_name": "Humber Valley Resort",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-pippy-park-golf-course",
+      "official_name": "Pippy Park Golf Course",
+      "province": "NL",
+      "place": "St. John's",
+      "latitude": 47.5889,
+      "longitude": -52.7482,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19102",
+      "association_course_ids": [
+        "19102",
+        "19103"
+      ],
+      "rating": 71.4,
+      "slope": 125,
+      "source_url": "https://www.golfnl.ca/location/pippy-park-golf-course/",
+      "merged_routings": true,
+      "record_name": "Pippy Park Public Golf Course",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-pitchers-pond-golf-club",
+      "official_name": "Pitcher’s Pond Golf Club",
+      "province": "NL",
+      "place": "Whiteway",
+      "latitude": 47.691,
+      "longitude": -53.4701,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "23342",
+      "association_course_ids": [
+        "23342"
+      ],
+      "rating": 75,
+      "slope": 131,
+      "source_url": "https://www.golfnl.ca/location/pitchers-pond-golf-club/",
+      "merged_routings": false,
+      "record_name": "Pitchers Pond Golf Course",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-tamarack-golf-club",
+      "official_name": "Tamarack Golf Club",
+      "province": "NL",
+      "place": "Labrador City",
+      "latitude": 52.902917,
+      "longitude": -66.989942,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19098",
+      "association_course_ids": [
+        "19098"
+      ],
+      "rating": 69.9,
+      "slope": 123,
+      "source_url": "https://www.golfnl.ca/location/tamarack-golf-club/",
+      "merged_routings": false,
+      "record_name": "Tamarack Golf Club",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-terra-nova-golf-resort",
+      "official_name": "Terra Nova Golf Resort",
+      "province": "NL",
+      "place": "Port Blandford",
+      "latitude": 48.3835,
+      "longitude": -54.2018,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19099",
+      "association_course_ids": [
+        "19099",
+        "19100"
+      ],
+      "rating": 72.5,
+      "slope": 126,
+      "source_url": "https://www.golfnl.ca/location/terra-nova-golf-resort/",
+      "merged_routings": true,
+      "record_name": "Terra Nova Golf Resort & Golf Community",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-the-wilds-golf-resort",
+      "official_name": "The Wilds Golf Resort",
+      "province": "NL",
+      "place": "Holyrood",
+      "latitude": 47.2206,
+      "longitude": -53.3319,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20406",
+      "association_course_ids": [
+        "20406"
+      ],
+      "rating": 73.7,
+      "slope": 138,
+      "source_url": "https://www.golfnl.ca/location/the-wilds-golf-resort/",
+      "merged_routings": false,
+      "record_name": "The Wilds Golf Resort",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "nl-the-willows-at-holyrood",
+      "official_name": "The Willows at Holyrood",
+      "province": "NL",
+      "place": "Holyrood",
+      "latitude": 47.3668,
+      "longitude": -53.1171,
+      "hole_count": 9,
+      "access": "public",
+      "association_course_id": "20405",
+      "association_course_ids": [
+        "20405"
+      ],
+      "rating": 66.8,
+      "slope": 121,
+      "source_url": "https://www.golfnl.ca/location/the-willows-at-holyrood/",
+      "merged_routings": false,
+      "record_name": "The Willows at Holyrood",
+      "published_list": "https://www.golfnl.ca/member-courses/"
+    },
+    {
+      "facility_id": "ns-abercrombie-country-club",
+      "official_name": "Abercrombie Country Club",
+      "province": "NS",
+      "place": "New Glasgow",
+      "latitude": 45.6125,
+      "longitude": -62.665,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19136",
+      "association_course_ids": [
+        "19136"
+      ],
+      "rating": 72.5,
+      "slope": 139,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Abercrombie Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-amherst-golf-club",
+      "official_name": "Amherst Golf Club",
+      "province": "NS",
+      "place": "Amherst",
+      "latitude": 45.8421,
+      "longitude": -64.1648,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19147",
+      "association_course_ids": [
+        "19147"
+      ],
+      "rating": 71.8,
+      "slope": 135,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Amherst Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-antigonish-golf-club",
+      "official_name": "Antigonish Golf Club",
+      "province": "NS",
+      "place": "Antigonish",
+      "latitude": 45.6322,
+      "longitude": -61.9995,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19128",
+      "association_course_ids": [
+        "19128"
+      ],
+      "rating": 74,
+      "slope": 143,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Antigonish Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-ashburn-golf-club-new-course",
+      "official_name": "Ashburn Golf Club (New Course)",
+      "province": "NS",
+      "place": "Halifax",
+      "latitude": 44.81,
+      "longitude": -63.65,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "19115",
+      "association_course_ids": [
+        "19115"
+      ],
+      "rating": 74.6,
+      "slope": 149,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Ashburn Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-ashburn-golf-club-old-course",
+      "official_name": "Ashburn Golf Club (Old Course)",
+      "province": "NS",
+      "place": "Halifax",
+      "latitude": 44.81,
+      "longitude": -63.65,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "19116",
+      "association_course_ids": [
+        "19116"
+      ],
+      "rating": 66.1,
+      "slope": 119,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Ashburn Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-aspotogan-ridge-golf-club",
+      "official_name": "Aspotogan Ridge Golf Club",
+      "province": "NS",
+      "place": "Hubbards",
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "33694",
+      "association_course_ids": [
+        "33694"
+      ],
+      "rating": 72.2,
+      "slope": 142,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Aspotogan Ridge Golf Course",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-avon-valley-golf-club",
+      "official_name": "Avon Valley Golf Club",
+      "province": "NS",
+      "place": "Falmouth",
+      "latitude": 44.9909,
+      "longitude": -64.1924,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19114",
+      "association_course_ids": [
+        "19114"
+      ],
+      "rating": 69.8,
+      "slope": 127,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Avon Valley Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-baddeck-forks-golf-club",
+      "official_name": "Baddeck Forks Golf Club",
+      "province": "NS",
+      "place": "Baddeck",
+      "latitude": 46.181227,
+      "longitude": -60.76581,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19127",
+      "association_course_ids": [
+        "19127"
+      ],
+      "rating": 68.4,
+      "slope": 123,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Baddeck Forks Golf Recreation Ltd.",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-bell-bay-golf-club",
+      "official_name": "Bell Bay Golf Club",
+      "province": "NS",
+      "place": "Baddeck",
+      "latitude": 46.1123,
+      "longitude": -60.7372,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19745",
+      "association_course_ids": [
+        "19745"
+      ],
+      "rating": 75.5,
+      "slope": 146,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Bell Bay Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-berwick-heights-golf-club",
+      "official_name": "Berwick Heights Golf Club",
+      "province": "NS",
+      "place": "Weston",
+      "latitude": 45.0667,
+      "longitude": -64.8096,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17872",
+      "association_course_ids": [
+        "17872"
+      ],
+      "rating": 72.5,
+      "slope": 135,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Berwick Heights Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-bluenose-golf-club",
+      "official_name": "Bluenose Golf Club",
+      "province": "NS",
+      "place": "Lunenburg",
+      "latitude": 44.368,
+      "longitude": -64.3126,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19135",
+      "association_course_ids": [
+        "19135"
+      ],
+      "rating": 67.6,
+      "slope": 114,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Bluenose Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-brightwood-golf-club",
+      "official_name": "Brightwood Golf Club",
+      "province": "NS",
+      "place": "Dartmouth",
+      "latitude": 44.675,
+      "longitude": -63.5729,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19130",
+      "association_course_ids": [
+        "19130"
+      ],
+      "rating": 68.2,
+      "slope": 115,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Brightwood Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-brookfield-golf-club",
+      "official_name": "Brookfield Golf Club",
+      "province": "NS",
+      "place": "Brookfield",
+      "latitude": 45.2475,
+      "longitude": -63.2797,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19154",
+      "association_course_ids": [
+        "19154"
+      ],
+      "rating": 67.8,
+      "slope": 121,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Brookfield Golf & Country Club Ltd",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-brule-point-golf-club",
+      "official_name": "Brule Point Golf Club",
+      "province": "NS",
+      "place": "Tatamagouche",
+      "latitude": 45.7531,
+      "longitude": -63.2022,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19129",
+      "association_course_ids": [
+        "19129"
+      ],
+      "rating": 67.2,
+      "slope": 116,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Brule Point Golf",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-cabot-cliffs",
+      "official_name": "Cabot Cliffs",
+      "province": "NS",
+      "place": "Inverness",
+      "latitude": 47.5501,
+      "longitude": -61.4361,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "33351",
+      "association_course_ids": [
+        "33351"
+      ],
+      "rating": 73.8,
+      "slope": 141,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Cabot Cliffs",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-cabot-links",
+      "official_name": "Cabot Links",
+      "province": "NS",
+      "place": "Inverness",
+      "latitude": 46.2366,
+      "longitude": -61.3042,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "32291",
+      "association_course_ids": [
+        "32291"
+      ],
+      "rating": 72.8,
+      "slope": 132,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Cabot Links Golf",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-cabot-the-nest",
+      "official_name": "Cabot The Nest",
+      "province": "NS",
+      "place": "Inverness",
+      "hole_count": 11,
+      "access": "public",
+      "source_url": "https://cabot.com/capebreton/",
+      "merged_routings": false,
+      "published_list": "https://nsga.ns.ca/member-clubs/",
+      "note": "Named on the Golf Nova Scotia member list. Cabot’s public page describes The Nest as an 11-hole par-3 course a non-member can book. No Golf Canada facility id was found."
+    },
+    {
+      "facility_id": "ns-chester-golf-club",
+      "official_name": "Chester Golf Club",
+      "province": "NS",
+      "place": "Chester",
+      "latitude": 44.5358,
+      "longitude": -64.2226,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19133",
+      "association_course_ids": [
+        "19133"
+      ],
+      "rating": 70.7,
+      "slope": 127,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Chester Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-clare-golf-and-country-club",
+      "official_name": "Clare Golf & Country Club",
+      "province": "NS",
+      "place": "Digby Co.",
+      "latitude": 44.2851,
+      "longitude": -66.1111,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19152",
+      "association_course_ids": [
+        "19152"
+      ],
+      "rating": 70.5,
+      "slope": 118,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Clare Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-coyote-hills-golf-course",
+      "official_name": "Coyote Hills Golf Course",
+      "province": "NS",
+      "place": "Ellershouse",
+      "latitude": 44.9762,
+      "longitude": -63.9869,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20561",
+      "association_course_ids": [
+        "20561"
+      ],
+      "rating": 67,
+      "slope": 119,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Coyote Hill Golf Course",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-digby-pines-golf-resort-and-spa",
+      "official_name": "Digby Pines Golf Resort & Spa",
+      "province": "NS",
+      "place": "Digby",
+      "latitude": 44.630612,
+      "longitude": -65.773258,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19111",
+      "association_course_ids": [
+        "19111"
+      ],
+      "rating": 72,
+      "slope": 134,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Digby Pines Golf Resort and Spa",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-dundee-resort-and-golf-club",
+      "official_name": "Dundee Resort & Golf Club",
+      "province": "NS",
+      "place": "West Bay",
+      "latitude": 45.7019,
+      "longitude": -61.0815,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19149",
+      "association_course_ids": [
+        "19149"
+      ],
+      "rating": 74.5,
+      "slope": 152,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Dundee Resort & Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-eagle-crest-golf-club",
+      "official_name": "Eagle Crest Golf Club",
+      "province": "NS",
+      "place": "Centreville",
+      "latitude": 45.1182,
+      "longitude": -64.5113,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19110",
+      "association_course_ids": [
+        "19110"
+      ],
+      "rating": 71.7,
+      "slope": 133,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Eagle Crest Golf Course",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-eden-golf-club",
+      "official_name": "Eden Golf Club",
+      "province": "NS",
+      "place": "Bridgetown",
+      "latitude": 44.8529,
+      "longitude": -65.2285,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19141",
+      "association_course_ids": [
+        "19141"
+      ],
+      "rating": 70.6,
+      "slope": 131,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Eden Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-fort-view-golf-course",
+      "official_name": "Fort View Golf Course",
+      "province": "NS",
+      "place": "Annapolis Royal",
+      "latitude": 44.7498,
+      "longitude": -65.5172,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19144",
+      "association_course_ids": [
+        "19144"
+      ],
+      "rating": 67.7,
+      "slope": 126,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Fort View Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-fox-harbr-golf-resort",
+      "official_name": "Fox Harbr’ Golf Resort",
+      "province": "NS",
+      "place": "Wallace",
+      "latitude": 45.8682,
+      "longitude": -63.4532,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "34969",
+      "association_course_ids": [
+        "34969"
+      ],
+      "rating": 74,
+      "slope": 139,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Fox Harb'r",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-fox-hollow-golf-club",
+      "official_name": "Fox Hollow Golf Club",
+      "province": "NS",
+      "place": "Stewiacke",
+      "latitude": 45.120886,
+      "longitude": -63.367832,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20078",
+      "association_course_ids": [
+        "20078"
+      ],
+      "rating": 72.4,
+      "slope": 132,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Fox Hollow Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-glen-arbour-golf-club",
+      "official_name": "Glen Arbour Golf Club",
+      "province": "NS",
+      "place": "Hammonds Plains",
+      "latitude": 44.7542,
+      "longitude": -63.7702,
+      "hole_count": 18,
+      "access": "private",
+      "association_course_id": "17829",
+      "association_course_ids": [
+        "17829"
+      ],
+      "rating": 73.1,
+      "slope": 146,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Glen Arbour Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-glen-lovat-golf-club",
+      "official_name": "Glen Lovat Golf Club",
+      "province": "NS",
+      "place": "New Glasgow",
+      "latitude": 45.6044,
+      "longitude": -62.5741,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17954",
+      "association_course_ids": [
+        "17954"
+      ],
+      "rating": 72.6,
+      "slope": 137,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Glen Lovat Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-grandview-golf-and-country-club",
+      "official_name": "Grandview Golf & Country Club",
+      "province": "NS",
+      "place": "Dartmouth",
+      "latitude": 44.7172,
+      "longitude": -63.4508,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19126",
+      "association_course_ids": [
+        "19126"
+      ],
+      "rating": 73.1,
+      "slope": 139,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Eaglequest Grandview Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-granite-springs-golf-club",
+      "official_name": "Granite Springs Golf Club",
+      "province": "NS",
+      "place": "Bayside",
+      "latitude": 44.5362,
+      "longitude": -63.8058,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19119",
+      "association_course_ids": [
+        "19119"
+      ],
+      "rating": 72.8,
+      "slope": 145,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Granite Springs Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-greenwood-golf-club",
+      "official_name": "Greenwood Golf Club",
+      "province": "NS",
+      "place": "Greenwood",
+      "latitude": 44.9887,
+      "longitude": -64.9222,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19109",
+      "association_course_ids": [
+        "19109"
+      ],
+      "rating": 70.8,
+      "slope": 131,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Greenwood Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-hartlen-point-golf-club",
+      "official_name": "Hartlen Point Golf Club",
+      "province": "NS",
+      "place": "Eastern Passage",
+      "latitude": 44.5976,
+      "longitude": -63.4487,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19125",
+      "association_course_ids": [
+        "19125"
+      ],
+      "rating": 72.3,
+      "slope": 130,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Hartlen Point Forces Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-highland-links-golf-club",
+      "official_name": "Highland Links Golf Club",
+      "province": "NS",
+      "place": "Ingonish Beach",
+      "latitude": 46.7631,
+      "longitude": -60.4548,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19124",
+      "association_course_ids": [
+        "19124"
+      ],
+      "rating": 73.5,
+      "slope": 144,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Cape Breton Highlands Links",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-kenwo-golf-club",
+      "official_name": "KenWo Golf Club",
+      "province": "NS",
+      "place": "Wolfville",
+      "latitude": 45.0705,
+      "longitude": -64.4292,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19153",
+      "association_course_ids": [
+        "19153"
+      ],
+      "rating": 71.7,
+      "slope": 137,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "KenWo Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-leportage-golf-club",
+      "official_name": "LePortage Golf Club",
+      "province": "NS",
+      "place": "Cheticamp",
+      "latitude": 46.6412,
+      "longitude": -60.9971,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19118",
+      "association_course_ids": [
+        "19118"
+      ],
+      "rating": 73.6,
+      "slope": 134,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Le Portage Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-lingan-golf-club",
+      "official_name": "Lingan Golf Club",
+      "province": "NS",
+      "place": "Sydney",
+      "latitude": 46.1717,
+      "longitude": -60.0985,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19151",
+      "association_course_ids": [
+        "19151"
+      ],
+      "rating": 72.8,
+      "slope": 131,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Lingan Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-lost-creek-golf-club",
+      "official_name": "Lost Creek Golf Club",
+      "province": "NS",
+      "place": "Beaver Bank",
+      "latitude": 44.850149,
+      "longitude": -63.666534,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17831",
+      "association_course_ids": [
+        "17831"
+      ],
+      "rating": 71.4,
+      "slope": 138,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Lost Creek Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-mountain-golf-and-country-club",
+      "official_name": "Mountain Golf & Country Club",
+      "province": "NS",
+      "place": "Truro",
+      "latitude": 45.4162,
+      "longitude": -63.1869,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19148",
+      "association_course_ids": [
+        "19148"
+      ],
+      "rating": 70.5,
+      "slope": 133,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Mountain Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-northumberland-links-golf-course",
+      "official_name": "Northumberland Links Golf Course",
+      "province": "NS",
+      "place": "Gulf Shore",
+      "latitude": 45.8723,
+      "longitude": -63.5792,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19113",
+      "association_course_ids": [
+        "19113"
+      ],
+      "rating": 73.8,
+      "slope": 136,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Northumberland Links",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-oakfield-golf-and-country-club",
+      "official_name": "Oakfield Golf & Country Club",
+      "province": "NS",
+      "place": "Enfield",
+      "latitude": 44.9134,
+      "longitude": -63.5721,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19140",
+      "association_course_ids": [
+        "19140"
+      ],
+      "rating": 73.4,
+      "slope": 136,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Oakfield Golf and Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-osprey-ridge-golf-club",
+      "official_name": "Osprey Ridge Golf Club",
+      "province": "NS",
+      "place": "Bridgewater",
+      "latitude": 44.4017,
+      "longitude": -64.5045,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19771",
+      "association_course_ids": [
+        "19771"
+      ],
+      "rating": 72.9,
+      "slope": 141,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Osprey Ridge Golf Course",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-paragon-golf-and-country-club",
+      "official_name": "Paragon Golf & Country Club",
+      "province": "NS",
+      "place": "Kingston",
+      "latitude": 44.9805,
+      "longitude": -64.9613,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19121",
+      "association_course_ids": [
+        "19121"
+      ],
+      "rating": 72.5,
+      "slope": 132,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Paragon Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-parrsboro-golf-club",
+      "official_name": "Parrsboro Golf Club",
+      "province": "NS",
+      "place": "Parrsboro",
+      "latitude": 45.3888,
+      "longitude": -64.2971,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19139",
+      "association_course_ids": [
+        "19139"
+      ],
+      "rating": 63,
+      "slope": 95,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Parrsboro Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-passchendaele-golf-course",
+      "official_name": "Passchendaele Golf Course",
+      "province": "NS",
+      "place": "Glace Bay",
+      "latitude": 46.1824,
+      "longitude": -59.9836,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17871",
+      "association_course_ids": [
+        "17871"
+      ],
+      "rating": 66.8,
+      "slope": 105,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Passchendaele Golf & Driving Range",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-river-hills-golf-club",
+      "official_name": "River Hills Golf Club",
+      "province": "NS",
+      "place": "Clyde River",
+      "latitude": 43.6181,
+      "longitude": -65.4758,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19150",
+      "association_course_ids": [
+        "19150"
+      ],
+      "rating": 71.7,
+      "slope": 130,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "River Hills Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-river-oaks-golf-club",
+      "official_name": "River Oaks Golf Club",
+      "province": "NS",
+      "place": "Halifax County",
+      "latitude": 44.9141,
+      "longitude": -63.2363,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19137",
+      "association_course_ids": [
+        "19137"
+      ],
+      "rating": 69.9,
+      "slope": 119,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "River Oaks Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-seaview-golf-club",
+      "official_name": "Seaview Golf Club",
+      "province": "NS",
+      "place": "North Sydney",
+      "latitude": 46.1821,
+      "longitude": -60.2965,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19117",
+      "association_course_ids": [
+        "19117"
+      ],
+      "rating": 71.9,
+      "slope": 140,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Seaview Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-sherwood-golf-club",
+      "official_name": "Sherwood Golf Club",
+      "province": "NS",
+      "place": "Sherwood",
+      "latitude": 44.7201,
+      "longitude": -64.3074,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17892",
+      "association_course_ids": [
+        "17892"
+      ],
+      "rating": 70,
+      "slope": 139,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Sherwood Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-spring-hill-centennial-golf-club",
+      "official_name": "Spring Hill Centennial Golf Club",
+      "province": "NS",
+      "place": "River Philip , NS",
+      "latitude": 45.6504,
+      "longitude": -64.0493,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19146",
+      "association_course_ids": [
+        "19146"
+      ],
+      "rating": 70.4,
+      "slope": 125,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Springhill Centennial Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-the-lakes-golf-club",
+      "official_name": "The Lakes Golf Club",
+      "province": "NS",
+      "place": "Ben Eoin",
+      "latitude": 45.9746,
+      "longitude": -60.436,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "24909",
+      "association_course_ids": [
+        "24909"
+      ],
+      "rating": 75.9,
+      "slope": 151,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "The Lakes Resort",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-the-links-at-brunello",
+      "official_name": "The Links at Brunello",
+      "province": "NS",
+      "place": "Timberlea",
+      "latitude": 44.6433,
+      "longitude": -63.7233,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "33075",
+      "association_course_ids": [
+        "33075"
+      ],
+      "rating": 75.5,
+      "slope": 150,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "The Links At Brunello",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-the-links-at-penn-hills",
+      "official_name": "The Links at Penn Hills",
+      "province": "NS",
+      "place": "Shubenacadie",
+      "latitude": 45.1198,
+      "longitude": -63.4049,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17976",
+      "association_course_ids": [
+        "17976"
+      ],
+      "rating": 75.1,
+      "slope": 139,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "The Links at Penn Hills",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-truro-golf-club",
+      "official_name": "Truro Golf Club",
+      "province": "NS",
+      "place": "Truro",
+      "latitude": 45.3644,
+      "longitude": -63.2995,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19134",
+      "association_course_ids": [
+        "19134"
+      ],
+      "rating": 70.9,
+      "slope": 130,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Truro Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-west-pubnico-golf-club",
+      "official_name": "West Pubnico Golf Club",
+      "province": "NS",
+      "place": "West Pubnico",
+      "latitude": 43.719,
+      "longitude": -65.7853,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19145",
+      "association_course_ids": [
+        "19145"
+      ],
+      "rating": 69,
+      "slope": 123,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "West Pubnico Golf & Country Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-white-point-golf-club",
+      "official_name": "White Point Golf Club",
+      "province": "NS",
+      "place": "Hunts Point",
+      "latitude": 43.9645,
+      "longitude": -64.7485,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19143",
+      "association_course_ids": [
+        "19143"
+      ],
+      "rating": 71,
+      "slope": 133,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "White Point Golf Club",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "ns-yarmouth-links-golf-club",
+      "official_name": "Yarmouth Links Golf Club",
+      "province": "NS",
+      "place": "Yarmouth",
+      "latitude": 43.8231,
+      "longitude": -66.1175,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19132",
+      "association_course_ids": [
+        "19132"
+      ],
+      "rating": 70,
+      "slope": 121,
+      "source_url": "https://nsga.ns.ca/member-clubs/",
+      "merged_routings": false,
+      "record_name": "Yarmouth Links",
+      "published_list": "https://nsga.ns.ca/member-clubs/"
+    },
+    {
+      "facility_id": "pei-andersons-creek-gc",
+      "official_name": "Andersons Creek GC",
+      "province": "PEI",
+      "place": "Stanley Bridge",
+      "latitude": 46.449,
+      "longitude": -63.4365,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17984",
+      "association_course_ids": [
+        "17984"
+      ],
+      "rating": 72.5,
+      "slope": 135,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Andersons Creek Golf Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-avondale-golf-course",
+      "official_name": "Avondale Golf Course",
+      "province": "PEI",
+      "place": "Vernon River",
+      "latitude": 46.229724,
+      "longitude": -62.833182,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17875",
+      "association_course_ids": [
+        "17875"
+      ],
+      "rating": 72.9,
+      "slope": 121,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Avondale Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-belfast-highland-greens",
+      "official_name": "Belfast Highland Greens",
+      "province": "PEI",
+      "place": "Belfast",
+      "latitude": 46.0982,
+      "longitude": -62.9098,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20374",
+      "association_course_ids": [
+        "20374"
+      ],
+      "rating": 71.4,
+      "slope": 132,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Belfast Highland Greens Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-belvedere-golf-club",
+      "official_name": "Belvedere Golf Club",
+      "province": "PEI",
+      "place": "Charlottetown",
+      "latitude": 46.2607,
+      "longitude": -63.1099,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19157",
+      "association_course_ids": [
+        "19157"
+      ],
+      "rating": 72.7,
+      "slope": 126,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Belvedere Golf Club Inc",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-brudenell-river-gc",
+      "official_name": "Brudenell River GC",
+      "province": "PEI",
+      "place": "Georgetown Royalty",
+      "latitude": 46.2018,
+      "longitude": -62.5869,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19165",
+      "association_course_ids": [
+        "19165"
+      ],
+      "rating": 71.1,
+      "slope": 118,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Brudenell Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-clyde-river-golf-and-cc",
+      "official_name": "Clyde River Golf & CC",
+      "province": "PEI",
+      "place": "Clyde River",
+      "latitude": 46.2128,
+      "longitude": -63.2645,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19159",
+      "association_course_ids": [
+        "19159"
+      ],
+      "rating": 69,
+      "slope": 121,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Clyde River Golf and Country Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-countryview-golf-club",
+      "official_name": "Countryview Golf Club",
+      "province": "PEI",
+      "place": "Fairview",
+      "latitude": 46.181438,
+      "longitude": -63.175394,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20252",
+      "association_course_ids": [
+        "20252"
+      ],
+      "rating": 70.7,
+      "slope": 120,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Countryview Golf Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-dundarave-golf-course",
+      "official_name": "Dundarave Golf Course",
+      "province": "PEI",
+      "place": "Georgetown Royalty",
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "20117",
+      "association_course_ids": [
+        "20117"
+      ],
+      "rating": 74.2,
+      "slope": 140,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Dundarave Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-eagles-glenn",
+      "official_name": "Eagles Glenn",
+      "province": "PEI",
+      "place": "Cavendish",
+      "latitude": 46.4737,
+      "longitude": -63.398,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17933",
+      "association_course_ids": [
+        "17933"
+      ],
+      "rating": 73.2,
+      "slope": 131,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Eagles Glenn",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-forest-hills",
+      "official_name": "Forest Hills",
+      "province": "PEI",
+      "place": "Cavendish",
+      "latitude": 46.2079,
+      "longitude": -62.8216,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "21252",
+      "association_course_ids": [
+        "21252"
+      ],
+      "rating": 67.2,
+      "slope": 116,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Forest Hills Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-fox-meadow-golf-course",
+      "official_name": "Fox Meadow Golf Course",
+      "province": "PEI",
+      "place": "Stratford",
+      "latitude": 46.2101,
+      "longitude": -63.092,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17876",
+      "association_course_ids": [
+        "17876"
+      ],
+      "rating": 72.5,
+      "slope": 122,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Fox Meadow Golf & Country Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-glasgow-hills-resort-and-gc",
+      "official_name": "Glasgow Hills Resort & GC",
+      "province": "PEI",
+      "place": "Hunter River",
+      "latitude": 46.4191,
+      "longitude": -63.3602,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17893",
+      "association_course_ids": [
+        "17893"
+      ],
+      "rating": 75.2,
+      "slope": 140,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Glasgow Hills Resort",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-green-gables-golf-course",
+      "official_name": "Green Gables Golf Course",
+      "province": "PEI",
+      "place": "Hunter River",
+      "latitude": 46.4876,
+      "longitude": -63.3805,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19160",
+      "association_course_ids": [
+        "19160"
+      ],
+      "rating": 73.8,
+      "slope": 139,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Green Gables Golf Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-mill-river",
+      "official_name": "Mill River",
+      "province": "PEI",
+      "place": "Woodstock",
+      "latitude": 46.7418,
+      "longitude": -64.1645,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19158",
+      "association_course_ids": [
+        "19158"
+      ],
+      "rating": 74.3,
+      "slope": 131,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Mill River Golf Resort",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-red-sands-gc",
+      "official_name": "Red Sands GC",
+      "province": "PEI",
+      "place": "Kensington",
+      "latitude": 46.4454,
+      "longitude": -63.5537,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "17854",
+      "association_course_ids": [
+        "17854"
+      ],
+      "rating": 63.6,
+      "slope": 99,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Red Sands Golf Course",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-rustico-resort-golf-club",
+      "official_name": "Rustico Resort Golf Club",
+      "province": "PEI",
+      "place": "Rustico",
+      "hole_count": 18,
+      "access": "public",
+      "source_url": "https://golfpei.ca/course/rusticoresort/",
+      "merged_routings": false,
+      "published_list": "https://golfpei.ca/course_directory_list/",
+      "note": "Golf PEI course page: “18 holes of ocean view golf” and a tee-time booking link. Not in the Golf Canada facility search used for the rest of the seed."
+    },
+    {
+      "facility_id": "pei-stanhope-golf-and-cc",
+      "official_name": "Stanhope Golf & CC",
+      "province": "PEI",
+      "place": "York",
+      "latitude": 46.4114,
+      "longitude": -63.1153,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19155",
+      "association_course_ids": [
+        "19155"
+      ],
+      "rating": 73.2,
+      "slope": 120,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Stanhope Golf & Country Club",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    },
+    {
+      "facility_id": "pei-the-links-at-crowbush-cove",
+      "official_name": "The Links at Crowbush Cove",
+      "province": "PEI",
+      "place": "West St. Peters",
+      "latitude": 46.4323,
+      "longitude": -62.7957,
+      "hole_count": 18,
+      "access": "public",
+      "association_course_id": "19156",
+      "association_course_ids": [
+        "19156"
+      ],
+      "rating": 74.9,
+      "slope": 155,
+      "source_url": "https://golfpei.ca/course_directory_list/",
+      "merged_routings": false,
+      "record_name": "Links at Crowbush Cove",
+      "published_list": "https://golfpei.ca/course_directory_list/"
+    }
+  ]
+}

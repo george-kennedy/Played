@@ -1,0 +1,11 @@
+node_modules
+.next
+data/*.sqlite
+data/*.sqlite-*
+data/*.sqlite-journal
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*
+credentials.json
+*.pem
