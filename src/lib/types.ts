@@ -1,4 +1,4 @@
-export const PROVINCES = ["NS", "PEI", "NB", "NL"] as const;
+export const PROVINCES = ["BC", "AB", "SK", "MB", "ON", "QC", "NB", "PEI", "NS", "NL", "YT", "NT"] as const;
 export type Province = (typeof PROVINCES)[number];
 export type Access = "public" | "private";
 export type RoundSource = "mark" | "manual" | "import";
@@ -36,7 +36,7 @@ export type Round = {
 
 export type Denominator =
   | { kind: "province"; province: Province }
-  | { kind: "atlantic" };
+  | { kind: "canada" };
 
 export type CoverageFilters = {
   eighteenHoleOnly?: boolean;
@@ -56,8 +56,8 @@ export type PublicShare = {
   provincialPlayed: number;
   provincialTotal: number;
   provincialPercentage: number | null;
-  atlanticPlayed: number;
-  atlanticTotal: number;
-  atlanticPercentage: number | null;
+  canadaPlayed: number;
+  canadaTotal: number;
+  canadaPercentage: number | null;
   firstPlayedThisYear: number;
 };

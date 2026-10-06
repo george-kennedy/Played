@@ -2,7 +2,11 @@
 
 import { useEffect } from "react";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+import { createLayerComponent } from "@react-leaflet/core";
 import L from "leaflet";
+import type { ReactElement, ReactNode } from "react";
+import "leaflet.markercluster";
+import "leaflet.markercluster/dist/MarkerCluster.css";
 import { addRound, setPlayed } from "@/app/actions";
 import type { PinCourse, PinMapLabels } from "./pin-course";
 import { openMarkerHtml, playedMarkerHtml } from "./pin-glyphs";
@@ -19,10 +23,40 @@ const playedIcon = L.divIcon({
 const openIcon = L.divIcon({
   className: "pin-marker",
   html: openMarkerHtml(),
-  iconSize: [26, 26],
-  iconAnchor: [13, 13],
-  popupAnchor: [0, -14],
+  iconSize: [12, 12],
+  iconAnchor: [6, 6],
+  popupAnchor: [0, -8],
 });
+
+const MarkerClusterGroup = createLayerComponent<L.MarkerClusterGroup, L.MarkerClusterGroupOptions>(
+  function createCluster(props, context) {
+    const cluster = L.markerClusterGroup({
+      chunkedLoading: true,
+      maxClusterRadius(zoom) {
+        if (zoom <= 4) return 200;
+        if (zoom === 5) return 120;
+        return 70;
+      },
+      disableClusteringAtZoom: 7,
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      removeOutsideVisibleBounds: true,
+      iconCreateFunction(group) {
+        const count = group.getChildCount();
+        return L.divIcon({
+          html: `<span class="pin-cluster-count">${count}</span>`,
+          className: "pin-cluster",
+          iconSize: [40, 40],
+          iconAnchor: [20, 20],
+        });
+      },
+      ...props,
+    });
+    return { instance: cluster, context: { ...context, layerContainer: cluster } };
+  },
+  function updateCluster() {},
+) as (props: { children?: ReactNode }) => ReactElement;
 
 function FitPins({ courses }: { courses: PinCourse[] }) {
   const map = useMap();
@@ -145,6 +179,30 @@ export default function CoursePinMapView({
     return <p className="pin-map-fallback">{labels.empty}</p>;
   }
   const bounds = L.latLngBounds(courses.map((course) => [course.latitude, course.longitude] as L.LatLngTuple));
+  const markers = courses.map((course) => (
+    <Marker
+      key={course.facilityId}
+      position={[course.latitude, course.longitude]}
+      icon={course.personal === false || course.played ? playedIcon : openIcon}
+      title={
+        course.personal === false
+          ? course.name
+          : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
+      }
+      alt={
+        course.personal === false
+          ? course.name
+          : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
+      }
+      keyboard
+      riseOnHover
+      zIndexOffset={course.played ? 400 : 0}
+    >
+      <Popup className="pin-popup-root" minWidth={240} maxWidth={320} maxHeight={280} autoPan>
+        <PinPopup course={course} labels={labels} today={today} returnTo={returnTo} />
+      </Popup>
+    </Marker>
+  ));
   return (
     <div className="pin-map" role="region" aria-label={labels.region}>
       <MapContainer
@@ -158,30 +216,7 @@ export default function CoursePinMapView({
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <FitPins courses={courses} />
-        {courses.map((course) => (
-          <Marker
-            key={course.facilityId}
-            position={[course.latitude, course.longitude]}
-            icon={course.personal === false || course.played ? playedIcon : openIcon}
-            title={
-              course.personal === false
-                ? course.name
-                : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
-            }
-            alt={
-              course.personal === false
-                ? course.name
-                : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
-            }
-            keyboard
-            riseOnHover
-            zIndexOffset={course.played ? 400 : 0}
-          >
-            <Popup className="pin-popup-root" minWidth={240} maxWidth={320} maxHeight={280} autoPan>
-              <PinPopup course={course} labels={labels} today={today} returnTo={returnTo} />
-            </Popup>
-          </Marker>
-        ))}
+        {courses.length > 60 ? <MarkerClusterGroup>{markers}</MarkerClusterGroup> : markers}
       </MapContainer>
     </div>
   );

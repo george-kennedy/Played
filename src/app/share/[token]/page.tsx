@@ -40,11 +40,11 @@ export default async function SharePage({ params }: { params: Promise<{ token: s
         </p>
       </section>
       <section className="card">
-        <p className="muted">{t("province.atlantic")}</p>
+        <p className="muted">{t("province.canada")}</p>
         <p className="coverage-text">
-          <strong>{percentageLabel(payload.atlanticPercentage)}</strong>
+          <strong>{percentageLabel(payload.canadaPercentage)}</strong>
           {" · "}
-          {t("coverage.count", { played: payload.atlanticPlayed, total: payload.atlanticTotal })}
+          {t("coverage.count", { played: payload.canadaPlayed, total: payload.canadaTotal })}
         </p>
       </section>
       <p>{t("share.first", { count: payload.firstPlayedThisYear })}</p>

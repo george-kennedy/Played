@@ -25,7 +25,7 @@ export async function GET(_request: Request, context: { params: Promise<{ token:
   const lines = [
     "Played",
     `${province}: ${percentageLabel(payload.provincialPercentage)} · ${t("coverage.count", { played: payload.provincialPlayed, total: payload.provincialTotal })}`,
-    `${t("province.atlantic")}: ${percentageLabel(payload.atlanticPercentage)} · ${t("coverage.count", { played: payload.atlanticPlayed, total: payload.atlanticTotal })}`,
+    `${t("province.canada")}: ${percentageLabel(payload.canadaPercentage)} · ${t("coverage.count", { played: payload.canadaPlayed, total: payload.canadaTotal })}`,
     t("share.first", { count: payload.firstPlayedThisYear }),
   ];
   const svg = `<?xml version="1.0" encoding="UTF-8"?>

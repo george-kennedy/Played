@@ -17,8 +17,7 @@ export function SiteHeader({
       <a className="brand" href="/">{t("brand")}</a>
       <nav className="nav" aria-label={t("brand")}>
         <a href="/">{t("nav.home")}</a>
-        <a href="/directory">{t("nav.directory")}</a>
-        {user ? <a href="/import">{t("nav.import")}</a> : null}
+        {user ? <a href="/connect">{t("nav.connect")}</a> : null}
         {user ? <a href="/season">{t("nav.season")}</a> : null}
         {user ? <a href="/account">{t("nav.account")}</a> : null}
         {user ? null : <a href="/sign-in">{t("nav.signIn")}</a>}

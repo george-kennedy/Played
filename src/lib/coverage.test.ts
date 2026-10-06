@@ -82,7 +82,7 @@ describe("coverage", () => {
     const result = coverage({
       facilities,
       rounds: [{ ...round("a", "2026-06-01"), holes: 7 as 9 }],
-      denominator: { kind: "atlantic" },
+      denominator: { kind: "canada" },
       year: 2026,
     });
     expect(result.played).toBe(0);
@@ -97,15 +97,15 @@ describe("coverage", () => {
       denominator: { kind: "province", province: "PEI" },
       year: 2026,
     });
-    const atlantic = coverage({
+    const canada = coverage({
       facilities,
       rounds,
-      denominator: { kind: "atlantic" },
+      denominator: { kind: "canada" },
       year: 2026,
     });
     expect(province).toMatchObject({ played: 1, total: 3 });
-    expect(atlantic).toMatchObject({ played: 1, total: 4 });
-    expect(atlantic.percentage).not.toBe(province.percentage);
+    expect(canada).toMatchObject({ played: 1, total: 4 });
+    expect(canada.percentage).not.toBe(province.percentage);
   });
 
   it("applies 18-hole and public filters only as denominator filters", () => {
@@ -135,21 +135,21 @@ describe("coverage", () => {
       denominator: { kind: "province", province: "PEI" },
       year: 2026,
     });
-    const atlantic = coverage({
+    const canada = coverage({
       facilities,
       rounds: [round("a", "2026-06-01")],
-      denominator: { kind: "atlantic" },
+      denominator: { kind: "canada" },
       year: 2026,
     });
-    const share = publicShare({ headlineProvince: "PEI", provincial, atlantic });
+    const share = publicShare({ headlineProvince: "PEI", provincial, canada });
     expect(share).toEqual({
       headlineProvince: "PEI",
       provincialPlayed: 1,
       provincialTotal: 3,
       provincialPercentage: provincial.percentage,
-      atlanticPlayed: 1,
-      atlanticTotal: 4,
-      atlanticPercentage: atlantic.percentage,
+      canadaPlayed: 1,
+      canadaTotal: 4,
+      canadaPercentage: canada.percentage,
       firstPlayedThisYear: 1,
     });
     expect(JSON.stringify(share)).not.toMatch(/official|score|course/i);

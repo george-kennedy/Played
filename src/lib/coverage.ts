@@ -7,12 +7,13 @@ import type {
   PublicShare,
   Round,
 } from "./types";
+import { PROVINCES } from "./types";
 import { yearOfPlayedOn } from "./dates";
 
 export type CoverageRound = Pick<Round, "facilityId" | "playedOn" | "holes">;
 
 function inDenominator(facility: Facility, denominator: Denominator): boolean {
-  if (denominator.kind === "atlantic") return true;
+  if (denominator.kind === "canada") return true;
   return facility.province === denominator.province;
 }
 
@@ -72,32 +73,32 @@ export function percentageLabel(percentage: number | null): string {
   return `${Math.round(percentage * 100)}%`;
 }
 
-export function scopeKey(denominator: Denominator): Province | "ATLANTIC" {
-  return denominator.kind === "atlantic" ? "ATLANTIC" : denominator.province;
+export function scopeKey(denominator: Denominator): Province | "CANADA" {
+  return denominator.kind === "canada" ? "CANADA" : denominator.province;
 }
 
-export function allScopes(): Array<Province | "ATLANTIC"> {
-  return ["NS", "PEI", "NB", "NL", "ATLANTIC"];
+export function allScopes(): Array<Province | "CANADA"> {
+  return [...PROVINCES, "CANADA"];
 }
 
-export function denominatorForScope(scope: Province | "ATLANTIC"): Denominator {
-  if (scope === "ATLANTIC") return { kind: "atlantic" };
+export function denominatorForScope(scope: Province | "CANADA"): Denominator {
+  if (scope === "CANADA") return { kind: "canada" };
   return { kind: "province", province: scope };
 }
 
 export function publicShare(input: {
   headlineProvince: Province;
   provincial: Coverage;
-  atlantic: Coverage;
+  canada: Coverage;
 }): PublicShare {
   return {
     headlineProvince: input.headlineProvince,
     provincialPlayed: input.provincial.played,
     provincialTotal: input.provincial.total,
     provincialPercentage: input.provincial.percentage,
-    atlanticPlayed: input.atlantic.played,
-    atlanticTotal: input.atlantic.total,
-    atlanticPercentage: input.atlantic.percentage,
-    firstPlayedThisYear: input.atlantic.thisYear,
+    canadaPlayed: input.canada.played,
+    canadaTotal: input.canada.total,
+    canadaPercentage: input.canada.percentage,
+    firstPlayedThisYear: input.canada.thisYear,
   };
 }

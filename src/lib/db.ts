@@ -58,7 +58,7 @@ type RoundRow = {
 };
 
 export type SummaryRow = {
-  scope: Province | "ATLANTIC";
+  scope: Province | "CANADA";
   played_count: number;
   total_count: number;
   this_year_count: number;
@@ -400,7 +400,7 @@ export function rebuildSummary(db: Database.Database, userId: string, year = hal
   }
 }
 
-export function readSummary(db: Database.Database, userId: string, scope: Province | "ATLANTIC"): SummaryRow | null {
+export function readSummary(db: Database.Database, userId: string, scope: Province | "CANADA"): SummaryRow | null {
   const row = db
     .prepare(
       `SELECT scope, played_count, total_count, this_year_count, earlier_count, percentage
@@ -563,8 +563,8 @@ export function sharePayload(db: Database.Database, userId: string): PublicShare
     | undefined;
   if (!user?.headline_province || !isProvince(user.headline_province)) return null;
   const provincial = readSummary(db, userId, user.headline_province);
-  const atlantic = readSummary(db, userId, "ATLANTIC");
-  if (!provincial || !atlantic) return null;
+  const canada = readSummary(db, userId, "CANADA");
+  if (!provincial || !canada) return null;
   return publicShare({
     headlineProvince: user.headline_province,
     provincial: {
@@ -574,12 +574,12 @@ export function sharePayload(db: Database.Database, userId: string): PublicShare
       earlier: provincial.earlier_count,
       percentage: provincial.percentage,
     },
-    atlantic: {
-      played: atlantic.played_count,
-      total: atlantic.total_count,
-      thisYear: atlantic.this_year_count,
-      earlier: atlantic.earlier_count,
-      percentage: atlantic.percentage,
+    canada: {
+      played: canada.played_count,
+      total: canada.total_count,
+      thisYear: canada.this_year_count,
+      earlier: canada.earlier_count,
+      percentage: canada.percentage,
     },
   });
 }

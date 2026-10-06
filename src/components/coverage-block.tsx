@@ -42,7 +42,7 @@ export function CoverageBlock({
   );
 }
 
-export function provinceLabel(locale: Locale, province: Province | "ATLANTIC"): string {
-  if (province === "ATLANTIC") return translate(locale, "province.atlantic");
+export function provinceLabel(locale: Locale, province: Province | "CANADA"): string {
+  if (province === "CANADA") return translate(locale, "province.canada");
   return translate(locale, `province.${province}`);
 }

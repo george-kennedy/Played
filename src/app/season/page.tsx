@@ -17,7 +17,7 @@ export default async function SeasonPage() {
   const db = getDb();
   const payload = sharePayload(db, user.id);
   const provincial = readSummary(db, user.id, user.headline_province);
-  const atlantic = readSummary(db, user.id, "ATLANTIC");
+  const canada = readSummary(db, user.id, "CANADA");
   const share = shareForUser(db, user.id);
   const headerList = await headers();
   const host = headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "localhost:3000";
@@ -30,8 +30,8 @@ export default async function SeasonPage() {
       <h1>{t("season.title")}</h1>
       <p className="help">{t("season.private")}</p>
       {provincial ? <CoverageBlock locale={locale} summary={provincial} label={provinceLabel(locale, user.headline_province)} /> : null}
-      {atlantic ? <CoverageBlock locale={locale} summary={atlantic} label={t("province.atlantic")} /> : null}
-      <p>{t("season.first", { count: payload?.firstPlayedThisYear ?? atlantic?.this_year_count ?? 0 })}</p>
+      {canada ? <CoverageBlock locale={locale} summary={canada} label={t("province.canada")} /> : null}
+      <p>{t("season.first", { count: payload?.firstPlayedThisYear ?? canada?.this_year_count ?? 0 })}</p>
       <section className="card stack">
         <p>{t("season.shareHelp")}</p>
         {share?.enabled ? (
