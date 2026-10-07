@@ -23,8 +23,6 @@ The SQLite file is created on first start and filled from `data/facilities.json`
 | `RESEND_FROM` | From address for those messages. Both Resend variables are required for mail to leave the server. Without them, the link is shown on the next screen. |
 | `GOLFCANADA_CLIENT_ID` | Partner client id. Live score pulls stay closed until both Golf Canada variables are set, and the score feed itself is not connected yet. |
 | `GOLFCANADA_CLIENT_SECRET` | Partner client secret. Played does not ask golfers for a Golf Canada password. |
-| `GHIN_CLIENT_ID` | Partner client id. Live pulls stay closed until both GHIN variables are set. |
-| `GHIN_CLIENT_SECRET` | Partner client secret. Played does not ask golfers for a GHIN password. |
 | `BOOKING_ENABLED` | Set to `1` to show Book or Call when a public course has that switch on in `data/reach.json`. Off otherwise. |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Plausible site domain. The analytics script is not loaded when empty. |
 

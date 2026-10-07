@@ -392,3 +392,95 @@ a.button { text-decoration: none; }
   border-radius: 16px;
   background: #e7efe4;
 }
+
+.share-dialog {
+  width: min(36rem, calc(100% - 1.5rem));
+  max-height: min(90vh, 52rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--card);
+  color: var(--ink);
+}
+.share-dialog::backdrop {
+  background: rgba(14, 61, 32, 0.55);
+}
+.share-dialog-panel {
+  display: grid;
+  gap: 0.85rem;
+  padding: 1rem;
+}
+.share-dialog-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+.share-dialog-bar h2 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+.share-dialog-preview {
+  width: 100%;
+  aspect-ratio: 1200 / 630;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: #14532d;
+}
+.share-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.share-stage {
+  display: grid;
+  gap: 0.55rem;
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(243, 239, 228, 0.12), transparent 34%),
+    linear-gradient(155deg, #0a2f18 0%, #14532d 52%, #1c6b3a 100%);
+  color: #f3efe4;
+  min-height: min(70vh, 36rem);
+  align-content: center;
+}
+.share-stage-brand {
+  margin: 0;
+  font-family: Palatino, "Iowan Old Style", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  letter-spacing: -0.03em;
+}
+.share-stage-tag,
+.share-stage-meta,
+.share-stage-line {
+  margin: 0;
+  color: #d5e5d8;
+}
+.share-stage-percent {
+  margin: 1.2rem 0 0;
+  font-family: Palatino, "Iowan Old Style", Georgia, serif;
+  font-size: clamp(4.5rem, 16vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+.share-stage-line { font-size: 1.35rem; }
+.share-stage-rule {
+  width: 4rem;
+  height: 3px;
+  border: 0;
+  margin: 0.9rem 0 0.4rem;
+  background: rgba(243, 239, 228, 0.45);
+}
+.share-stage-province {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.share-stage-cta { margin-top: 1.25rem; }
+.share-stage .button {
+  background: #f3efe4;
+  color: #0e3d20;
+  border-color: #f3efe4;
+}

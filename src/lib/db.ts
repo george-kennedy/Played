@@ -689,7 +689,7 @@ export function loadComparisons(
     .prepare(
       `SELECT handicap_index FROM external_links
        WHERE user_id = ? AND handicap_index IS NOT NULL
-       ORDER BY CASE provider WHEN 'golf_canada' THEN 0 WHEN 'ghin' THEN 1 ELSE 2 END
+       ORDER BY CASE provider WHEN 'golf_canada' THEN 0 ELSE 1 END
        LIMIT 1`,
     )
     .get(viewerId) as { handicap_index: number } | undefined;
@@ -700,7 +700,7 @@ export function loadComparisons(
     )
     .all(viewerId) as Array<{ user_id: string; provider: string; handicap_index: number }>;
   const indexes = new Map<string, number>();
-  const rank = (provider: string) => (provider === "golf_canada" ? 0 : provider === "ghin" ? 1 : 2);
+  const rank = (provider: string) => (provider === "golf_canada" ? 0 : 1);
   const chosen = new Map<string, { rank: number; index: number }>();
   for (const row of indexRows) {
     const current = chosen.get(row.user_id);

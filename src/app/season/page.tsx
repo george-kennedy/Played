@@ -40,7 +40,8 @@ export default async function SeasonPage() {
               <span className="muted">{t("season.link")}</span><br />
               <a href={url}>{url}</a>
             </p>
-            <p><a href={`/share/${share.token}/card`}>{t("season.image")}</a></p>
+            <p><a href={`/share/${share.token}/card`} download="played-card.svg">{t("season.image")}</a></p>
+            <p><a href={`/share/${share.token}/story`} download="played-story.svg">{t("season.story")}</a></p>
             <form action={toggleShare}>
               <input type="hidden" name="enabled" value="0" />
               <button className="secondary" type="submit">{t("season.shareOff")}</button>

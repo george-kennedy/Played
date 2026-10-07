@@ -12,7 +12,7 @@ import {
   loadComparisons,
   openDatabase,
 } from "./db";
-import { pullGhin, pullGolfCanada, ScoreFeedClosed } from "./providers";
+import { pullGolfCanada, ScoreFeedClosed } from "./providers";
 import { parseBirdiesDownload, type IncomingRound } from "./sync";
 
 const opened: Array<{ close: () => void }> = [];
@@ -83,16 +83,16 @@ describe("account sync", () => {
       newId: () => "r3",
     });
     expect(birdies).toMatchObject({ added: 0, duplicates: 1 });
-    const ghin = applyProviderSync(db, {
+    const foreign = applyProviderSync(db, {
       userId: "u",
-      provider: "ghin",
-      externalId: "999000",
-      handicapIndex: 11,
+      provider: "birdies",
+      externalId: "download",
+      handicapIndex: null,
       rounds: [posted("us-1", "Pebble Beach Golf Links", "not-canadian", "2026-07-01")],
       syncedAt: "2026-10-06T14:00:00.000Z",
       newId: () => "r4",
     });
-    expect(ghin).toEqual({ added: 0, duplicates: 0, unmatched: 1 });
+    expect(foreign).toEqual({ added: 0, duplicates: 0, unmatched: 1 });
     expect(listFacilityRounds(db, "u", pippy!.facilityId)).toHaveLength(1);
     expect(disconnectProvider(db, "u", "golf_canada")).toBe(true);
     expect(listFacilityRounds(db, "u", pippy!.facilityId)).toHaveLength(1);
@@ -119,28 +119,19 @@ describe("account sync", () => {
     const saved = {
       golfId: process.env.GOLFCANADA_CLIENT_ID,
       golfSecret: process.env.GOLFCANADA_CLIENT_SECRET,
-      ghinId: process.env.GHIN_CLIENT_ID,
-      ghinSecret: process.env.GHIN_CLIENT_SECRET,
     };
     delete process.env.GOLFCANADA_CLIENT_ID;
     delete process.env.GOLFCANADA_CLIENT_SECRET;
-    delete process.env.GHIN_CLIENT_ID;
-    delete process.env.GHIN_CLIENT_SECRET;
     try {
       await expect(pullGolfCanada("1234")).rejects.toBeInstanceOf(ScoreFeedClosed);
-      await expect(pullGhin("1234")).rejects.toMatchObject({ reason: "agreement" });
+      await expect(pullGolfCanada("1234")).rejects.toMatchObject({ reason: "agreement" });
       process.env.GOLFCANADA_CLIENT_ID = "client";
       process.env.GOLFCANADA_CLIENT_SECRET = "secret";
-      process.env.GHIN_CLIENT_ID = "client";
-      process.env.GHIN_CLIENT_SECRET = "secret";
       await expect(pullGolfCanada("1234")).rejects.toMatchObject({ reason: "endpoint" });
-      await expect(pullGhin("1234")).rejects.toMatchObject({ reason: "endpoint" });
     } finally {
       for (const [key, value] of [
         ["GOLFCANADA_CLIENT_ID", saved.golfId],
         ["GOLFCANADA_CLIENT_SECRET", saved.golfSecret],
-        ["GHIN_CLIENT_ID", saved.ghinId],
-        ["GHIN_CLIENT_SECRET", saved.ghinSecret],
       ] as const) {
         if (value === undefined) delete process.env[key];
         else process.env[key] = value;

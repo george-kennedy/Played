@@ -35,7 +35,7 @@ import {
   rebuildSummary,
 } from "@/lib/db";
 import { parseBirdiesDownload } from "@/lib/sync";
-import { pullGhin, pullGolfCanada, ScoreFeedClosed, type ScoreProvider } from "@/lib/providers";
+import { pullGolfCanada, ScoreFeedClosed, type ScoreProvider } from "@/lib/providers";
 import { sendMail } from "@/lib/mail";
 import { isProvince } from "@/lib/names";
 import { placeById } from "@/lib/distance";
@@ -276,7 +276,7 @@ export async function savePlace(formData: FormData) {
   redirect(returnTo);
 }
 
-export async function enableShare(): Promise<{ url: string }> {
+export async function enableShare(): Promise<{ url: string; cardUrl: string; storyUrl: string }> {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   if (!emailIsVerified(user)) redirect("/verify-email");
@@ -285,7 +285,11 @@ export async function enableShare(): Promise<{ url: string }> {
   revalidatePath("/season");
   revalidatePath("/");
   const origin = await publicOrigin();
-  return { url: `${origin}/share/${token}` };
+  return {
+    url: `${origin}/share/${token}`,
+    cardUrl: `${origin}/share/${token}/card`,
+    storyUrl: `${origin}/share/${token}/story`,
+  };
 }
 
 export async function toggleShare(formData: FormData) {
@@ -304,7 +308,7 @@ function memberIdOk(value: string): boolean {
 }
 
 function providerOf(value: string): ScoreProvider | null {
-  if (value === "golf_canada" || value === "ghin" || value === "birdies") return value;
+  if (value === "golf_canada" || value === "birdies") return value;
   return null;
 }
 
@@ -331,35 +335,6 @@ export async function connectGolfCanada(formData: FormData) {
     result = applyProviderSync(getDb(), {
       userId: user.id,
       provider: "golf_canada",
-      externalId: memberId,
-      handicapIndex: history.handicapIndex,
-      rounds: history.rounds,
-      syncedAt: new Date().toISOString(),
-      newId: () => randomUUID(),
-    });
-  } catch (error) {
-    failure = error instanceof ScoreFeedClosed ? error.reason : "generic";
-  }
-  revalidatePath("/connect");
-  revalidatePath("/");
-  if (failure || !result) redirect(`/connect?error=${failure ?? "generic"}`);
-  connectRedirect(result);
-}
-
-export async function connectGhin(formData: FormData) {
-  const user = await currentUser();
-  if (!user) redirect("/sign-in");
-  const memberId = String(formData.get("memberId") ?? "").trim();
-  if (String(formData.get("consent") ?? "") !== "yes" || !memberIdOk(memberId)) {
-    redirect("/connect?error=generic");
-  }
-  let failure: "agreement" | "endpoint" | "generic" | null = null;
-  let result: { added: number; unmatched: number; duplicates: number } | null = null;
-  try {
-    const history = await pullGhin(memberId);
-    result = applyProviderSync(getDb(), {
-      userId: user.id,
-      provider: "ghin",
       externalId: memberId,
       handicapIndex: history.handicapIndex,
       rounds: history.rounds,

@@ -1,7 +1,7 @@
-import { connectGhin, connectGolfCanada, disconnectAccount, uploadBirdies } from "@/app/actions";
+import { connectGolfCanada, disconnectAccount, uploadBirdies } from "@/app/actions";
 import { getDb, listExternalLinks, type ExternalLink } from "@/lib/db";
 import { translate, type MessageKey } from "@/lib/i18n";
-import { ghinLicensed, golfCanadaLicensed, type ScoreProvider } from "@/lib/providers";
+import { golfCanadaLicensed, type ScoreProvider } from "@/lib/providers";
 import { currentLocale, currentUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
@@ -59,10 +59,8 @@ export default async function ConnectPage({
     listExternalLinks(getDb(), user.id).map((link) => [link.provider, link]),
   );
   const golfLink = links.get("golf_canada");
-  const ghinLink = links.get("ghin");
   const birdiesLink = links.get("birdies");
   const golfOpen = golfCanadaLicensed() && golfLink?.status !== "linked";
-  const ghinOpen = ghinLicensed() && ghinLink?.status !== "linked";
   const added = countParam(query.added);
   const unmatched = countParam(query.unmatched);
   const duplicates = countParam(query.duplicates);
@@ -102,26 +100,6 @@ export default async function ConnectPage({
             <button type="submit">{t("connect.sync")}</button>
           </form>
         ) : golfLink?.status === "linked" ? null : (
-          <span className="pill">{t("connect.later")}</span>
-        )}
-      </section>
-      <section className="card stack">
-        <h2>{t("connect.ghin")}</h2>
-        <p className="help">{t("connect.ghinHelp")}</p>
-        {ghinLicensed() ? null : <p>{t("connect.ghinClosed")}</p>}
-        <LinkControls link={ghinLink} sourceLabel={t("connect.ghin")} t={t} />
-        {ghinOpen ? (
-          <form className="stack" action={connectGhin}>
-            <label>
-              {t("connect.member")}
-              <input name="memberId" autoComplete="off" required pattern="[A-Za-z0-9-]{4,32}" />
-            </label>
-            <label>
-              <input type="checkbox" name="consent" value="yes" required /> {t("connect.consent")}
-            </label>
-            <button type="submit">{t("connect.sync")}</button>
-          </form>
-        ) : ghinLink?.status === "linked" ? null : (
           <span className="pill">{t("connect.later")}</span>
         )}
       </section>

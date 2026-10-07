@@ -232,6 +232,14 @@ export default async function HomePage({
             copiedLabel={t("home.shareCopied")}
             verifyHref="/verify-email"
             verifyLabel={t("home.shareVerify")}
+            title={t("home.shareTitle")}
+            nativeLabel={t("home.shareNative")}
+            facebookLabel={t("home.shareFacebook")}
+            instagramLabel={t("home.shareInstagram")}
+            copyLabel={t("home.shareCopy")}
+            closeLabel={t("home.shareClose")}
+            help={t("home.shareHelp")}
+            failedLabel={t("home.shareFailed")}
           />
         </div>
       ) : (

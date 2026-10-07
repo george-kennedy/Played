@@ -26,9 +26,11 @@ Page views use Plausible. Create the site in Plausible first, then set `NEXT_PUB
 
 Passwords are hashed with scrypt and must be at least 10 characters. The session is an HTTP-only cookie. A golfer can mark a course and add a round as soon as the account exists. Confirming the email is required to generate a share link, export rounds, and reset the password.
 
+Share opens a panel with a preview graphic, the device share sheet when available, a Facebook link share, a story-sized image to save for Instagram, and copy link. Facebook and chat apps show the Open Graph card from `/share/{token}/card`. Instagram does not offer a web post API for personal accounts, so Played saves a 1080×1920 image instead. Account export remains CSV for a personal rounds backup, not a social graphic.
+
 Set `RESEND_API_KEY` and `RESEND_FROM` to send the confirmation and password-reset links. Without those, the link is shown on the next screen.
 
-Connect lists Golf Canada, GHIN, and 18Birdies. Live Golf Canada and GHIN pulls stay closed until `GOLFCANADA_CLIENT_ID` and `GOLFCANADA_CLIENT_SECRET`, or `GHIN_CLIENT_ID` and `GHIN_CLIENT_SECRET`, are set. The score feed itself is not connected yet, and Played does not ask for those passwords. 18Birdies has no live connection. A golfer can add a download of their own account when each round includes a course, a date, and 9 or 18 holes.
+Connect lists Golf Canada and 18Birdies. Live Golf Canada pulls stay closed until `GOLFCANADA_CLIENT_ID` and `GOLFCANADA_CLIENT_SECRET` are set. The score feed itself is not connected yet, and Played does not ask for those passwords. 18Birdies has no live connection. A golfer can add a download of their own account when each round includes a course, a date, and 9 or 18 holes.
 
 ## Booking
 
