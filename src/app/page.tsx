@@ -201,6 +201,8 @@ export default async function HomePage({
     collapse: t("preview.collapse"),
     close: t("preview.close"),
     website: t("preview.website"),
+    book: t("preview.book"),
+    call: t("preview.call"),
     rankings: t("preview.rankings"),
     onNational: t("preview.onNational"),
     onPublic: t("preview.onPublic"),

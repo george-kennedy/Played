@@ -9,6 +9,7 @@ import type { ReactElement, ReactNode } from "react";
 import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import { addRound, setPlayed } from "@/app/actions";
+import type { CourseMedia } from "@/lib/course-media";
 import type { PinCourse, PinMapLabels } from "./pin-course";
 import { openMarkerHtml, playedMarkerHtml } from "./pin-glyphs";
 import "leaflet/dist/leaflet.css";
@@ -205,7 +206,7 @@ function CourseWindow({
   onClose: () => void;
 }) {
   const frame = useRef<HTMLElement>(null);
-  const [media, setMedia] = useState<{ photoUrl: string | null; websiteUrl: string | null } | null>(null);
+  const [media, setMedia] = useState<CourseMedia | null>(null);
   useEffect(() => {
     const el = frame.current;
     if (!el) return;
@@ -219,12 +220,12 @@ function CourseWindow({
   useEffect(() => {
     const controller = new AbortController();
     fetch(`/api/courses/${encodeURIComponent(course.facilityId)}/media`, { signal: controller.signal })
-      .then((response) => (response.ok ? (response.json() as Promise<{ photoUrl: string | null; websiteUrl: string | null }>) : null))
+      .then((response) => (response.ok ? (response.json() as Promise<CourseMedia>) : null))
       .then((body) => {
         if (!controller.signal.aborted) setMedia(body);
       })
       .catch(() => {
-        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null });
+        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null, bookingUrl: null, phone: null });
       });
     return () => controller.abort();
   }, [course.facilityId]);
@@ -312,11 +313,22 @@ function CourseWindow({
         {lists.map((list) => (
           <p key={list}>{list === "national" ? labels.onNational : labels.onPublic}</p>
         ))}
-        {media?.websiteUrl ? (
+        {media?.websiteUrl || media?.bookingUrl || media?.phone ? (
           <div className="course-actions">
-            <a className="button secondary" href={media.websiteUrl} rel="noreferrer">
-              {labels.website}
-            </a>
+            {media.bookingUrl ? (
+              <a className="button" href={media.bookingUrl} rel="noreferrer">
+                {labels.book}
+              </a>
+            ) : media.phone ? (
+              <a className="button" href={`tel:+1${media.phone.replace(/\D/g, "")}`}>
+                {labels.call.replace("{phone}", media.phone)}
+              </a>
+            ) : null}
+            {media.websiteUrl ? (
+              <a className="button secondary" href={media.websiteUrl} rel="noreferrer">
+                {labels.website}
+              </a>
+            ) : null}
           </div>
         ) : null}
         {course.standing ? <p>{course.standing}</p> : null}

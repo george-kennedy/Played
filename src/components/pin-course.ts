@@ -44,6 +44,8 @@ export type PinMapLabels = {
   collapse: string;
   close: string;
   website: string;
+  book: string;
+  call: string;
   rankings: string;
   onNational: string;
   onPublic: string;

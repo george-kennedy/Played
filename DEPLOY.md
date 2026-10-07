@@ -25,6 +25,8 @@ The SQLite file is created on first start and filled from `data/facilities.json`
 | `GOLFCANADA_CLIENT_SECRET` | Partner client secret. Played does not ask golfers for a Golf Canada password. |
 | `GHIN_CLIENT_ID` | Partner client id. Live pulls stay closed until both GHIN variables are set. |
 | `GHIN_CLIENT_SECRET` | Partner client secret. Played does not ask golfers for a GHIN password. |
+| `BOOKING_ENABLED` | Set to `1` to show Book or Call when a public course has that switch on in `data/reach.json`. Off otherwise. |
+| `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | Plausible site domain. The analytics script is not loaded when empty. |
 
 ## Container
 

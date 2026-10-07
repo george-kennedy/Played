@@ -2,7 +2,7 @@
 
 Played is a free website for golfers in Canada. Signed-in home is one page: a pin map, the percentage of courses played, and one list. Canada is the wide view. A province chip refits the map and the percentage to that province. There is no native app.
 
-Played pins are green teardrops. Unplayed courses are small white dots. Visitors see the full map and directory. Marking a course sends them to create an account. Expand a pin for the course photo and website.
+Played pins are green teardrops. Unplayed courses are small white dots. Visitors see the full map and directory. Marking a course sends them to create an account. Expand a pin for the course photo, website, and, when that course has turned it on, a booking link or a phone number. Private courses do not show Book or Call.
 
 ## Run
 
@@ -29,6 +29,10 @@ Passwords are hashed with scrypt and must be at least 10 characters. The session
 Set `RESEND_API_KEY` and `RESEND_FROM` to send the confirmation and password-reset links. Without those, the link is shown on the next screen.
 
 Connect lists Golf Canada, GHIN, and 18Birdies. Live Golf Canada and GHIN pulls stay closed until `GOLFCANADA_CLIENT_ID` and `GOLFCANADA_CLIENT_SECRET`, or `GHIN_CLIENT_ID` and `GHIN_CLIENT_SECRET`, are set. The score feed itself is not connected yet, and Played does not ask for those passwords. 18Birdies has no live connection. A golfer can add a download of their own account when each round includes a course, a date, and 9 or 18 holes.
+
+## Booking
+
+`data/reach.json` holds a booking link or a phone number for public courses, found from the club’s site. Each row stays off until `enabled` is true. The whole feature stays off until `BOOKING_ENABLED=1`. Private courses never show the action. `data/reach-trouble.json` lists public courses the scan could not resolve. Run `node scripts/scan-reach.mjs` to scan again. A rerun skips courses that already have both a link and a phone.
 
 ## Coverage
 
