@@ -14,6 +14,7 @@ const ROOT = process.cwd();
 const REACH_PATH = path.join(ROOT, "data", "reach.json");
 const TROUBLE_PATH = path.join(ROOT, "data", "reach-trouble.json");
 const LIMIT = Number(process.argv.find((arg) => arg.startsWith("--limit"))?.split("=")[1] ?? process.argv[process.argv.indexOf("--limit") + 1] ?? 0);
+const RETRY = process.argv.includes("--retry");
 const CONCURRENCY = 6;
 const BODY_CAP = 400_000;
 
@@ -105,7 +106,8 @@ function shouldSkip(facility) {
   const saved = reach.get(facility.facility_id);
   if (saved?.bookingUrl && saved?.phone) return true;
   const problem = trouble.get(facility.facility_id);
-  if (problem?.reason === "no-website" || problem?.reason === "no-phone-or-booking") return true;
+  if (!RETRY && (problem?.reason === "no-website" || problem?.reason === "no-phone-or-booking")) return true;
+  if (RETRY && problem?.reason === "no-website") return true;
   return false;
 }
 
@@ -154,7 +156,14 @@ async function scanOne(facility) {
   });
 }
 
-const queue = facilities.filter((facility) => facility.access !== "private" && !shouldSkip(facility));
+const queue = facilities.filter((facility) => {
+  if (facility.access === "private") return false;
+  if (RETRY) {
+    const problem = trouble.get(facility.facility_id);
+    return problem?.reason === "site-failed" || problem?.reason === "no-phone-or-booking";
+  }
+  return !shouldSkip(facility);
+});
 const work = LIMIT > 0 ? queue.slice(0, LIMIT) : queue;
 let finished = 0;
 console.log(`scanning ${work.length} public courses`);

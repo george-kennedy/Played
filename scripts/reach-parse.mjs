@@ -120,6 +120,11 @@ export function parseClubPage(html, pageUrl) {
     if (/tee-?times?|reserv|book/i.test(absolute.pathname)) teeFollow ??= absolute.toString();
     else contactFollow ??= absolute.toString();
   }
+  if (!phone) {
+    const text = html.replace(/<[^>]+>/g, " ");
+    const match = text.match(/\(?[2-9]\d{2}\)?[\s.-]+[2-9]\d{2}[\s.-]+\d{4}/);
+    if (match) phone = canadianPhone(match[0]);
+  }
   return { bookingUrl, phone, followUrl: bookingUrl && phone ? null : (teeFollow ?? contactFollow) };
 }
 

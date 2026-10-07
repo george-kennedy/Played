@@ -18,8 +18,7 @@ export default async function ResetPasswordPage({
   return (
     <div className="stack">
       <h1>{t("auth.resetTitle")}</h1>
-      <p className="help">{t("auth.resetHelp")}</p>
-      <p className="help">{t("auth.devNotice")}</p>
+      <p className="help">{query.sent ? t("auth.resetSent") : t("auth.resetHelp")}</p>
       {query.error === "invalid" ? <p className="error">{t("auth.resetInvalid")}</p> : null}
       {query.error === "password" ? <p className="error">{t("auth.badPassword")}</p> : null}
       {query.sent ? <p>{t("auth.resetHelp")}</p> : null}

@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 export default async function VerifyEmailPage({
   searchParams,
 }: {
-  searchParams: Promise<{ token?: string; error?: string }>;
+  searchParams: Promise<{ token?: string; error?: string; sent?: string }>;
 }) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
@@ -22,7 +22,7 @@ export default async function VerifyEmailPage({
   return (
     <div className="stack card">
       <h1>{t("auth.verifyTitle")}</h1>
-      <p>{t("auth.verifyHelp")}</p>
+      <p>{query.sent ? t("auth.verifySent") : t("auth.verifyHelp")}</p>
       {query.error ? <p className="error">{t("auth.resetInvalid")}</p> : null}
       {link ? (
         <form className="stack" action={verifyEmail}>

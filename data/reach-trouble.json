@@ -19,12 +19,6 @@
       "reason": "no-website"
     },
     {
-      "facilityId": "ab-eagle-point-golf-course",
-      "name": "Eagle Point Golf Course",
-      "province": "AB",
-      "reason": "no-phone-or-booking"
-    },
-    {
       "facilityId": "ab-fairways-at-last-hill-golf-and-country-club",
       "name": "Fairways at Last Hill Golf and Country Club",
       "province": "AB",
@@ -427,12 +421,6 @@
       "reason": "no-website"
     },
     {
-      "facilityId": "on-forest-ridge-golf-club",
-      "name": "Forest Ridge Golf Club",
-      "province": "ON",
-      "reason": "no-phone-or-booking"
-    },
-    {
       "facilityId": "on-fort-erie-golf-club",
       "name": "Fort Erie Golf Club",
       "province": "ON",
@@ -463,12 +451,6 @@
       "reason": "no-website"
     },
     {
-      "facilityId": "on-knollwood-golf-club",
-      "name": "Knollwood Golf Club",
-      "province": "ON",
-      "reason": "no-phone-or-booking"
-    },
-    {
       "facilityId": "on-laurentide-golf-club",
       "name": "Laurentide Golf Club",
       "province": "ON",
@@ -491,12 +473,6 @@
       "name": "Markham Green Golf Club",
       "province": "ON",
       "reason": "no-website"
-    },
-    {
-      "facilityId": "on-mattawa-golf-and-ski-resort",
-      "name": "Mattawa Golf and Ski Resort",
-      "province": "ON",
-      "reason": "no-phone-or-booking"
     },
     {
       "facilityId": "on-metro-golf-sportsplex",
@@ -845,12 +821,6 @@
       "name": "Lac Pelletier Golf Course",
       "province": "SK",
       "reason": "no-website"
-    },
-    {
-      "facilityId": "sk-redvers-and-district-golf-and-country-club",
-      "name": "Redvers & District Golf and Country Club",
-      "province": "SK",
-      "reason": "no-phone-or-booking"
     },
     {
       "facilityId": "sk-rolling-pines-golf-and-country-resort",

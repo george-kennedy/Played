@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import {
@@ -35,9 +35,25 @@ import {
 } from "@/lib/db";
 import { parseBirdiesDownload } from "@/lib/sync";
 import { pullGhin, pullGolfCanada, ScoreFeedClosed, type ScoreProvider } from "@/lib/providers";
+import { sendMail } from "@/lib/mail";
 import { isProvince } from "@/lib/names";
 import { placeById } from "@/lib/distance";
 import { LOCALE_COOKIE, SESSION_COOKIE, currentUser, sessionCookieOptions } from "@/lib/session";
+
+async function publicOrigin(): Promise<string> {
+  const headerList = await headers();
+  const host = headerList.get("x-forwarded-host") ?? headerList.get("host") ?? "localhost:3000";
+  const proto = headerList.get("x-forwarded-proto") ?? "http";
+  return `${proto}://${host}`;
+}
+
+async function deliverLink(input: { to: string; subject: string; text: string; token: string; sentPath: string; linkPath: string }): Promise<never> {
+  const origin = await publicOrigin();
+  const link = `${origin}${input.linkPath}${input.token}`;
+  const sent = await sendMail({ to: input.to, subject: input.subject, text: `${input.text}\n${link}\n` });
+  if (sent) redirect(input.sentPath);
+  redirect(`${input.linkPath}${input.token}`);
+}
 
 function safeReturn(value: FormDataEntryValue | null, fallback: string): string {
   const text = String(value ?? "");
@@ -63,7 +79,14 @@ export async function signUp(formData: FormData) {
   rebuildSummary(db, id);
   await signInCookie(id);
   const token = issueToken(db, { userId: id, purpose: "verify" });
-  redirect(`/verify-email?token=${token}`);
+  await deliverLink({
+    to: email.trim().toLowerCase(),
+    subject: "Confirm your Played account",
+    text: "Open this link to confirm your email.",
+    token,
+    sentPath: "/verify-email?sent=1",
+    linkPath: "/verify-email?token=",
+  });
 }
 
 export async function signIn(formData: FormData) {
@@ -97,7 +120,14 @@ export async function newVerificationLink() {
   if (!user) redirect("/sign-in");
   if (user.email_verified_at) redirect("/");
   const token = issueToken(getDb(), { userId: user.id, purpose: "verify" });
-  redirect(`/verify-email?token=${token}`);
+  await deliverLink({
+    to: user.email,
+    subject: "Confirm your Played account",
+    text: "Open this link to confirm your email.",
+    token,
+    sentPath: "/verify-email?sent=1",
+    linkPath: "/verify-email?token=",
+  });
 }
 
 export async function requestReset(formData: FormData) {
@@ -106,7 +136,14 @@ export async function requestReset(formData: FormData) {
   const user = findUserByEmail(db, email);
   if (!user) redirect("/reset-password?sent=1");
   const token = issueToken(db, { userId: user.id, purpose: "reset" });
-  redirect(`/reset-password?token=${token}`);
+  await deliverLink({
+    to: user.email,
+    subject: "Reset your Played password",
+    text: "Open this link to choose a new password.",
+    token,
+    sentPath: "/reset-password?sent=1",
+    linkPath: "/reset-password?token=",
+  });
 }
 
 export async function resetPassword(formData: FormData) {

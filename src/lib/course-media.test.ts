@@ -104,6 +104,7 @@ describe("book or call", () => {
     );
     expect(page.bookingUrl).toBeNull();
     expect(page.phone).toBe("(902) 466-7688");
+    expect(parseClubPage("<p>Pro shop 902-555-0199</p>", "https://example.com/").phone).toBe("(902) 555-0199");
     expect(page.followUrl).toBe("https://www.brightwoodgolf.ca/contact");
 
     const booked = parseClubPage(

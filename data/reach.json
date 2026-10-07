@@ -283,6 +283,12 @@
       "enabled": false
     },
     {
+      "facilityId": "ab-eagle-point-golf-course",
+      "bookingUrl": null,
+      "phone": "(780) 891-3475",
+      "enabled": false
+    },
+    {
       "facilityId": "ab-eagle-rock-golf-course",
       "bookingUrl": "https://foreupsoftware.com/index.php/booking/index/18992#/teetimes",
       "phone": "(780) 464-4653",
@@ -1095,13 +1101,13 @@
     {
       "facilityId": "ab-trochu-golf-and-country-club",
       "bookingUrl": "https://www.trochugolf.com/tee-times",
-      "phone": null,
+      "phone": "(403) 442-2747",
       "enabled": false
     },
     {
       "facilityId": "ab-turner-valley-golf-club",
       "bookingUrl": "https://turnervalleygolf.com/book-a-tee-time/",
-      "phone": null,
+      "phone": "(403) 933-4721",
       "enabled": false
     },
     {
@@ -2349,7 +2355,7 @@
     {
       "facilityId": "bc-tower-ranch-golf-and-country-club",
       "bookingUrl": "https://www.golftowerranch.com/2020-rates/",
-      "phone": null,
+      "phone": "(250) 491-8211",
       "enabled": false
     },
     {
@@ -2775,7 +2781,7 @@
     {
       "facilityId": "mb-rivers-edge-golf-course",
       "bookingUrl": "https://riversedgegolf.ca/book-tee-time",
-      "phone": null,
+      "phone": "(204) 268-2010",
       "enabled": false
     },
     {
@@ -3356,7 +3362,7 @@
     },
     {
       "facilityId": "ns-the-links-at-brunello",
-      "bookingUrl": null,
+      "bookingUrl": "https://www.tee-on.com/PubGolf/servlet/com.teeon.teesheet.servlets.golfersection.ComboLanding?CourseCode=TLAB&#038;FromCourseWebsite=true",
       "phone": "(902) 876-7649",
       "enabled": false
     },
@@ -4165,6 +4171,12 @@
       "enabled": false
     },
     {
+      "facilityId": "on-forest-ridge-golf-club",
+      "bookingUrl": null,
+      "phone": "(705) 855-8558",
+      "enabled": false
+    },
+    {
       "facilityId": "on-fort-william-country-club",
       "bookingUrl": "https://www.tee-on.com/PubGolf/servlet/com.teeon.teesheet.servlets.golfersection.OnlineSales?CourseCode=FWCC&PageID=351&Referrer=www.fwcc.ca",
       "phone": "(807) 475-8925",
@@ -4527,7 +4539,13 @@
     {
       "facilityId": "on-kirkland-lake-golf-club",
       "bookingUrl": "https://www.chronogolf.ca/club/kirkland-lake-golf-club",
-      "phone": null,
+      "phone": "(705) 642-3456",
+      "enabled": false
+    },
+    {
+      "facilityId": "on-knollwood-golf-club",
+      "bookingUrl": null,
+      "phone": "(905) 648-6687",
       "enabled": false
     },
     {
@@ -4738,6 +4756,12 @@
       "facilityId": "on-marshes-golf-club-the",
       "bookingUrl": null,
       "phone": "(613) 271-3370",
+      "enabled": false
+    },
+    {
+      "facilityId": "on-mattawa-golf-and-ski-resort",
+      "bookingUrl": null,
+      "phone": "(705) 744-5818",
       "enabled": false
     },
     {
@@ -7840,6 +7864,12 @@
       "facilityId": "sk-punnichy-golf-club",
       "bookingUrl": null,
       "phone": "(306) 835-2430",
+      "enabled": false
+    },
+    {
+      "facilityId": "sk-redvers-and-district-golf-and-country-club",
+      "bookingUrl": null,
+      "phone": "(306) 452-3533",
       "enabled": false
     },
     {
