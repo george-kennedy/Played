@@ -20,6 +20,7 @@ import {
   setPassword,
   setPlace,
   setShareEnabled,
+  shareForUser,
   verifyPassword,
 } from "@/lib/auth";
 import { halifaxToday } from "@/lib/dates";
@@ -88,13 +89,16 @@ export async function signUp(formData: FormData) {
   rebuildSummary(db, id);
   await signInCookie(id);
   const token = issueToken(db, { userId: id, purpose: "verify" });
-  const origin = await publicOrigin();
-  await sendMail({
+  // deliverLink shows the link on screen when Resend is not configured,
+  // so signup never dead-ends in a Resend-less environment.
+  await deliverLink({
     to: email.trim().toLowerCase(),
     subject: "Confirm your Played account",
-    text: `Open this link to confirm your email.\n${origin}/verify-email?token=${token}\n`,
+    text: "Open this link to confirm your email.",
+    token,
+    sentPath: safeReturn(returnTo, "/"),
+    linkPath: "/verify-email?token=",
   });
-  redirect(safeReturn(returnTo, "/"));
 }
 
 export async function signIn(formData: FormData) {
@@ -142,7 +146,10 @@ export async function requestReset(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const db = getDb();
   const user = findUserByEmail(db, email);
-  if (!user || !emailIsVerified(user)) redirect("/reset-password?sent=1");
+  // Unverified users must be able to reset too: otherwise forgetting a
+  // password before verifying leaves no recovery path (can't log in to
+  // re-verify, can't reset without verifying).
+  if (!user) redirect("/reset-password?sent=1");
   const token = issueToken(db, { userId: user.id, purpose: "reset" });
   await deliverLink({
     to: user.email,
@@ -276,7 +283,27 @@ export async function savePlace(formData: FormData) {
   redirect(returnTo);
 }
 
-export async function enableShare(): Promise<{ url: string; cardUrl: string; storyUrl: string }> {
+type ShareUrls = { url: string; cardUrl: string; storyUrl: string };
+
+export async function shareStatus(): Promise<{ enabled: boolean; urls: ShareUrls | null }> {
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
+  if (!emailIsVerified(user)) redirect("/verify-email");
+  if (!user.headline_province) redirect("/");
+  const share = shareForUser(getDb(), user.id);
+  if (!share?.enabled) return { enabled: false, urls: null };
+  const origin = await publicOrigin();
+  return {
+    enabled: true,
+    urls: {
+      url: `${origin}/share/${share.token}`,
+      cardUrl: `${origin}/share/${share.token}/card`,
+      storyUrl: `${origin}/share/${share.token}/story`,
+    },
+  };
+}
+
+export async function enableShare(): Promise<ShareUrls> {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   if (!emailIsVerified(user)) redirect("/verify-email");
