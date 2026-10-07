@@ -11,6 +11,7 @@ import {
   getFacility,
   openDatabase,
   readSummary,
+  seedFacilities,
 } from "./db";
 
 const opened: Array<{ close: () => void }> = [];
@@ -98,5 +99,14 @@ describe("stored summary and account deletion", () => {
     expect(shareByToken(db, first)).toBeNull();
     expect(shareByToken(db, second!)?.enabled).toBe(true);
     expect(regenerateShareToken(db, "nobody", "2026-10-07T12:00:00.000Z")).toBeNull();
+  });
+
+  it("excludes indoor-only venues from the seed", () => {
+    const db = database();
+    seedFacilities(db);
+    expect(getFacility(db, "nb-par94-bar-and-lounge")).toBeNull();
+    expect(getFacility(db, "mb-shanks-driving-range-and-grill")).toBeNull();
+    // Real courses still seed.
+    expect(getFacility(db, "ns-cabot-links")?.officialName).toBe("Cabot Links");
   });
 });

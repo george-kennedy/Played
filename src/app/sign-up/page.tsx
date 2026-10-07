@@ -18,7 +18,9 @@ export default async function SignUpPage({
         ? t("auth.badPassword")
         : query.error === "taken"
           ? t("auth.emailTaken")
-          : null;
+          : query.error === "rate_limited"
+            ? t("auth.rateLimited")
+            : null;
   return (
     <form className="stack card" action={signUp}>
       <h1>{t("auth.signUpTitle")}</h1>

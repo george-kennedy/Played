@@ -23,7 +23,11 @@ export default async function VerifyEmailPage({
     <div className="stack card">
       <h1>{t("auth.verifyTitle")}</h1>
       <p>{query.sent ? t("auth.verifySent") : t("auth.verifyHelp")}</p>
-      {query.error ? <p className="error">{t("auth.resetInvalid")}</p> : null}
+      {query.error === "rate_limited" ? (
+        <p className="error">{t("auth.rateLimited")}</p>
+      ) : query.error ? (
+        <p className="error">{t("auth.resetInvalid")}</p>
+      ) : null}
       {link ? (
         <form className="stack" action={verifyEmail}>
           <p>

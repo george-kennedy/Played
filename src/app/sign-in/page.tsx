@@ -13,7 +13,11 @@ export default async function SignInPage({
   return (
     <form className="stack card" action={signIn}>
       <h1>{t("auth.signInTitle")}</h1>
-      {query.error ? <p className="error">{t("auth.badCredentials")}</p> : null}
+      {query.error === "rate_limited" ? (
+        <p className="error">{t("auth.rateLimited")}</p>
+      ) : query.error ? (
+        <p className="error">{t("auth.badCredentials")}</p>
+      ) : null}
       <label>
         {t("auth.email")}
         <input name="email" type="email" autoComplete="username" required />

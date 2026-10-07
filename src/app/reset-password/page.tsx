@@ -21,6 +21,7 @@ export default async function ResetPasswordPage({
       <p className="help">{query.sent ? t("auth.resetSent") : t("auth.resetHelp")}</p>
       {query.error === "invalid" ? <p className="error">{t("auth.resetInvalid")}</p> : null}
       {query.error === "password" ? <p className="error">{t("auth.badPassword")}</p> : null}
+      {query.error === "rate_limited" ? <p className="error">{t("auth.rateLimited")}</p> : null}
       {query.sent ? <p>{t("auth.resetHelp")}</p> : null}
       {query.token ? (
         <form className="stack card" action={resetPassword}>

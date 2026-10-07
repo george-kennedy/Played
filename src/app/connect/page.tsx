@@ -73,7 +73,9 @@ export default async function ConnectPage({
           ? "connect.agreement"
           : query.error === "generic"
             ? "error.generic"
-            : null;
+            : query.error === "rate_limited"
+              ? "auth.rateLimited"
+              : null;
 
   return (
     <div className="stack">
