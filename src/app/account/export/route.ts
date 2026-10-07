@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     raw_association_course_id: string | null;
     id: string;
     user_id: string;
-    source: "mark" | "manual" | "import";
+    source: "mark" | "manual" | "import" | "sync";
   }>;
   const csv = roundsToCsv(
     rows.map((row) => {

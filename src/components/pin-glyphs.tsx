@@ -12,8 +12,8 @@ export function PlayedPinGlyph() {
 
 export function OpenPinGlyph() {
   return (
-    <svg className="pin-glyph" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
-      <circle cx="6" cy="6" r="3.25" fill="#fffdf8" stroke="#1b2418" strokeWidth="1.25" />
+    <svg className="pin-glyph" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+      <circle cx="8" cy="8" r="5" fill="#fffdf8" stroke="#1b2418" strokeWidth="1.4" />
     </svg>
   );
 }
@@ -23,5 +23,5 @@ export function playedMarkerHtml(): string {
 }
 
 export function openMarkerHtml(): string {
-  return `<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="3.25" fill="#fffdf8" stroke="#1b2418" stroke-width="1.25"/></svg>`;
+  return `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#fffdf8" stroke="#1b2418" stroke-width="1.4"/></svg>`;
 }

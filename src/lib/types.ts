@@ -1,7 +1,7 @@
 export const PROVINCES = ["BC", "AB", "SK", "MB", "ON", "QC", "NB", "PEI", "NS", "NL", "YT", "NT"] as const;
 export type Province = (typeof PROVINCES)[number];
 export type Access = "public" | "private";
-export type RoundSource = "mark" | "manual" | "import";
+export type RoundSource = "mark" | "manual" | "import" | "sync";
 export type HoleCount = 9 | 18;
 
 export type Facility = {
@@ -32,6 +32,8 @@ export type Round = {
   source: RoundSource;
   rawCourseName: string | null;
   rawAssociationCourseId: string | null;
+  provider?: string | null;
+  externalRoundId?: string | null;
 };
 
 export type Denominator =

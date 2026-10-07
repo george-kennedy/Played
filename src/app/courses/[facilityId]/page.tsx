@@ -1,7 +1,10 @@
 import { addRound, setPlayed } from "@/app/actions";
 import { provinceLabel } from "@/components/coverage-block";
+import { loadCourseMedia } from "@/lib/course-media";
 import { halifaxToday } from "@/lib/dates";
-import { getDb, getFacility, listFacilityRounds, readStatuses } from "@/lib/db";
+import { getDb, getFacility, listFacilityRounds, loadComparisons, readStatuses } from "@/lib/db";
+import { rankingLists } from "@/lib/list-filters";
+import { bandLabel } from "@/lib/standing";
 import { translate } from "@/lib/i18n";
 import { currentLocale, currentUser } from "@/lib/session";
 import { notFound } from "next/navigation";
@@ -22,9 +25,15 @@ export default async function FacilityPage({
   const t = (key: Parameters<typeof translate>[1], vars?: Record<string, string | number>) =>
     translate(locale, key, vars);
   const access = facility.access === "public" ? t("access.public") : t("access.private");
+  const media = await loadCourseMedia(facility);
+  const lists = rankingLists(facility.facilityId);
   const signedIn = Boolean(user?.email_verified_at);
   const rounds = signedIn && user ? listFacilityRounds(getDb(), user.id, facility.facilityId) : [];
   const status = signedIn && user ? readStatuses(getDb(), user.id).find((item) => item.facilityId === facility.facilityId) : undefined;
+  const comparison =
+    signedIn && user
+      ? loadComparisons(getDb(), user.id, [facility.facilityId], halifaxToday()).get(facility.facilityId)
+      : undefined;
   const errorKey =
     query.error === "future_date"
       ? "error.future"
@@ -40,6 +49,11 @@ export default async function FacilityPage({
 
   return (
     <article className="stack">
+      {media.photoUrl ? (
+        <img className="course-page-photo" src={media.photoUrl} alt="" />
+      ) : (
+        <p className="help">{t("preview.noPhoto")}</p>
+      )}
       <h1>{facility.officialName}</h1>
       <p className="lede">
         {[facility.place, provinceLabel(locale, facility.province)].filter(Boolean).join(", ")}
@@ -47,6 +61,34 @@ export default async function FacilityPage({
         {access}
       </p>
       <p>{t("course.holes", { count: facility.holeCount })}</p>
+      <section>
+        <h2>{t("preview.rankings")}</h2>
+        {lists.length === 0 ? <p className="help">{t("preview.noRanking")}</p> : (
+          <ul className="facts">
+            {lists.map((list) => (
+              <li key={list} className="pill">{list === "national" ? t("preview.onNational") : t("preview.onPublic")}</li>
+            ))}
+          </ul>
+        )}
+      </section>
+      {media.websiteUrl ? <p><a href={media.websiteUrl} rel="noreferrer">{t("preview.website")}</a></p> : null}
+      {media.bookingUrl ? <p><a href={media.bookingUrl} rel="noreferrer">{t("preview.book")}</a></p> : null}
+      <section>
+        <h2>{t("preview.reviews")}</h2>
+        <p className="help">{t("preview.noReviews")}</p>
+      </section>
+      {comparison?.standing ? (
+        <p>
+          {t("course.standing", {
+            percent: comparison.standing.percent,
+            band: bandLabel(comparison.standing.band),
+            count: comparison.standing.count,
+          })}
+        </p>
+      ) : null}
+      {comparison?.suited ? (
+        <p>{t("course.suited", { band: bandLabel(comparison.suited.band), count: comparison.suited.count })}</p>
+      ) : null}
       {facility.rating != null && facility.slope != null ? (
         <p>{t("course.rating", { rating: facility.rating, slope: facility.slope })}</p>
       ) : null}

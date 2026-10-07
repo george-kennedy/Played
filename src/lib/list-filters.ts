@@ -6,6 +6,13 @@ const publicList = new Set(rankings.public);
 
 export type RankingFilter = "" | "national" | "public";
 
+export function rankingLists(facilityId: string): Array<"national" | "public"> {
+  const lists: Array<"national" | "public"> = [];
+  if (national.has(facilityId)) lists.push("national");
+  if (publicList.has(facilityId)) lists.push("public");
+  return lists;
+}
+
 export function matchesRanking(facilityId: string, filter: string): boolean {
   if (!filter) return true;
   if (filter === "national") return national.has(facilityId);

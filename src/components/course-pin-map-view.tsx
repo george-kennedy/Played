@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { createPortal } from "react-dom";
 import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import { createLayerComponent } from "@react-leaflet/core";
 import L from "leaflet";
@@ -8,6 +9,7 @@ import type { ReactElement, ReactNode } from "react";
 import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import { addRound, setPlayed } from "@/app/actions";
+import type { CourseMedia } from "@/lib/course-media";
 import type { PinCourse, PinMapLabels } from "./pin-course";
 import { openMarkerHtml, playedMarkerHtml } from "./pin-glyphs";
 import "leaflet/dist/leaflet.css";
@@ -23,9 +25,9 @@ const playedIcon = L.divIcon({
 const openIcon = L.divIcon({
   className: "pin-marker",
   html: openMarkerHtml(),
-  iconSize: [12, 12],
-  iconAnchor: [6, 6],
-  popupAnchor: [0, -8],
+  iconSize: [16, 16],
+  iconAnchor: [8, 8],
+  popupAnchor: [0, -10],
 });
 
 const MarkerClusterGroup = createLayerComponent<L.MarkerClusterGroup, L.MarkerClusterGroupOptions>(
@@ -77,22 +79,48 @@ function keepPopupOpen(event: { stopPropagation: () => void; nativeEvent: { stop
   event.nativeEvent.stopPropagation();
 }
 
+function WindowExpandIcon() {
+  return (
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+      <rect x="2.25" y="2.25" width="11.5" height="11.5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 function PinPopup({
   course,
   labels,
   today,
   returnTo,
+  onExpand,
 }: {
   course: PinCourse;
   labels: PinMapLabels;
   today: string;
   returnTo: string;
+  onExpand: (course: PinCourse) => void;
 }) {
+  const map = useMap();
   return (
     <div className="pin-popup" onPointerDown={keepPopupOpen} onClick={keepPopupOpen} onDoubleClick={keepPopupOpen}>
-      <strong className="pin-title">{course.name}</strong>
+      <div className="pin-popup-bar">
+        <strong className="pin-title">{course.name}</strong>
+        <button
+          type="button"
+          className="window-control"
+          aria-label={labels.expand}
+          onClick={() => {
+            onExpand(course);
+            map.closePopup();
+          }}
+        >
+          <WindowExpandIcon />
+        </button>
+      </div>
       <p className="meta">{course.placeLine}</p>
       {course.personal === false ? null : <p>{course.played ? labels.played : labels.notPlayed}</p>}
+      {course.standing ? <p>{course.standing}</p> : null}
+      {course.suited ? <p>{course.suited}</p> : null}
       {course.personal !== false && course.played ? (
         <div>
           <p className="pin-label">{labels.rounds}</p>
@@ -164,6 +192,221 @@ function PinPopup({
   );
 }
 
+function CourseWindow({
+  course,
+  labels,
+  today,
+  returnTo,
+  onClose,
+}: {
+  course: PinCourse;
+  labels: PinMapLabels;
+  today: string;
+  returnTo: string;
+  onClose: () => void;
+}) {
+  const frame = useRef<HTMLElement>(null);
+  const [media, setMedia] = useState<CourseMedia | null>(null);
+  useEffect(() => {
+    const el = frame.current;
+    if (!el) return;
+    const width = 380;
+    const height = Math.min(560, window.innerHeight - 48);
+    el.style.width = `${width}px`;
+    el.style.height = `${height}px`;
+    el.style.left = `${Math.max(16, (window.innerWidth - width) / 2)}px`;
+    el.style.top = `${Math.max(16, (window.innerHeight - height) / 2)}px`;
+  }, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/courses/${encodeURIComponent(course.facilityId)}/media`, { signal: controller.signal })
+      .then((response) => (response.ok ? (response.json() as Promise<CourseMedia>) : null))
+      .then((body) => {
+        if (!controller.signal.aborted) setMedia(body);
+      })
+      .catch(() => {
+        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null, bookingUrl: null });
+      });
+    return () => controller.abort();
+  }, [course.facilityId]);
+  const lists = course.lists ?? [];
+  const onResizePointerDown = (edge: string) => (event: ReactPointerEvent<HTMLElement>) => {
+    const el = frame.current;
+    if (!el) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const handle = event.currentTarget;
+    const startX = event.clientX;
+    const startY = event.clientY;
+    const rect = el.getBoundingClientRect();
+    handle.setPointerCapture(event.pointerId);
+    const move = (ev: PointerEvent) => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      let left = rect.left;
+      let top = rect.top;
+      let width = rect.width;
+      let height = rect.height;
+      if (edge.includes("e")) width = Math.max(280, rect.width + dx);
+      if (edge.includes("s")) height = Math.max(240, rect.height + dy);
+      if (edge.includes("w")) {
+        width = Math.max(280, rect.width - dx);
+        left = rect.right - width;
+      }
+      if (edge.includes("n")) {
+        height = Math.max(240, rect.height - dy);
+        top = rect.bottom - height;
+      }
+      el.style.left = `${left}px`;
+      el.style.top = `${top}px`;
+      el.style.width = `${width}px`;
+      el.style.height = `${height}px`;
+    };
+    const end = () => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", end);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", end);
+  };
+  const onTitlePointerDown = (event: ReactPointerEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest("button, a")) return;
+    const el = frame.current;
+    if (!el) return;
+    const handle = event.currentTarget;
+    const startX = event.clientX;
+    const startY = event.clientY;
+    const rect = el.getBoundingClientRect();
+    handle.setPointerCapture(event.pointerId);
+    const move = (ev: PointerEvent) => {
+      el.style.left = `${rect.left + ev.clientX - startX}px`;
+      el.style.top = `${rect.top + ev.clientY - startY}px`;
+    };
+    const end = () => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", end);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", end);
+  };
+  return createPortal(
+    <section className="course-window" ref={frame} role="dialog" aria-label={course.name}>
+      <header className="course-window-bar" onPointerDown={onTitlePointerDown}>
+        <strong>{course.name}</strong>
+        <button type="button" className="window-control" aria-label={labels.close} onClick={onClose}>
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+            <path d="M4 4 L12 12 M12 4 L4 12" fill="none" stroke="currentColor" strokeWidth="1.5" />
+          </svg>
+        </button>
+      </header>
+      <div className="course-window-body">
+        {media?.photoUrl ? (
+          <img className="pin-popup-photo" src={media.photoUrl} alt="" />
+        ) : (
+          <p className="help">{media ? labels.noPhoto : labels.photoLoading}</p>
+        )}
+        <p className="meta">{course.placeLine}</p>
+        {course.ratingLine ? <p className="meta">{course.ratingLine}</p> : null}
+        {course.personal === false ? null : <p>{course.played ? labels.played : labels.notPlayed}</p>}
+        <p className="pin-label">{labels.rankings}</p>
+        {lists.length === 0 ? <p className="help">{labels.noRanking}</p> : null}
+        {lists.map((list) => (
+          <p key={list}>{list === "national" ? labels.onNational : labels.onPublic}</p>
+        ))}
+        {media?.websiteUrl ? (
+          <p>
+            <a href={media.websiteUrl} rel="noreferrer">
+              {labels.website}
+            </a>
+          </p>
+        ) : null}
+        {media?.bookingUrl ? (
+          <p>
+            <a href={media.bookingUrl} rel="noreferrer">
+              {labels.book}
+            </a>
+          </p>
+        ) : null}
+        <p className="pin-label">{labels.reviews}</p>
+        <p className="help">{labels.noReviews}</p>
+        {course.standing ? <p>{course.standing}</p> : null}
+        {course.suited ? <p>{course.suited}</p> : null}
+        {course.personal !== false && course.played ? (
+          <div>
+            <p className="pin-label">{labels.rounds}</p>
+            {course.rounds.length === 0 ? <p>{labels.noRounds}</p> : null}
+            <ul className="rounds">
+              {course.rounds.map((round) => (
+                <li key={round.id}>
+                  {round.playedOn} · {round.holesLabel}
+                  {round.score != null ? ` · ${round.score}` : ""}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+        {course.personal === false ? (
+          <p>
+            <a href="/sign-in">{labels.signIn}</a>
+          </p>
+        ) : null}
+        {course.personal !== false && course.played && course.markRoundId ? (
+          <form action={setPlayed}>
+            <input type="hidden" name="facilityId" value={course.facilityId} />
+            <input type="hidden" name="intent" value="off" />
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <button className="secondary" type="submit">
+              {labels.markOff}
+            </button>
+          </form>
+        ) : null}
+        {course.personal !== false && course.played && !course.markRoundId ? (
+          <span className="pill">{labels.playedKeep}</span>
+        ) : null}
+        {course.personal !== false && !course.played ? (
+          <form action={setPlayed}>
+            <input type="hidden" name="facilityId" value={course.facilityId} />
+            <input type="hidden" name="intent" value="on" />
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <button type="submit">{labels.markOn}</button>
+          </form>
+        ) : null}
+        {course.personal === false ? null : (
+          <form className="pin-round" action={addRound}>
+            <p className="pin-label">{labels.addRound}</p>
+            <p className="help">{labels.secondRound}</p>
+            <input type="hidden" name="facilityId" value={course.facilityId} />
+            <input type="hidden" name="returnTo" value={returnTo} />
+            <label>
+              {labels.date}
+              <input type="date" name="playedOn" required defaultValue={today} max={today} />
+            </label>
+            <label>
+              {labels.holes}
+              <select name="holes" defaultValue={course.defaultHoles}>
+                <option value="18">18</option>
+                <option value="9">9</option>
+              </select>
+            </label>
+            <label>
+              {labels.score} <span className="muted">{labels.scoreOptional}</span>
+              <input name="score" inputMode="numeric" />
+            </label>
+            <button type="submit">{labels.addRound}</button>
+          </form>
+        )}
+        <p>
+          <a href={`/courses/${course.facilityId}`}>{labels.courseLink}</a>
+        </p>
+      </div>
+      {(["n", "s", "e", "w", "ne", "nw", "se", "sw"] as const).map((edge) => (
+        <div key={edge} className={`course-window-edge ${edge}`} onPointerDown={onResizePointerDown(edge)} />
+      ))}
+    </section>,
+    document.body,
+  );
+}
+
 export default function CoursePinMapView({
   courses,
   labels,
@@ -175,6 +418,7 @@ export default function CoursePinMapView({
   today: string;
   returnTo: string;
 }) {
+  const [windowCourse, setWindowCourse] = useState<PinCourse | null>(null);
   if (courses.length === 0) {
     return <p className="pin-map-fallback">{labels.empty}</p>;
   }
@@ -198,8 +442,14 @@ export default function CoursePinMapView({
       riseOnHover
       zIndexOffset={course.played ? 400 : 0}
     >
-      <Popup className="pin-popup-root" minWidth={240} maxWidth={320} maxHeight={280} autoPan>
-        <PinPopup course={course} labels={labels} today={today} returnTo={returnTo} />
+      <Popup className="pin-popup-root" minWidth={240} maxWidth={320} maxHeight={360} autoPan>
+        <PinPopup
+          course={course}
+          labels={labels}
+          today={today}
+          returnTo={returnTo}
+          onExpand={setWindowCourse}
+        />
       </Popup>
     </Marker>
   ));
@@ -218,6 +468,15 @@ export default function CoursePinMapView({
         <FitPins courses={courses} />
         {courses.length > 60 ? <MarkerClusterGroup>{markers}</MarkerClusterGroup> : markers}
       </MapContainer>
+      {windowCourse ? (
+        <CourseWindow
+          course={windowCourse}
+          labels={labels}
+          today={today}
+          returnTo={returnTo}
+          onClose={() => setWindowCourse(null)}
+        />
+      ) : null}
     </div>
   );
 }

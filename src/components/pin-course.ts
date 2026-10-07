@@ -15,6 +15,10 @@ export type PinCourse = {
   defaultHoles: "9" | "18";
   markRoundId: string | null;
   rounds: PinRound[];
+  standing?: string | null;
+  suited?: string | null;
+  lists?: Array<"national" | "public">;
+  ratingLine?: string | null;
   /** False on a signed-out directory map, where played is not this golfer's record. */
   personal?: boolean;
 };
@@ -34,6 +38,19 @@ export type PinMapLabels = {
   scoreOptional: string;
   secondRound: string;
   courseLink: string;
+  expand: string;
+  collapse: string;
+  close: string;
+  website: string;
+  book: string;
+  rankings: string;
+  onNational: string;
+  onPublic: string;
+  noRanking: string;
+  reviews: string;
+  noReviews: string;
+  noPhoto: string;
+  photoLoading: string;
   loading: string;
   failed: string;
   region: string;

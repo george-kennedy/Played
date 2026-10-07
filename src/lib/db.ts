@@ -8,6 +8,9 @@ import {
   publicShare,
 } from "./coverage";
 import { halifaxYear } from "./dates";
+import type { ScoreProvider } from "./providers";
+import { courseComparison, shiftIsoDate, SUITED_MONTHS, type CourseComparison } from "./standing";
+import { planIncoming, type IncomingRound } from "./sync";
 import { importCsv, type ImportResult } from "./import-csv";
 import { addManualRound } from "./manual";
 import { toggleMark } from "./mark";
@@ -211,7 +214,32 @@ export function migrate(db: Database.Database): void {
       created_at TEXT NOT NULL,
       review_json TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS external_links (
+      user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      provider TEXT NOT NULL,
+      external_id TEXT,
+      status TEXT NOT NULL,
+      handicap_index REAL,
+      last_sync_at TEXT,
+      consented_at TEXT NOT NULL,
+      PRIMARY KEY (user_id, provider)
+    );
+    CREATE INDEX IF NOT EXISTS rounds_facility_date ON rounds(facility_id, played_on);
   `);
+  ensureColumn(db, "rounds", "provider", "TEXT");
+  ensureColumn(db, "rounds", "external_round_id", "TEXT");
+  db.exec(`
+    CREATE UNIQUE INDEX IF NOT EXISTS rounds_external
+      ON rounds(user_id, provider, external_round_id)
+      WHERE external_round_id IS NOT NULL;
+  `);
+}
+
+function ensureColumn(db: Database.Database, table: string, column: string, definition: string): void {
+  const columns = db.prepare(`PRAGMA table_info(${table})`).all() as Array<{ name: string }>;
+  if (!columns.some((item) => item.name === column)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+  }
 }
 
 export function seedFacilities(db: Database.Database, rows = loadSeedFacilities()): void {
@@ -326,8 +354,9 @@ export function listUnmatched(db: Database.Database, userId: string): Round[] {
 function insertRound(db: Database.Database, round: Round): void {
   db.prepare(
     `INSERT INTO rounds (
-      id, user_id, facility_id, played_on, holes, score, score_differential, source, raw_course_name, raw_association_course_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      id, user_id, facility_id, played_on, holes, score, score_differential, source,
+      raw_course_name, raw_association_course_id, provider, external_round_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   ).run(
     round.id,
     round.userId,
@@ -339,6 +368,8 @@ function insertRound(db: Database.Database, round: Round): void {
     round.source,
     round.rawCourseName,
     round.rawAssociationCourseId,
+    round.provider ?? null,
+    round.externalRoundId ?? null,
   );
 }
 
@@ -543,6 +574,185 @@ export function attachUnmatched(
   return { ok: true };
 }
 
+export type ExternalLink = {
+  provider: ScoreProvider;
+  externalId: string | null;
+  status: "linked" | "disconnected";
+  handicapIndex: number | null;
+  lastSyncAt: string | null;
+};
+
+export function listExternalLinks(db: Database.Database, userId: string): ExternalLink[] {
+  const rows = db
+    .prepare(
+      `SELECT provider, external_id, status, handicap_index, last_sync_at
+       FROM external_links WHERE user_id = ? ORDER BY provider`,
+    )
+    .all(userId) as Array<{
+    provider: ScoreProvider;
+    external_id: string | null;
+    status: "linked" | "disconnected";
+    handicap_index: number | null;
+    last_sync_at: string | null;
+  }>;
+  return rows.map((row) => ({
+    provider: row.provider,
+    externalId: row.external_id,
+    status: row.status,
+    handicapIndex: row.handicap_index,
+    lastSyncAt: row.last_sync_at,
+  }));
+}
+
+export function applyProviderSync(
+  db: Database.Database,
+  input: {
+    userId: string;
+    provider: ScoreProvider;
+    externalId: string;
+    handicapIndex: number | null;
+    rounds: IncomingRound[];
+    syncedAt: string;
+    newId: () => string;
+  },
+): { added: number; duplicates: number; unmatched: number } {
+  const facilities = listFacilities(db);
+  const existing = db
+    .prepare(
+      `SELECT facility_id, played_on, holes, provider, external_round_id
+       FROM rounds WHERE user_id = ?`,
+    )
+    .all(input.userId) as Array<{
+    facility_id: string | null;
+    played_on: string;
+    holes: number;
+    provider: string | null;
+    external_round_id: string | null;
+  }>;
+  const plan = planIncoming({
+    facilities,
+    existing: existing.map((round) => ({
+      facilityId: round.facility_id,
+      playedOn: round.played_on,
+      holes: round.holes,
+      provider: round.provider,
+      externalRoundId: round.external_round_id,
+    })),
+    incoming: input.rounds,
+    userId: input.userId,
+    provider: input.provider,
+    newId: input.newId,
+  });
+  const tx = db.transaction(() => {
+    for (const round of plan.insert) insertRound(db, round);
+    db.prepare(
+      `INSERT INTO external_links (
+         user_id, provider, external_id, status, handicap_index, last_sync_at, consented_at
+       ) VALUES (?, ?, ?, 'linked', ?, ?, ?)
+       ON CONFLICT(user_id, provider) DO UPDATE SET
+         external_id = excluded.external_id,
+         status = 'linked',
+         handicap_index = COALESCE(excluded.handicap_index, external_links.handicap_index),
+         last_sync_at = excluded.last_sync_at`,
+    ).run(
+      input.userId,
+      input.provider,
+      input.externalId,
+      input.handicapIndex,
+      input.syncedAt,
+      input.syncedAt,
+    );
+    rebuildSummary(db, input.userId);
+  });
+  tx();
+  return { added: plan.insert.length, duplicates: plan.duplicates, unmatched: plan.unmatched };
+}
+
+/** Stops future syncs. Rounds already saved stay on the map. */
+export function disconnectProvider(db: Database.Database, userId: string, provider: ScoreProvider): boolean {
+  const result = db
+    .prepare(`UPDATE external_links SET status = 'disconnected' WHERE user_id = ? AND provider = ? AND status = 'linked'`)
+    .run(userId, provider);
+  return result.changes > 0;
+}
+
+export function loadComparisons(
+  db: Database.Database,
+  viewerId: string,
+  facilityIds: string[],
+  today: string,
+): Map<string, CourseComparison> {
+  const result = new Map<string, CourseComparison>();
+  const unique = [...new Set(facilityIds)];
+  if (unique.length === 0) return result;
+  const viewer = db
+    .prepare(
+      `SELECT handicap_index FROM external_links
+       WHERE user_id = ? AND handicap_index IS NOT NULL
+       ORDER BY CASE provider WHEN 'golf_canada' THEN 0 WHEN 'ghin' THEN 1 ELSE 2 END
+       LIMIT 1`,
+    )
+    .get(viewerId) as { handicap_index: number } | undefined;
+  const indexRows = db
+    .prepare(
+      `SELECT user_id, provider, handicap_index FROM external_links
+       WHERE status = 'linked' AND handicap_index IS NOT NULL AND user_id != ?`,
+    )
+    .all(viewerId) as Array<{ user_id: string; provider: string; handicap_index: number }>;
+  const indexes = new Map<string, number>();
+  const rank = (provider: string) => (provider === "golf_canada" ? 0 : provider === "ghin" ? 1 : 2);
+  const chosen = new Map<string, { rank: number; index: number }>();
+  for (const row of indexRows) {
+    const current = chosen.get(row.user_id);
+    const next = { rank: rank(row.provider), index: row.handicap_index };
+    if (!current || next.rank < current.rank) chosen.set(row.user_id, next);
+  }
+  for (const [userId, value] of chosen) indexes.set(userId, value.index);
+  const start = shiftIsoDate(today, -SUITED_MONTHS);
+  const grouped = new Map<string, Array<{ userId: string; playedOn: string; holes: number; differential: number | null }>>();
+  for (let offset = 0; offset < unique.length; offset += 200) {
+    const slice = unique.slice(offset, offset + 200);
+    const placeholders = slice.map(() => "?").join(", ");
+    const rows = db
+      .prepare(
+        `SELECT user_id, facility_id, played_on, holes, score_differential
+         FROM rounds
+         WHERE facility_id IN (${placeholders}) AND played_on >= ? AND played_on <= ?`,
+      )
+      .all(...slice, start, today) as Array<{
+      user_id: string;
+      facility_id: string;
+      played_on: string;
+      holes: number;
+      score_differential: number | null;
+    }>;
+    for (const row of rows) {
+      const list = grouped.get(row.facility_id);
+      const round = {
+        userId: row.user_id,
+        playedOn: row.played_on,
+        holes: row.holes,
+        differential: row.score_differential,
+      };
+      if (list) list.push(round);
+      else grouped.set(row.facility_id, [round]);
+    }
+  }
+  for (const facilityId of unique) {
+    result.set(
+      facilityId,
+      courseComparison({
+        viewerId,
+        viewerIndex: viewer?.handicap_index ?? null,
+        rounds: grouped.get(facilityId) ?? [],
+        indexes,
+        today,
+      }),
+    );
+  }
+  return result;
+}
+
 export function deleteAccount(db: Database.Database, userId: string): void {
   const tx = db.transaction(() => {
     db.prepare("DELETE FROM rounds WHERE user_id = ?").run(userId);
@@ -550,6 +760,7 @@ export function deleteAccount(db: Database.Database, userId: string): void {
     db.prepare("DELETE FROM coverage_summaries WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM share_links WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM import_runs WHERE user_id = ?").run(userId);
+    db.prepare("DELETE FROM external_links WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM sessions WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM tokens WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM users WHERE id = ?").run(userId);

@@ -7,8 +7,9 @@ import { halifaxToday } from "@/lib/dates";
 import { distanceKm, placeById, PLACES } from "@/lib/distance";
 import { translate } from "@/lib/i18n";
 import { PROVINCES, type Province } from "@/lib/types";
-import { matchesHoles, matchesRanking } from "@/lib/list-filters";
-import { getDb, listAccountRounds, listFacilities, readStatuses, readSummary, rebuildSummary } from "@/lib/db";
+import { matchesHoles, matchesRanking, rankingLists } from "@/lib/list-filters";
+import { getDb, listAccountRounds, listFacilities, loadComparisons, readStatuses, readSummary, rebuildSummary } from "@/lib/db";
+import { bandLabel } from "@/lib/standing";
 import { splitMapFacilities } from "@/lib/map-pins";
 import { currentLocale, currentUser } from "@/lib/session";
 
@@ -152,9 +153,28 @@ export default async function HomePage({
     const search = next.toString();
     return search ? `/?${search}` : "/";
   };
+  const playedIds = pinned.filter((facility) => statuses.has(facility.facilityId)).map((facility) => facility.facilityId);
+  const comparisons = user ? loadComparisons(getDb(), user.id, playedIds, halifaxToday()) : new Map();
+  const comparisonText = (facilityId: string) => {
+    const comparison = comparisons.get(facilityId);
+    if (!comparison) return { standing: null, suited: null };
+    return {
+      standing: comparison.standing
+        ? t("course.standing", {
+            percent: comparison.standing.percent,
+            band: bandLabel(comparison.standing.band),
+            count: comparison.standing.count,
+          })
+        : null,
+      suited: comparison.suited
+        ? t("course.suited", { band: bandLabel(comparison.suited.band), count: comparison.suited.count })
+        : null,
+    };
+  };
   const pins: PinCourse[] = pinned.map((facility) => {
     const access = facility.access === "public" ? t("access.public") : t("access.private");
     const place = [facility.place, provinceLabel(locale, facility.province)].filter(Boolean).join(", ");
+    const comparison = comparisonText(facility.facilityId);
     return {
       facilityId: facility.facilityId,
       name: facility.officialName,
@@ -165,6 +185,13 @@ export default async function HomePage({
       defaultHoles: facility.holeCount >= 18 ? "18" : "9",
       markRoundId: statuses.get(facility.facilityId)?.markRoundId ?? null,
       rounds: roundsByFacility.get(facility.facilityId) ?? [],
+      standing: comparison.standing,
+      suited: comparison.suited,
+      lists: rankingLists(facility.facilityId),
+      ratingLine:
+        facility.rating != null && facility.slope != null
+          ? t("course.rating", { rating: facility.rating, slope: facility.slope })
+          : null,
     };
   });
   const labels: PinMapLabels = {
@@ -182,6 +209,19 @@ export default async function HomePage({
     scoreOptional: t("course.scoreOptional"),
     secondRound: t("course.secondRound"),
     courseLink: t("map.courseLink"),
+    expand: t("preview.expand"),
+    collapse: t("preview.collapse"),
+    close: t("preview.close"),
+    website: t("preview.website"),
+    book: t("preview.book"),
+    rankings: t("preview.rankings"),
+    onNational: t("preview.onNational"),
+    onPublic: t("preview.onPublic"),
+    noRanking: t("preview.noRanking"),
+    reviews: t("preview.reviews"),
+    noReviews: t("preview.noReviews"),
+    noPhoto: t("preview.noPhoto"),
+    photoLoading: t("preview.loading"),
     loading: t("map.loading"),
     failed: t("map.failed"),
     region: t("map.region"),
