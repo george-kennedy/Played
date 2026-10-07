@@ -1,6 +1,8 @@
 # Played
 
-Played is a free website for golfers in Atlantic Canada. Home is the course list for a home-screen province (Nova Scotia, Prince Edward Island, New Brunswick, or Newfoundland and Labrador), split into played and not played, with the percentage and the counts. Atlantic is a switch on that page. There is no native app, no payment, and no live Golf Canada or GHIN login.
+Played is a free website for golfers in Canada. Signed-in home is one page: a pin map, the percentage of courses played, and one list. Canada is the wide view. A province chip refits the map and the percentage to that province. There is no native app.
+
+Played pins are green teardrops. Unplayed courses are small white dots. Click a pin to record a round. Expand that window for the course photo, website, and, when that course has turned it on, a booking link or a phone number. Private courses do not show Book or Call.
 
 ## Run
 
@@ -14,38 +16,28 @@ Open [http://localhost:3000](http://localhost:3000).
 
 The database is SQLite at `data/played.sqlite`. It is created on first start and filled from `data/facilities.json`. Override the file with `PLAYED_DB`.
 
-## Email confirmation and password reset
+A production build is `npm run build` and `npm start`.
 
-This build does not send email. After you create an account, the confirmation link is shown on the next screen. Password reset works the same way: enter the email, and if the account exists the reset link is shown on the next screen. Replace that with a mail provider before a public launch. A golfer cannot mark a course or import a file until the email is confirmed. The session is an HTTP-only cookie.
+## Accounts
 
-Passwords are hashed with scrypt and must be at least 10 characters.
+Passwords are hashed with scrypt and must be at least 10 characters. The session is an HTTP-only cookie. A golfer confirms their email before marking a course.
+
+Set `RESEND_API_KEY` and `RESEND_FROM` to send the confirmation and password-reset links. Without those, the link is shown on the next screen.
+
+Connect lists Golf Canada, GHIN, and 18Birdies. Live Golf Canada and GHIN pulls stay closed until `GOLFCANADA_CLIENT_ID` and `GOLFCANADA_CLIENT_SECRET`, or `GHIN_CLIENT_ID` and `GHIN_CLIENT_SECRET`, are set. The score feed itself is not connected yet, and Played does not ask for those passwords. 18Birdies has no live connection. A golfer can add a download of their own account when each round includes a course, a date, and 9 or 18 holes.
+
+## Booking
+
+`data/reach.json` holds a booking link or a phone number for public courses, found from the club’s site. Each row stays off until `enabled` is true. The whole feature stays off until `BOOKING_ENABLED=1`. Private courses never show the action. `data/reach-trouble.json` lists public courses the scan could not resolve. Run `node scripts/scan-reach.mjs` to scan again. A rerun skips courses that already have both a link and a phone.
 
 ## Coverage
 
-Coverage is a pure function of matched 9- and 18-hole rounds and the selected denominator. Home reads a summary that is rewritten in the same transaction as a round change. It does not scan every round to draw the percentage.
+The percentage is played facilities divided by the facilities in the current view, province or Canada. A round counts when it is 9 or 18 holes. This year and earlier use the calendar year of `played_on` in America/Halifax. One played course in a large view shows as <1%.
 
-This year and earlier use the calendar year of `played_on` in America/Halifax. They split the played courses and do not overlap.
+## Course file
 
-## Course seed
+`data/facilities.json` has 1,679 outdoor facilities: BC 218, AB 239, SK 157, MB 86, ON 612, QC 222, NB 49, PEI 18, NS 57, NL 17, YT 2, NT 2. Atlantic rows come from the provincial member lists. The other provinces come from the public Golf Canada facility search. One outdoor facility is one course. Indoor simulators are omitted. Public and semi-public are public. Private stays private.
 
-Names come from the public member lists:
+National list and public list filters name courses on a published Canadian ranking. Played does not publish that ranking, and the percentage still counts every course.
 
-- Nova Scotia: [Golf Nova Scotia member clubs](https://nsga.ns.ca/member-clubs/)
-- Prince Edward Island: [Golf PEI course directory](https://golfpei.ca/course_directory_list/)
-- New Brunswick: [Golf New Brunswick member facilities](https://www.golfnb.ca/member-facilities/)
-- Newfoundland and Labrador: [Golf Newfoundland Labrador member courses](https://www.golfnl.ca/member-courses/)
-
-Hole count, public or private, coordinates, and association course ids come from the public Golf Canada facility record those association sites use, except where noted. A facility with more than one routing of the same published name is one row. `hole_count` is the longest routing. Pippy Park (Admiral’s Green, 18, and Captain’s Hill, 9) is the worked example.
-
-The seed currently holds 57 Nova Scotia facilities, 18 Prince Edward Island courses, 49 New Brunswick facilities, and 17 Newfoundland and Labrador courses.
-
-Gaps:
-
-- Golf Nova Scotia’s page names Cabot Cliffs and Cabot Links on one line, and Ashburn Old and New on one line. Each is two facilities because the list names them separately.
-- Cabot The Nest is on the Nova Scotia list. Golf Canada has no separate facility id. The row uses Cabot’s public page, which describes an 11-hole par-3 course a non-member can book. No coordinates.
-- Rustico Resort Golf Club is on the Golf PEI directory. It is not in the Golf Canada facility search. The Golf PEI page says 18 holes and offers a tee time. No coordinates.
-- Golf New Brunswick’s live member page lists 52 names, against a published size of about 53. GreyRock Golf, JH Sports, and Top Shots Golf are indoor simulators on that page, so they are not in the outdoor seed. The other 49 are included.
-- These rows have no coordinates and sort last, labeled distance unavailable: Under Par Golf & Academy, Aspotogan Ridge Golf Club, Dundarave Golf Course, Rustico Resort Golf Club, and Cabot The Nest.
-- Public or private follows the Golf Canada class. Public and semi-public are public, because a non-member can book a tee time. Private stays private.
-
-Rebuild the seed with `npm run seed` if those public pages need another pass. The script needs network access.
+Rebuild the Atlantic seed with `npm run seed` if those public pages need another pass. The script needs network access.
