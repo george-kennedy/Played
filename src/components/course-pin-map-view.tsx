@@ -9,7 +9,6 @@ import type { ReactElement, ReactNode } from "react";
 import "leaflet.markercluster";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import { addRound, setPlayed } from "@/app/actions";
-import type { CourseMedia } from "@/lib/course-media";
 import type { PinCourse, PinMapLabels } from "./pin-course";
 import { openMarkerHtml, playedMarkerHtml } from "./pin-glyphs";
 import "leaflet/dist/leaflet.css";
@@ -118,7 +117,7 @@ function PinPopup({
         </button>
       </div>
       <p className="meta">{course.placeLine}</p>
-      {course.personal === false ? null : <p>{course.played ? labels.played : labels.notPlayed}</p>}
+      <p>{course.played ? labels.played : labels.notPlayed}</p>
       {course.standing ? <p>{course.standing}</p> : null}
       {course.suited ? <p>{course.suited}</p> : null}
       {course.personal !== false && course.played ? (
@@ -135,12 +134,12 @@ function PinPopup({
           </ul>
         </div>
       ) : null}
-      {course.personal === false ? (
+      {course.signupHref ? (
         <p>
-          <a href="/sign-in">{labels.signIn}</a>
+          <a className="button" href={course.signupHref}>{labels.markOn}</a>
         </p>
       ) : null}
-      {course.personal !== false && course.played && course.markRoundId ? (
+      {!course.signupHref && course.personal !== false && course.played && course.markRoundId ? (
         <form action={setPlayed}>
           <input type="hidden" name="facilityId" value={course.facilityId} />
           <input type="hidden" name="intent" value="off" />
@@ -150,10 +149,10 @@ function PinPopup({
           </button>
         </form>
       ) : null}
-      {course.personal !== false && course.played && !course.markRoundId ? (
+      {!course.signupHref && course.personal !== false && course.played && !course.markRoundId ? (
         <span className="pill">{labels.playedKeep}</span>
       ) : null}
-      {course.personal !== false && !course.played ? (
+      {!course.signupHref && course.personal !== false && !course.played ? (
         <form action={setPlayed}>
           <input type="hidden" name="facilityId" value={course.facilityId} />
           <input type="hidden" name="intent" value="on" />
@@ -161,7 +160,7 @@ function PinPopup({
           <button type="submit">{labels.markOn}</button>
         </form>
       ) : null}
-      {course.personal === false ? null : (
+      {course.signupHref || course.personal === false ? null : (
       <form className="pin-round" action={addRound}>
         <p className="pin-label">{labels.addRound}</p>
         <p className="help">{labels.secondRound}</p>
@@ -206,7 +205,7 @@ function CourseWindow({
   onClose: () => void;
 }) {
   const frame = useRef<HTMLElement>(null);
-  const [media, setMedia] = useState<CourseMedia | null>(null);
+  const [media, setMedia] = useState<{ photoUrl: string | null; websiteUrl: string | null } | null>(null);
   useEffect(() => {
     const el = frame.current;
     if (!el) return;
@@ -220,12 +219,12 @@ function CourseWindow({
   useEffect(() => {
     const controller = new AbortController();
     fetch(`/api/courses/${encodeURIComponent(course.facilityId)}/media`, { signal: controller.signal })
-      .then((response) => (response.ok ? (response.json() as Promise<CourseMedia>) : null))
+      .then((response) => (response.ok ? (response.json() as Promise<{ photoUrl: string | null; websiteUrl: string | null }>) : null))
       .then((body) => {
         if (!controller.signal.aborted) setMedia(body);
       })
       .catch(() => {
-        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null, bookingUrl: null, phone: null });
+        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null });
       });
     return () => controller.abort();
   }, [course.facilityId]);
@@ -307,28 +306,17 @@ function CourseWindow({
         )}
         <p className="meta">{course.placeLine}</p>
         {course.ratingLine ? <p className="meta">{course.ratingLine}</p> : null}
-        {course.personal === false ? null : <p>{course.played ? labels.played : labels.notPlayed}</p>}
+        <p>{course.played ? labels.played : labels.notPlayed}</p>
         <p className="pin-label">{labels.rankings}</p>
         {lists.length === 0 ? <p className="help">{labels.noRanking}</p> : null}
         {lists.map((list) => (
           <p key={list}>{list === "national" ? labels.onNational : labels.onPublic}</p>
         ))}
-        {media?.websiteUrl || media?.bookingUrl || media?.phone ? (
+        {media?.websiteUrl ? (
           <div className="course-actions">
-            {media.bookingUrl ? (
-              <a className="button" href={media.bookingUrl} rel="noreferrer">
-                {labels.book}
-              </a>
-            ) : media.phone ? (
-              <a className="button" href={`tel:+1${media.phone.replace(/\D/g, "")}`}>
-                {labels.call.replace("{phone}", media.phone)}
-              </a>
-            ) : null}
-            {media.websiteUrl ? (
-              <a className="button secondary" href={media.websiteUrl} rel="noreferrer">
-                {labels.website}
-              </a>
-            ) : null}
+            <a className="button secondary" href={media.websiteUrl} rel="noreferrer">
+              {labels.website}
+            </a>
           </div>
         ) : null}
         {course.standing ? <p>{course.standing}</p> : null}
@@ -347,12 +335,12 @@ function CourseWindow({
             </ul>
           </div>
         ) : null}
-        {course.personal === false ? (
+        {course.signupHref ? (
           <p>
-            <a href="/sign-in">{labels.signIn}</a>
+            <a className="button" href={course.signupHref}>{labels.markOn}</a>
           </p>
         ) : null}
-        {course.personal !== false && course.played && course.markRoundId ? (
+        {!course.signupHref && course.personal !== false && course.played && course.markRoundId ? (
           <form action={setPlayed}>
             <input type="hidden" name="facilityId" value={course.facilityId} />
             <input type="hidden" name="intent" value="off" />
@@ -362,10 +350,10 @@ function CourseWindow({
             </button>
           </form>
         ) : null}
-        {course.personal !== false && course.played && !course.markRoundId ? (
+        {!course.signupHref && course.personal !== false && course.played && !course.markRoundId ? (
           <span className="pill">{labels.playedKeep}</span>
         ) : null}
-        {course.personal !== false && !course.played ? (
+        {!course.signupHref && course.personal !== false && !course.played ? (
           <form action={setPlayed}>
             <input type="hidden" name="facilityId" value={course.facilityId} />
             <input type="hidden" name="intent" value="on" />
@@ -373,7 +361,7 @@ function CourseWindow({
             <button type="submit">{labels.markOn}</button>
           </form>
         ) : null}
-        {course.personal === false ? null : (
+        {course.signupHref || course.personal === false ? null : (
           <form className="pin-round" action={addRound}>
             <p className="pin-label">{labels.addRound}</p>
             <p className="help">{labels.secondRound}</p>
@@ -429,17 +417,9 @@ export default function CoursePinMapView({
     <Marker
       key={course.facilityId}
       position={[course.latitude, course.longitude]}
-      icon={course.personal === false || course.played ? playedIcon : openIcon}
-      title={
-        course.personal === false
-          ? course.name
-          : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
-      }
-      alt={
-        course.personal === false
-          ? course.name
-          : `${course.name}. ${course.played ? labels.played : labels.notPlayed}`
-      }
+      icon={course.played ? playedIcon : openIcon}
+      title={`${course.name}. ${course.played ? labels.played : labels.notPlayed}`}
+      alt={`${course.name}. ${course.played ? labels.played : labels.notPlayed}`}
       keyboard
       riseOnHover
       zIndexOffset={course.played ? 400 : 0}

@@ -92,6 +92,8 @@ h1 { font-size: clamp(2rem, 6vw, 3.2rem); margin: 0.2rem 0 0.6rem; }
   border: 1px solid var(--ink);
   text-decoration: none;
 }
+.coverage-with-share { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 1rem; }
+.coverage-with-share .button { margin-bottom: 0.6rem; }
 .coverage-text { font-size: 1.35rem; margin: 0.4rem 0; }
 .coverage-text strong { font-variant-numeric: tabular-nums; }
 .bar {

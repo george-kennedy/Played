@@ -5,10 +5,11 @@ import { currentLocale } from "@/lib/session";
 export default async function SignUpPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; returnTo?: string }>;
 }) {
   const locale = await currentLocale();
   const query = await searchParams;
+  const returnTo = query.returnTo?.startsWith("/") && !query.returnTo.startsWith("//") ? query.returnTo : "/";
   const t = (key: Parameters<typeof translate>[1]) => translate(locale, key);
   const error =
     query.error === "email"
@@ -21,6 +22,7 @@ export default async function SignUpPage({
   return (
     <form className="stack card" action={signUp}>
       <h1>{t("auth.signUpTitle")}</h1>
+      <input type="hidden" name="returnTo" value={returnTo} />
       {error ? <p className="error">{error}</p> : null}
       <label>
         {t("auth.email")}

@@ -1,10 +1,9 @@
 import { addRound, setPlayed } from "@/app/actions";
 import { provinceLabel } from "@/components/coverage-block";
-import { loadCourseMedia, phoneHref } from "@/lib/course-media";
+import { loadCourseMedia } from "@/lib/course-media";
 import { halifaxToday } from "@/lib/dates";
 import { getDb, getFacility, listFacilityRounds, loadComparisons, readStatuses } from "@/lib/db";
 import { rankingLists } from "@/lib/list-filters";
-import { reachAction } from "@/lib/reach-store";
 import { bandLabel } from "@/lib/standing";
 import { translate } from "@/lib/i18n";
 import { currentLocale, currentUser } from "@/lib/session";
@@ -27,9 +26,8 @@ export default async function FacilityPage({
     translate(locale, key, vars);
   const access = facility.access === "public" ? t("access.public") : t("access.private");
   const media = await loadCourseMedia(facility);
-  const action = reachAction(facility.access, facility.facilityId);
   const lists = rankingLists(facility.facilityId);
-  const signedIn = Boolean(user?.email_verified_at);
+  const signedIn = Boolean(user);
   const rounds = signedIn && user ? listFacilityRounds(getDb(), user.id, facility.facilityId) : [];
   const status = signedIn && user ? readStatuses(getDb(), user.id).find((item) => item.facilityId === facility.facilityId) : undefined;
   const comparison =
@@ -73,17 +71,9 @@ export default async function FacilityPage({
           </ul>
         )}
       </section>
-      {media.websiteUrl || action.bookingUrl || action.phone ? (
+      {media.websiteUrl ? (
         <div className="course-actions">
-          {action.bookingUrl ? (
-            <a className="button" href={action.bookingUrl} rel="noreferrer">{t("preview.book")}</a>
-          ) : null}
-          {!action.bookingUrl && action.phone ? (
-            <a className="button" href={phoneHref(action.phone)}>{t("preview.call", { phone: action.phone })}</a>
-          ) : null}
-          {media.websiteUrl ? (
-            <a className="button secondary" href={media.websiteUrl} rel="noreferrer">{t("preview.website")}</a>
-          ) : null}
+          <a className="button secondary" href={media.websiteUrl} rel="noreferrer">{t("preview.website")}</a>
         </div>
       ) : null}
       {comparison?.standing ? (
@@ -156,10 +146,12 @@ export default async function FacilityPage({
             <button type="submit">{t("course.addRound")}</button>
           </form>
         </div>
-      ) : user ? (
-        <p><a href="/verify-email">{t("account.verifyNeeded")}</a></p>
       ) : (
-        <p><a href="/sign-in">{t("course.signIn")}</a></p>
+        <p>
+          <a className="button" href={`/sign-up?returnTo=${encodeURIComponent(`/courses/${facility.facilityId}`)}`}>
+            {t("home.markOn")}
+          </a>
+        </p>
       )}
     </article>
   );

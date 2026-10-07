@@ -39,7 +39,7 @@ export async function GET(_request: Request, context: { params: Promise<{ token:
   return new NextResponse(svg, {
     headers: {
       "Content-Type": "image/svg+xml; charset=utf-8",
-      "Content-Disposition": "attachment; filename=\"played-season.svg\"",
+      "Cache-Control": "public, max-age=300",
     },
   });
 }

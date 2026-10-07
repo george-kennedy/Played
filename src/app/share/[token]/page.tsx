@@ -1,9 +1,32 @@
+import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { provinceLabel } from "@/components/coverage-block";
 import { shareByToken } from "@/lib/auth";
 import { percentageLabel } from "@/lib/coverage";
 import { getDb, sharePayload } from "@/lib/db";
 import { translate } from "@/lib/i18n";
 import { currentLocale } from "@/lib/session";
+
+export async function generateMetadata({ params }: { params: Promise<{ token: string }> }): Promise<Metadata> {
+  const { token } = await params;
+  const locale = await currentLocale();
+  const share = shareByToken(getDb(), token);
+  const payload = share?.enabled ? sharePayload(getDb(), share.userId) : null;
+  const title = payload
+    ? translate(locale, "share.ogTitle", { percent: percentageLabel(payload.canadaPercentage) })
+    : translate(locale, "brand");
+  const headerList = await headers();
+  const host = headerList.get("x-forwarded-host") ?? headerList.get("host");
+  const proto = headerList.get("x-forwarded-proto") ?? "http";
+  const image = host ? `${proto}://${host}/share/${token}/card` : `/share/${token}/card`;
+  return {
+    title,
+    openGraph: {
+      title,
+      images: payload ? [{ url: image, width: 900, height: 520 }] : undefined,
+    },
+  };
+}
 
 export default async function SharePage({ params }: { params: Promise<{ token: string }> }) {
   const { token } = await params;

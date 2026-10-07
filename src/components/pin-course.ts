@@ -21,6 +21,8 @@ export type PinCourse = {
   ratingLine?: string | null;
   /** False on a signed-out directory map, where played is not this golfer's record. */
   personal?: boolean;
+  /** When set, mark and add-round send the visitor here instead of saving a round. */
+  signupHref?: string;
 };
 
 export type PinMapLabels = {
@@ -42,8 +44,6 @@ export type PinMapLabels = {
   collapse: string;
   close: string;
   website: string;
-  book: string;
-  call: string;
   rankings: string;
   onNational: string;
   onPublic: string;

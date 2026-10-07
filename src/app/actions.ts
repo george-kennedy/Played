@@ -10,6 +10,7 @@ import {
   createUser,
   deleteSession,
   emailIsValid,
+  emailIsVerified,
   findUserByEmail,
   issueToken,
   markEmailVerified,
@@ -67,26 +68,33 @@ async function signInCookie(userId: string) {
   jar.set(SESSION_COOKIE, token, sessionCookieOptions());
 }
 
+function signUpError(code: string, returnTo: FormDataEntryValue | null): never {
+  const back = safeReturn(returnTo, "");
+  const query = new URLSearchParams({ error: code });
+  if (back) query.set("returnTo", back);
+  redirect(`/sign-up?${query.toString()}`);
+}
+
 export async function signUp(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
-  if (!emailIsValid(email)) redirect("/sign-up?error=email");
-  if (!passwordIsValid(password)) redirect("/sign-up?error=password");
+  const returnTo = formData.get("returnTo");
+  if (!emailIsValid(email)) signUpError("email", returnTo);
+  if (!passwordIsValid(password)) signUpError("password", returnTo);
   const db = getDb();
-  if (findUserByEmail(db, email)) redirect("/sign-up?error=taken");
+  if (findUserByEmail(db, email)) signUpError("taken", returnTo);
   const id = randomUUID();
   createUser(db, { id, email, password, createdAt: new Date().toISOString() });
   rebuildSummary(db, id);
   await signInCookie(id);
   const token = issueToken(db, { userId: id, purpose: "verify" });
-  await deliverLink({
+  const origin = await publicOrigin();
+  await sendMail({
     to: email.trim().toLowerCase(),
     subject: "Confirm your Played account",
-    text: "Open this link to confirm your email.",
-    token,
-    sentPath: "/verify-email?sent=1",
-    linkPath: "/verify-email?token=",
+    text: `Open this link to confirm your email.\n${origin}/verify-email?token=${token}\n`,
   });
+  redirect(safeReturn(returnTo, "/"));
 }
 
 export async function signIn(formData: FormData) {
@@ -96,7 +104,7 @@ export async function signIn(formData: FormData) {
   const user = findUserByEmail(db, email);
   if (!user || !verifyPassword(password, user.password_hash)) redirect("/sign-in?error=credentials");
   await signInCookie(user.id);
-  redirect(user.email_verified_at ? (user.headline_province ? "/" : "/") : "/verify-email");
+  redirect("/");
 }
 
 export async function signOut() {
@@ -134,7 +142,7 @@ export async function requestReset(formData: FormData) {
   const email = String(formData.get("email") ?? "");
   const db = getDb();
   const user = findUserByEmail(db, email);
-  if (!user) redirect("/reset-password?sent=1");
+  if (!user || !emailIsVerified(user)) redirect("/reset-password?sent=1");
   const token = issueToken(db, { userId: user.id, purpose: "reset" });
   await deliverLink({
     to: user.email,
@@ -165,7 +173,7 @@ export async function chooseProvince(formData: FormData) {
   if (!isProvince(province)) redirect("/?error=province");
   setHeadlineProvince(getDb(), user.id, province);
   revalidatePath("/");
-  redirect("/");
+  redirect(safeReturn(formData.get("returnTo"), "/"));
 }
 
 export async function chooseLocale(formData: FormData) {
@@ -182,9 +190,8 @@ export async function chooseLocale(formData: FormData) {
 
 export async function setPlayed(formData: FormData) {
   const user = await currentUser();
-  if (!user) redirect("/sign-in");
   const returnTo = safeReturn(formData.get("returnTo"), "/");
-  if (!user.email_verified_at) redirect(`/verify-email?error=required`);
+  if (!user) redirect(`/sign-up?returnTo=${encodeURIComponent(returnTo)}`);
   const facilityId = String(formData.get("facilityId") ?? "");
   const intent = String(formData.get("intent") ?? "");
   applyMarkToggle(getDb(), {
@@ -203,10 +210,9 @@ export async function setPlayed(formData: FormData) {
 
 export async function addRound(formData: FormData) {
   const user = await currentUser();
-  if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const facilityId = String(formData.get("facilityId") ?? "");
   const returnTo = safeReturn(formData.get("returnTo"), `/courses/${facilityId}`);
+  if (!user) redirect(`/sign-up?returnTo=${encodeURIComponent(returnTo)}`);
   const result = applyManualRound(getDb(), {
     userId: user.id,
     facilityId,
@@ -230,7 +236,6 @@ export async function addRound(formData: FormData) {
 export async function uploadCsv(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const file = formData.get("file");
   if (!(file instanceof File)) redirect("/import?error=file");
   const csv = await file.text();
@@ -252,7 +257,6 @@ export async function uploadCsv(formData: FormData) {
 export async function attachRow(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const result = attachUnmatched(getDb(), {
     userId: user.id,
     roundId: String(formData.get("roundId") ?? ""),
@@ -272,9 +276,22 @@ export async function savePlace(formData: FormData) {
   redirect(returnTo);
 }
 
+export async function enableShare(): Promise<{ url: string }> {
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
+  if (!emailIsVerified(user)) redirect("/verify-email");
+  if (!user.headline_province) redirect("/");
+  const token = setShareEnabled(getDb(), user.id, true, new Date().toISOString());
+  revalidatePath("/season");
+  revalidatePath("/");
+  const origin = await publicOrigin();
+  return { url: `${origin}/share/${token}` };
+}
+
 export async function toggleShare(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
+  if (!emailIsVerified(user)) redirect("/verify-email");
   if (!user.headline_province) redirect("/");
   const enabled = String(formData.get("enabled") ?? "") === "1";
   setShareEnabled(getDb(), user.id, enabled, new Date().toISOString());
@@ -303,7 +320,6 @@ function connectRedirect(result: { added: number; unmatched: number; duplicates:
 export async function connectGolfCanada(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const memberId = String(formData.get("memberId") ?? "").trim();
   if (String(formData.get("consent") ?? "") !== "yes" || !memberIdOk(memberId)) {
     redirect("/connect?error=generic");
@@ -333,7 +349,6 @@ export async function connectGolfCanada(formData: FormData) {
 export async function connectGhin(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const memberId = String(formData.get("memberId") ?? "").trim();
   if (String(formData.get("consent") ?? "") !== "yes" || !memberIdOk(memberId)) {
     redirect("/connect?error=generic");
@@ -363,7 +378,6 @@ export async function connectGhin(formData: FormData) {
 export async function uploadBirdies(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
-  if (!user.email_verified_at) redirect("/verify-email?error=required");
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0 || file.size > 2_000_000) redirect("/connect?error=bad_file");
   let parsed: unknown;

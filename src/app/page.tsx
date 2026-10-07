@@ -1,5 +1,6 @@
 import { chooseProvince, setPlayed } from "@/app/actions";
 import { CoverageBlock, provinceLabel } from "@/components/coverage-block";
+import { ShareProgress } from "@/components/share-progress";
 import { CoursePinMap } from "@/components/course-pin-map";
 import { OpenPinGlyph, PlayedPinGlyph } from "@/components/pin-glyphs";
 import type { PinCourse, PinMapLabels } from "@/components/pin-course";
@@ -31,34 +32,17 @@ export default async function HomePage({
   const showAll = params.show === "all";
   const near = placeById(params.place);
 
-  if (!user) {
-    return (
-      <div className="stack">
-        <h1>{t("brand")}</h1>
-        <p className="lede">{t("home.signedOut")}</p>
-        <p className="inline">
-          <a className="button" href="/sign-up">{t("nav.signUp")}</a>
-          <a className="button secondary" href="/sign-in">{t("nav.signIn")}</a>
-        </p>
-      </div>
-    );
-  }
-
-  if (!user.email_verified_at) {
-    return (
-      <div className="stack">
-        <h1>{t("auth.verifyTitle")}</h1>
-        <p>{t("account.verifyNeeded")}</p>
-        <a className="button" href="/verify-email">{t("auth.verifyButton")}</a>
-      </div>
-    );
-  }
-
-  if (!user.headline_province) {
+  if (user && !user.headline_province) {
+    const back = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+      if (value && key !== "returnTo") back.set(key, value);
+    }
+    const returnTo = params.returnTo?.startsWith("/") ? params.returnTo : back.toString() ? `/?${back.toString()}` : "/";
     return (
       <form className="stack card" action={chooseProvince}>
         <h1>{t("home.provinceTitle")}</h1>
         <p className="help">{t("home.provinceHelp")}</p>
+        <input type="hidden" name="returnTo" value={returnTo} />
         {PROVINCES.map((province) => (
           <label key={province} className="inline">
             <input type="radio" name="province" value={province} required />
@@ -70,25 +54,27 @@ export default async function HomePage({
     );
   }
 
-  const homeProvince = user.headline_province;
+  const homeProvince = user?.headline_province ?? null;
   const requested = params.view;
   const view: Province | "CANADA" =
     requested === "canada"
       ? "CANADA"
       : requested && (PROVINCES as readonly string[]).includes(requested)
         ? (requested as Province)
-        : homeProvince;
+        : (homeProvince ?? "CANADA");
   const db = getDb();
-  if (!readSummary(db, user.id, view)) rebuildSummary(db, user.id);
-  const summary = readSummary(db, user.id, view) ?? {
+  if (user && !readSummary(db, user.id, view)) rebuildSummary(db, user.id);
+  const summary = user
+    ? readSummary(db, user.id, view) ?? {
     scope: view,
     played_count: 0,
     total_count: 0,
     this_year_count: 0,
     earlier_count: 0,
     percentage: 0,
-  };
-  const statuses = new Map(readStatuses(db, user.id).map((status) => [status.facilityId, status]));
+  }
+    : null;
+  const statuses = new Map(user ? readStatuses(db, user.id).map((status) => [status.facilityId, status]) : []);
   const needle = queryText.toLowerCase();
   const inView = listFacilities(db)
     .filter((facility) => (view === "CANADA" ? true : facility.province === view))
@@ -121,7 +107,7 @@ export default async function HomePage({
     });
   const { pinned, unpinned } = splitMapFacilities(ranked.map((row) => row.facility));
   const roundsByFacility = new Map<string, PinCourse["rounds"]>();
-  for (const round of listAccountRounds(db, user.id)) {
+  for (const round of user ? listAccountRounds(db, user.id) : []) {
     if (!round.facilityId) continue;
     const line = {
       id: round.id,
@@ -179,12 +165,14 @@ export default async function HomePage({
       facilityId: facility.facilityId,
       name: facility.officialName,
       placeLine: `${place} · ${access}`,
-      played: statuses.has(facility.facilityId),
+      played: Boolean(user) && statuses.has(facility.facilityId),
+      personal: Boolean(user),
+      signupHref: user ? undefined : `/sign-up?returnTo=${encodeURIComponent(returnTo)}`,
       latitude: facility.latitude,
       longitude: facility.longitude,
       defaultHoles: facility.holeCount >= 18 ? "18" : "9",
-      markRoundId: statuses.get(facility.facilityId)?.markRoundId ?? null,
-      rounds: roundsByFacility.get(facility.facilityId) ?? [],
+      markRoundId: user ? statuses.get(facility.facilityId)?.markRoundId ?? null : null,
+      rounds: user ? roundsByFacility.get(facility.facilityId) ?? [] : [],
       standing: comparison.standing,
       suited: comparison.suited,
       lists: rankingLists(facility.facilityId),
@@ -213,8 +201,6 @@ export default async function HomePage({
     collapse: t("preview.collapse"),
     close: t("preview.close"),
     website: t("preview.website"),
-    book: t("preview.book"),
-    call: t("preview.call"),
     rankings: t("preview.rankings"),
     onNational: t("preview.onNational"),
     onPublic: t("preview.onPublic"),
@@ -235,7 +221,23 @@ export default async function HomePage({
     <div className="stack">
       <h1>{provinceLabel(locale, view)}</h1>
       <p className="lede">{t("home.lede")}</p>
-      <CoverageBlock locale={locale} summary={summary} label={provinceLabel(locale, view)} />
+      {summary && user ? (
+        <div className="coverage-with-share">
+          <CoverageBlock locale={locale} summary={summary} label={provinceLabel(locale, view)} />
+          <ShareProgress
+            verified={Boolean(user.email_verified_at)}
+            label={t("home.share")}
+            copiedLabel={t("home.shareCopied")}
+            verifyHref="/verify-email"
+            verifyLabel={t("home.shareVerify")}
+          />
+        </div>
+      ) : (
+        <p className="card">
+          {t("home.trackTeaser")}{" "}
+          <a href={`/sign-up?returnTo=${encodeURIComponent(returnTo)}`}>{t("nav.signUp")}</a>
+        </p>
+      )}
       <div className="switch" role="group" aria-label={t("directory.province")}>
         <a href={chipHref("CANADA")} aria-current={view === "CANADA" ? "page" : undefined}>{t("province.canada")}</a>
         {PROVINCES.map((code) => (
@@ -331,7 +333,9 @@ export default async function HomePage({
                     {status ? ` · ${t("home.played")}` : ""}
                   </p>
                 </div>
-                {status?.markRoundId ? (
+                {!user ? (
+                  <a className="button" href={`/sign-up?returnTo=${encodeURIComponent(returnTo)}`}>{t("home.markOn")}</a>
+                ) : status?.markRoundId ? (
                   <form action={setPlayed}>
                     <input type="hidden" name="facilityId" value={facility.facilityId} />
                     <input type="hidden" name="intent" value="off" />

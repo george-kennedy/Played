@@ -1,0 +1,7 @@
+node_modules
+.next
+.git
+data/*.sqlite
+data/*.sqlite-journal
+data/*.sqlite-wal
+data/*.sqlite-shm

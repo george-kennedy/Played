@@ -36,6 +36,11 @@ export function emailIsValid(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
+/** Share links, account export, and password reset require a confirmed email. */
+export function emailIsVerified(user: { email_verified_at: string | null } | null): boolean {
+  return Boolean(user?.email_verified_at);
+}
+
 export function createUser(
   db: Database.Database,
   input: { id: string; email: string; password: string; createdAt: string },

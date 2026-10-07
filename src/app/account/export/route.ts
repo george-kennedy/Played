@@ -6,6 +6,7 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function GET(request: NextRequest) {
   const user = await currentUser();
   if (!user) return NextResponse.redirect(new URL("/sign-in", request.url));
+  if (!user.email_verified_at) return NextResponse.redirect(new URL("/verify-email", request.url));
   const db = getDb();
   const facilities = new Map(listFacilities(db).map((facility) => [facility.facilityId, facility]));
   const rows = db
