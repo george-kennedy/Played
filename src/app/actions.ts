@@ -20,16 +20,15 @@ import {
   setPassword,
   setPlace,
   setShareEnabled,
+  regenerateShareToken,
   shareForUser,
   verifyPassword,
 } from "@/lib/auth";
 import { halifaxToday } from "@/lib/dates";
 import {
-  applyImport,
   applyManualRound,
   applyMarkToggle,
   applyProviderSync,
-  attachUnmatched,
   deleteAccount,
   disconnectProvider,
   getDb,
@@ -240,41 +239,6 @@ export async function addRound(formData: FormData) {
   redirect(returnTo);
 }
 
-export async function uploadCsv(formData: FormData) {
-  const user = await currentUser();
-  if (!user) redirect("/sign-in");
-  const file = formData.get("file");
-  if (!(file instanceof File)) redirect("/import?error=file");
-  const csv = await file.text();
-  let counter = 0;
-  applyImport(getDb(), {
-    userId: user.id,
-    csv,
-    newId: () => `imp-${randomUUID()}-${counter++}`,
-    runId: randomUUID(),
-    createdAt: new Date().toISOString(),
-  });
-  revalidatePath("/");
-  revalidatePath("/import");
-  revalidatePath("/directory");
-  revalidatePath("/season");
-  redirect("/import");
-}
-
-export async function attachRow(formData: FormData) {
-  const user = await currentUser();
-  if (!user) redirect("/sign-in");
-  const result = attachUnmatched(getDb(), {
-    userId: user.id,
-    roundId: String(formData.get("roundId") ?? ""),
-    facilityId: String(formData.get("facilityId") ?? ""),
-  });
-  revalidatePath("/import");
-  revalidatePath("/");
-  if (!result.ok) redirect(`/import?error=${result.reason}`);
-  redirect("/import");
-}
-
 export async function savePlace(formData: FormData) {
   const user = await currentUser();
   const place = placeById(String(formData.get("place") ?? ""));
@@ -327,6 +291,17 @@ export async function toggleShare(formData: FormData) {
   const enabled = String(formData.get("enabled") ?? "") === "1";
   setShareEnabled(getDb(), user.id, enabled, new Date().toISOString());
   revalidatePath("/season");
+  redirect("/season");
+}
+
+export async function regenerateShareLink() {
+  const user = await currentUser();
+  if (!user) redirect("/sign-in");
+  if (!emailIsVerified(user)) redirect("/verify-email");
+  if (!user.headline_province) redirect("/");
+  regenerateShareToken(getDb(), user.id, new Date().toISOString());
+  revalidatePath("/season");
+  revalidatePath("/");
   redirect("/season");
 }
 

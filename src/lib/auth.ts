@@ -145,6 +145,18 @@ export function setShareEnabled(db: Database.Database, userId: string, enabled: 
   return token;
 }
 
+/**
+ * Issue a fresh share token, invalidating the old link immediately.
+ * Returns the new token, or null when the user has no share row.
+ */
+export function regenerateShareToken(db: Database.Database, userId: string, now: string): string | null {
+  const token = randomToken();
+  const result = db
+    .prepare("UPDATE share_links SET token = ?, created_at = ? WHERE user_id = ?")
+    .run(token, now, userId);
+  return result.changes > 0 ? token : null;
+}
+
 export function shareForUser(db: Database.Database, userId: string): { token: string; enabled: boolean } | null {
   const row = db.prepare("SELECT token, enabled FROM share_links WHERE user_id = ?").get(userId) as
     | { token: string; enabled: number }

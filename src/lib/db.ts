@@ -11,7 +11,6 @@ import { halifaxYear } from "./dates";
 import type { ScoreProvider } from "./providers";
 import { courseComparison, shiftIsoDate, SUITED_MONTHS, type CourseComparison } from "./standing";
 import { planIncoming, type IncomingRound } from "./sync";
-import { importCsv, type ImportResult } from "./import-csv";
 import { addManualRound } from "./manual";
 import { toggleMark } from "./mark";
 import type { Access, Facility, HoleCount, Province, PublicShare, Round, RoundSource } from "./types";
@@ -207,12 +206,6 @@ export function migrate(db: Database.Database): void {
       token TEXT NOT NULL UNIQUE,
       enabled INTEGER NOT NULL,
       created_at TEXT NOT NULL
-    );
-    CREATE TABLE IF NOT EXISTS import_runs (
-      id TEXT PRIMARY KEY,
-      user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-      created_at TEXT NOT NULL,
-      review_json TEXT NOT NULL
     );
     CREATE TABLE IF NOT EXISTS external_links (
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -512,68 +505,6 @@ export function applyManualRound(
   return result;
 }
 
-export function applyImport(
-  db: Database.Database,
-  input: { userId: string; csv: string; newId: () => string; runId: string; createdAt: string },
-): ImportResult {
-  const facilities = listFacilities(db);
-  const existing = listUserRounds(db, input.userId);
-  const result = importCsv({
-    csv: input.csv,
-    facilities,
-    existing,
-    userId: input.userId,
-    newId: input.newId,
-  });
-  const tx = db.transaction(() => {
-    for (const round of result.toInsert) insertRound(db, round);
-    rebuildSummary(db, input.userId);
-    db.prepare("INSERT INTO import_runs (id, user_id, created_at, review_json) VALUES (?, ?, ?, ?)").run(
-      input.runId,
-      input.userId,
-      input.createdAt,
-      JSON.stringify(result),
-    );
-  });
-  tx();
-  return result;
-}
-
-export function latestImport(db: Database.Database, userId: string): ImportResult | null {
-  const row = db
-    .prepare("SELECT review_json FROM import_runs WHERE user_id = ? ORDER BY created_at DESC LIMIT 1")
-    .get(userId) as { review_json: string } | undefined;
-  return row ? (JSON.parse(row.review_json) as ImportResult) : null;
-}
-
-export function attachUnmatched(
-  db: Database.Database,
-  input: { userId: string; roundId: string; facilityId: string },
-): { ok: true } | { ok: false; reason: "missing" | "outside_seed" | "conflict" } {
-  const facility = getFacility(db, input.facilityId);
-  if (!facility) return { ok: false, reason: "outside_seed" };
-  const round = db
-    .prepare("SELECT * FROM rounds WHERE id = ? AND user_id = ? AND facility_id IS NULL")
-    .get(input.roundId, input.userId) as RoundRow | undefined;
-  if (!round) return { ok: false, reason: "missing" };
-  const clash = db
-    .prepare(
-      "SELECT id FROM rounds WHERE user_id = ? AND facility_id = ? AND played_on = ? AND holes = ?",
-    )
-    .get(input.userId, facility.facilityId, round.played_on, round.holes) as { id: string } | undefined;
-  if (clash) return { ok: false, reason: "conflict" };
-  const tx = db.transaction(() => {
-    db.prepare("UPDATE rounds SET facility_id = ? WHERE id = ? AND user_id = ?").run(
-      facility.facilityId,
-      input.roundId,
-      input.userId,
-    );
-    rebuildSummary(db, input.userId);
-  });
-  tx();
-  return { ok: true };
-}
-
 export type ExternalLink = {
   provider: ScoreProvider;
   externalId: string | null;
@@ -759,7 +690,6 @@ export function deleteAccount(db: Database.Database, userId: string): void {
     db.prepare("DELETE FROM facility_status WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM coverage_summaries WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM share_links WHERE user_id = ?").run(userId);
-    db.prepare("DELETE FROM import_runs WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM external_links WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM sessions WHERE user_id = ?").run(userId);
     db.prepare("DELETE FROM tokens WHERE user_id = ?").run(userId);

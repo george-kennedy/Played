@@ -1,4 +1,4 @@
-import { toggleShare } from "@/app/actions";
+import { regenerateShareLink, toggleShare } from "@/app/actions";
 import { CoverageBlock, provinceLabel } from "@/components/coverage-block";
 import { shareForUser } from "@/lib/auth";
 import { getDb, readSummary, sharePayload } from "@/lib/db";
@@ -40,11 +40,15 @@ export default async function SeasonPage() {
               <span className="muted">{t("season.link")}</span><br />
               <a href={url}>{url}</a>
             </p>
-            <p><a href={`/share/${share.token}/card`} download="played-card.svg">{t("season.image")}</a></p>
-            <p><a href={`/share/${share.token}/story`} download="played-story.svg">{t("season.story")}</a></p>
+            <p><a href={`/share/${share.token}/card`} download="played-card.png">{t("season.image")}</a></p>
+            <p><a href={`/share/${share.token}/story`} download="played-story.png">{t("season.story")}</a></p>
             <form action={toggleShare}>
               <input type="hidden" name="enabled" value="0" />
               <button className="secondary" type="submit">{t("season.shareOff")}</button>
+            </form>
+            <form action={regenerateShareLink}>
+              <p className="help">{t("season.shareRegenerateHelp")}</p>
+              <button className="secondary" type="submit">{t("season.shareRegenerate")}</button>
             </form>
           </>
         ) : (
