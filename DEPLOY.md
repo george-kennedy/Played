@@ -10,6 +10,13 @@ npm start
 
 `npm start` listens on port 3000 unless `PORT` is set.
 
+## HTTPS
+
+Session cookies are `Secure` in production: the app must sit behind a
+TLS-terminating reverse proxy (Caddy, nginx, Traefik, a platform load
+balancer). Serving it over plain HTTP silently breaks every session — logins
+will appear to succeed and then immediately drop.
+
 ## Database
 
 The SQLite file is created on first start and filled from `data/facilities.json`. Put it on a persistent volume. The default path is `data/played.sqlite` inside the working directory. Set `PLAYED_DB` to an absolute path on that volume when the process working directory is ephemeral.

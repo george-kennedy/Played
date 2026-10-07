@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { enableShare } from "@/app/actions";
+import { enableShare, shareStatus } from "@/app/actions";
 
 type ShareUrls = {
   url: string;
@@ -23,6 +23,8 @@ export function ShareProgress({
   closeLabel,
   help,
   failedLabel,
+  enableLabel,
+  enableHelp,
 }: {
   verified: boolean;
   label: string;
@@ -37,10 +39,13 @@ export function ShareProgress({
   closeLabel: string;
   help: string;
   failedLabel: string;
+  enableLabel: string;
+  enableHelp: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const [urls, setUrls] = useState<ShareUrls | null>(null);
+  const [shareOff, setShareOff] = useState(false);
   const [busy, setBusy] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,10 +67,29 @@ export function ShareProgress({
     setBusy(true);
     setError(null);
     setCopied(false);
+    setShareOff(false);
+    // Read-only: opening the dialog must not change the share state.
+    void shareStatus()
+      .then((status) => {
+        if (!status.enabled || !status.urls) {
+          setShareOff(true);
+          setUrls(null);
+        } else {
+          setUrls(status.urls);
+        }
+        dialogRef.current?.showModal();
+      })
+      .catch(() => setError(failedLabel))
+      .finally(() => setBusy(false));
+  };
+
+  const turnOn = () => {
+    setBusy(true);
+    setError(null);
     void enableShare()
       .then((next) => {
         setUrls(next);
-        dialogRef.current?.showModal();
+        setShareOff(false);
       })
       .catch(() => setError(failedLabel))
       .finally(() => setBusy(false));
@@ -130,11 +154,21 @@ export function ShareProgress({
                 <button type="button" onClick={shareFacebook}>
                   {facebookLabel}
                 </button>
-                <a className="button" href={urls.storyUrl} download="played-story.svg">
+                <a className="button" href={urls.storyUrl} download="played-story.png">
                   {instagramLabel}
                 </a>
                 <button type="button" className="secondary" onClick={() => void copyLink()}>
                   {copied ? copiedLabel : copyLabel}
+                </button>
+              </div>
+            </>
+          ) : shareOff ? (
+            <>
+              <p className="help">{enableHelp}</p>
+              {error ? <p className="error">{error}</p> : null}
+              <div className="share-dialog-actions">
+                <button type="button" onClick={() => void turnOn()} disabled={busy}>
+                  {busy ? "…" : enableLabel}
                 </button>
               </div>
             </>

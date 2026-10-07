@@ -1,6 +1,7 @@
 import { shareByToken } from "@/lib/auth";
 import { getDb, sharePayload } from "@/lib/db";
 import { buildShareStory } from "@/lib/share-card-build";
+import { svgToPng } from "@/lib/share-card-png";
 import { currentLocale } from "@/lib/session";
 import { NextResponse } from "next/server";
 
@@ -11,10 +12,12 @@ export async function GET(_request: Request, context: { params: Promise<{ token:
   const payload = sharePayload(getDb(), share.userId);
   if (!payload) return new NextResponse("Not found", { status: 404 });
   const locale = await currentLocale();
-  return new NextResponse(buildShareStory(locale, payload), {
+  // PNG, not SVG: Instagram Stories cannot ingest an SVG download.
+  const png = new Blob([svgToPng(buildShareStory(locale, payload)) as BlobPart], { type: "image/png" });
+  return new NextResponse(png, {
     headers: {
-      "Content-Type": "image/svg+xml; charset=utf-8",
-      "Content-Disposition": 'attachment; filename="played-story.svg"',
+      "Content-Type": "image/png",
+      "Content-Disposition": 'attachment; filename="played-story.png"',
       "Cache-Control": "public, max-age=300",
     },
   });

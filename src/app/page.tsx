@@ -240,6 +240,8 @@ export default async function HomePage({
             closeLabel={t("home.shareClose")}
             help={t("home.shareHelp")}
             failedLabel={t("home.shareFailed")}
+            enableLabel={t("season.shareOn")}
+            enableHelp={t("season.shareHelp")}
           />
         </div>
       ) : (
