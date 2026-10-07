@@ -54,6 +54,8 @@ describe("coverage", () => {
     expect(result).toMatchObject({ played: 2, total: 3, thisYear: 1, earlier: 1 });
     expect(result.thisYear + result.earlier).toBe(result.played);
     expect(percentageLabel(result.percentage)).toBe("67%");
+    expect(percentageLabel(1 / 1679)).toBe("<1%");
+    expect(percentageLabel(0)).toBe("0%");
   });
 
   it("counts a facility once when it has many rounds", () => {

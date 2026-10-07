@@ -86,10 +86,6 @@ export default async function FacilityPage({
           ) : null}
         </div>
       ) : null}
-      <section>
-        <h2>{t("preview.reviews")}</h2>
-        <p className="help">{t("preview.noReviews")}</p>
-      </section>
       {comparison?.standing ? (
         <p>
           {t("course.standing", {

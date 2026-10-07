@@ -70,7 +70,9 @@ export function coverage(input: {
 
 export function percentageLabel(percentage: number | null): string {
   if (percentage === null) return "—";
-  return `${Math.round(percentage * 100)}%`;
+  const rounded = Math.round(percentage * 100);
+  if (rounded === 0 && percentage > 0) return "<1%";
+  return `${rounded}%`;
 }
 
 export function scopeKey(denominator: Denominator): Province | "CANADA" {

@@ -331,8 +331,6 @@ function CourseWindow({
             ) : null}
           </div>
         ) : null}
-        <p className="pin-label">{labels.reviews}</p>
-        <p className="help">{labels.noReviews}</p>
         {course.standing ? <p>{course.standing}</p> : null}
         {course.suited ? <p>{course.suited}</p> : null}
         {course.personal !== false && course.played ? (
