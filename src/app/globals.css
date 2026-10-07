@@ -270,17 +270,26 @@ input:not([type="radio"]):not([type="checkbox"]), select {
 .pin-title { font-size: 1.05rem; }
 button.window-control {
   margin-left: auto;
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  min-height: 28px;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   padding: 0;
-  border-radius: 6px;
-  background: transparent;
+  border-radius: 999px;
+  background: var(--bg);
   color: var(--ink);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--line);
   flex: none;
 }
+.course-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+a.button { text-decoration: none; }
+.course-window a.button { color: white; }
+.course-window a.button.secondary { color: var(--ink); }
 .course-window {
   position: fixed;
   z-index: 2000;

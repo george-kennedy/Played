@@ -225,7 +225,7 @@ function CourseWindow({
         if (!controller.signal.aborted) setMedia(body);
       })
       .catch(() => {
-        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null, bookingUrl: null });
+        if (!controller.signal.aborted) setMedia({ photoUrl: null, websiteUrl: null, bookingUrl: null, phone: null });
       });
     return () => controller.abort();
   }, [course.facilityId]);
@@ -313,19 +313,23 @@ function CourseWindow({
         {lists.map((list) => (
           <p key={list}>{list === "national" ? labels.onNational : labels.onPublic}</p>
         ))}
-        {media?.websiteUrl ? (
-          <p>
-            <a href={media.websiteUrl} rel="noreferrer">
-              {labels.website}
-            </a>
-          </p>
-        ) : null}
-        {media?.bookingUrl ? (
-          <p>
-            <a href={media.bookingUrl} rel="noreferrer">
-              {labels.book}
-            </a>
-          </p>
+        {media?.websiteUrl || media?.bookingUrl || media?.phone ? (
+          <div className="course-actions">
+            {media.bookingUrl ? (
+              <a className="button" href={media.bookingUrl} rel="noreferrer">
+                {labels.book}
+              </a>
+            ) : media.phone ? (
+              <a className="button" href={`tel:+1${media.phone.replace(/\D/g, "")}`}>
+                {labels.call.replace("{phone}", media.phone)}
+              </a>
+            ) : null}
+            {media.websiteUrl ? (
+              <a className="button secondary" href={media.websiteUrl} rel="noreferrer">
+                {labels.website}
+              </a>
+            ) : null}
+          </div>
         ) : null}
         <p className="pin-label">{labels.reviews}</p>
         <p className="help">{labels.noReviews}</p>

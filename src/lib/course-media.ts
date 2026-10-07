@@ -4,9 +4,40 @@ export type CourseMedia = {
   photoUrl: string | null;
   websiteUrl: string | null;
   bookingUrl: string | null;
+  phone: string | null;
 };
 
-const EMPTY: CourseMedia = { photoUrl: null, websiteUrl: null, bookingUrl: null };
+export type ClubContact = {
+  websiteUrl: string | null;
+  bookingUrl: string | null;
+  phone: string | null;
+};
+
+export type PageReach = {
+  bookingUrl: string | null;
+  phone: string | null;
+  followUrl: string | null;
+};
+
+const TEE_SHEET_HOSTS = [
+  "chronogolf.com",
+  "chronogolf.ca",
+  "lightspeedhq.com",
+  "golfnow.com",
+  "teeoff.com",
+  "foreupsoftware.com",
+  "prophetservices.com",
+  "cps.golf",
+  "supremegolf.com",
+  "quick18.com",
+  "ezlinks.com",
+  "teeitup.com",
+  "teeitup.golf",
+  "tee-on.com",
+  "golfback.com",
+];
+
+const EMPTY: CourseMedia = { photoUrl: null, websiteUrl: null, bookingUrl: null, phone: null };
 
 function record(value: unknown): Record<string, unknown> | null {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
@@ -58,7 +89,7 @@ function linksFrom(siteValue: unknown, bookingValue: unknown): Pick<CourseMedia,
 }
 
 function media(photo: unknown, site: unknown, booking: unknown): CourseMedia {
-  return { photoUrl: photoUrl(photo), ...linksFrom(site, booking) };
+  return { photoUrl: photoUrl(photo), phone: null, ...linksFrom(site, booking) };
 }
 
 export function mediaFromDetail(payload: unknown, officialName: string): CourseMedia | null {
@@ -109,6 +140,110 @@ export function mediaFromSearch(payload: unknown, officialName: string): CourseM
   if (!item) return EMPTY;
   const outdoor = record(item.outdoor_details);
   return media(outdoor?.image_url ?? item.image, outdoor?.url ?? item.url, outdoor?.tee_time_url);
+}
+
+/** A North American number with a 10-digit local part, shown as (902) 466-7688. */
+export function canadianPhone(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  const digits = value.replace(/\D/g, "");
+  const local = digits.length === 11 && digits.startsWith("1") ? digits.slice(1) : digits;
+  if (!/^[2-9]\d{2}[2-9]\d{6}$/.test(local)) return null;
+  return `(${local.slice(0, 3)}) ${local.slice(3, 6)}-${local.slice(6)}`;
+}
+
+export function phoneHref(display: string): string {
+  return `tel:+1${display.replace(/\D/g, "")}`;
+}
+
+export function isTeeSheetUrl(value: string): boolean {
+  const url = httpUrl(value);
+  if (!url) return false;
+  const host = url.hostname.toLowerCase().replace(/^www\./, "");
+  return TEE_SHEET_HOSTS.some((known) => host === known || host.endsWith(`.${known}`));
+}
+
+function originOf(value: unknown): string | null {
+  const url = httpUrl(value);
+  if (!url) return null;
+  return `${url.origin}/`;
+}
+
+/**
+ * Golf Canada is used to find the club site and, when present, its tee-time URL.
+ * A green-fees page is not treated as online booking.
+ */
+export function golfContact(payload: unknown, officialName: string): ClubContact | null {
+  const data = record(record(payload)?.data);
+  if (!data) return null;
+  const name = typeof data.facilityName === "string" ? data.facilityName : "";
+  if (normalizeName(name) !== normalizeName(officialName)) return null;
+  const tee = httpUrl(data.teeTimeUrl);
+  const site = originOf(data.url) ?? originOf(data.greenFeeUrl);
+  const websiteUrl = site ?? (tee && !isTeeSheetUrl(tee.toString()) ? `${tee.origin}/` : null);
+  const courses = Array.isArray(data.courses) ? data.courses : [];
+  const coursePhone = record(courses[0])?.phone;
+  const phone =
+    canadianPhone(data.phone) ?? canadianPhone(typeof coursePhone === "string" ? coursePhone : null);
+  return { websiteUrl, bookingUrl: tee ? tee.toString() : null, phone };
+}
+
+function followPath(pathname: string): boolean {
+  return /tee-?times?|reserv|contact|book/i.test(pathname);
+}
+
+/** Read a tee-sheet link and a tel: link from one HTML page. A fees page is not a booking link. */
+export function parseClubPage(html: string, pageUrl: string): PageReach {
+  const base = httpUrl(pageUrl);
+  let bookingUrl: string | null = null;
+  let phone: string | null = null;
+  let teeFollow: string | null = null;
+  let contactFollow: string | null = null;
+  for (const match of html.matchAll(/href\s*=\s*["']([^"']+)["']/gi)) {
+    const raw = match[1].trim().replace(/&amp;/g, "&");
+    if (!phone && raw.toLowerCase().startsWith("tel:")) {
+      phone = canadianPhone(decodeURIComponent(raw.slice(4).split("?")[0] ?? ""));
+    }
+    if (!base) continue;
+    let absolute: URL;
+    try {
+      absolute = new URL(raw, base);
+    } catch {
+      continue;
+    }
+    if (absolute.protocol !== "http:" && absolute.protocol !== "https:") continue;
+    if (!bookingUrl && isTeeSheetUrl(absolute.toString())) bookingUrl = absolute.toString();
+    if (absolute.origin !== base.origin || absolute.toString() === base.toString()) continue;
+    if (!followPath(absolute.pathname)) continue;
+    if (/tee-?times?|reserv|book/i.test(absolute.pathname)) teeFollow ??= absolute.toString();
+    else contactFollow ??= absolute.toString();
+  }
+  const followUrl = bookingUrl && phone ? null : teeFollow ?? contactFollow;
+  return { bookingUrl, phone, followUrl };
+}
+
+/** Private courses never expose a booking link or a phone number. */
+export function reachForAccess(
+  access: string,
+  found: { bookingUrl: string | null; phone: string | null },
+): { bookingUrl: string | null; phone: string | null } {
+  if (access === "private") return { bookingUrl: null, phone: null };
+  return { bookingUrl: found.bookingUrl, phone: found.phone };
+}
+
+export function shownReach(
+  access: string,
+  reach: { bookingUrl: string | null; phone: string | null; enabled: boolean } | null,
+  featureOn: boolean,
+): { bookingUrl: string | null; phone: string | null } {
+  const empty = { bookingUrl: null, phone: null };
+  if (!featureOn || access === "private" || !reach?.enabled) return empty;
+  if (reach.bookingUrl) return { bookingUrl: reach.bookingUrl, phone: null };
+  if (reach.phone) return { bookingUrl: null, phone: reach.phone };
+  return empty;
+}
+
+export function bookingFeatureOn(): boolean {
+  return process.env.BOOKING_ENABLED === "1";
 }
 
 async function reachable(url: string | null): Promise<boolean> {
