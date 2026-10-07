@@ -37,6 +37,7 @@ import {
 import { parseBirdiesDownload } from "@/lib/sync";
 import { pullGolfCanada, ScoreFeedClosed, type ScoreProvider } from "@/lib/providers";
 import { sendMail } from "@/lib/mail";
+import { checkRateLimit, RATE_LIMITS, type RateLimitAction } from "@/lib/rate-limit";
 import { isProvince } from "@/lib/names";
 import { placeById } from "@/lib/distance";
 import { LOCALE_COOKIE, SESSION_COOKIE, currentUser, sessionCookieOptions } from "@/lib/session";
@@ -75,7 +76,22 @@ function signUpError(code: string, returnTo: FormDataEntryValue | null): never {
   redirect(`/sign-up?${query.toString()}`);
 }
 
+async function clientIp(): Promise<string> {
+  const headerList = await headers();
+  const forwarded = headerList.get("x-forwarded-for");
+  if (forwarded) return forwarded.split(",")[0].trim() || "unknown";
+  return headerList.get("x-real-ip")?.trim() || "unknown";
+}
+
+/** Redirects to `redirectTo?error=rate_limited` when the action is over its limit. */
+async function rateLimitOrRedirect(action: RateLimitAction, redirectTo: string): Promise<void> {
+  const key = `${action}:${await clientIp()}`;
+  const allowed = checkRateLimit(getDb(), key, RATE_LIMITS[action], Date.now());
+  if (!allowed) redirect(`${redirectTo}?error=rate_limited`);
+}
+
 export async function signUp(formData: FormData) {
+  await rateLimitOrRedirect("auth:sign-up", "/sign-up");
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const returnTo = formData.get("returnTo");
@@ -101,6 +117,7 @@ export async function signUp(formData: FormData) {
 }
 
 export async function signIn(formData: FormData) {
+  await rateLimitOrRedirect("auth:sign-in", "/sign-in");
   const email = String(formData.get("email") ?? "");
   const password = String(formData.get("password") ?? "");
   const db = getDb();
@@ -118,6 +135,7 @@ export async function signOut() {
 }
 
 export async function verifyEmail(formData: FormData) {
+  await rateLimitOrRedirect("auth:verify", "/verify-email");
   const token = String(formData.get("token") ?? "");
   const db = getDb();
   const userId = consumeToken(db, { token, purpose: "verify" });
@@ -127,6 +145,7 @@ export async function verifyEmail(formData: FormData) {
 }
 
 export async function newVerificationLink() {
+  await rateLimitOrRedirect("auth:verify-link", "/verify-email");
   const user = await currentUser();
   if (!user) redirect("/sign-in");
   if (user.email_verified_at) redirect("/");
@@ -142,6 +161,7 @@ export async function newVerificationLink() {
 }
 
 export async function requestReset(formData: FormData) {
+  await rateLimitOrRedirect("auth:reset", "/reset-password");
   const email = String(formData.get("email") ?? "");
   const db = getDb();
   const user = findUserByEmail(db, email);
@@ -326,6 +346,7 @@ function connectRedirect(result: { added: number; unmatched: number; duplicates:
 export async function connectGolfCanada(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
+  await rateLimitOrRedirect("connect:golf-canada", "/connect");
   const memberId = String(formData.get("memberId") ?? "").trim();
   if (String(formData.get("consent") ?? "") !== "yes" || !memberIdOk(memberId)) {
     redirect("/connect?error=generic");

@@ -207,6 +207,11 @@ export function migrate(db: Database.Database): void {
       enabled INTEGER NOT NULL,
       created_at TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS rate_limits (
+      key TEXT PRIMARY KEY,
+      count INTEGER NOT NULL,
+      reset_at INTEGER NOT NULL
+    );
     CREATE TABLE IF NOT EXISTS external_links (
       user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       provider TEXT NOT NULL,
@@ -236,7 +241,14 @@ function ensureColumn(db: Database.Database, table: string, column: string, defi
 }
 
 export function seedFacilities(db: Database.Database, rows = loadSeedFacilities()): void {
-  const insert = db.prepare(`
+  // Indoor-only venues that slipped in via the Golf Canada pull. The seed is
+  // outdoor courses (per data/facilities.json notes); these are curated out
+  // here because the 1.3 MB seed file is rewritten only when rebuilt upstream.
+  const excluded = new Set([
+    "mb-shanks-driving-range-and-grill", // driving range + simulators, no golf course
+    "nb-par94-bar-and-lounge", // indoor simulator bar
+  ]);
+  const items = rows.filter((row) => !excluded.has(row.facility_id));  const insert = db.prepare(`
     INSERT INTO facilities (
       facility_id, official_name, province, place, latitude, longitude, hole_count, access,
       association_course_id, association_course_ids, rating, slope, source_url, merged_routings
@@ -278,8 +290,14 @@ export function seedFacilities(db: Database.Database, rows = loadSeedFacilities(
         merged_routings: row.merged_routings ? 1 : 0,
       });
     }
+    // Clean up databases seeded before the exclusion: detach any rounds first
+    // (rounds.facility_id is RESTRICT), then drop the facility rows.
+    for (const facilityId of excluded) {
+      db.prepare("UPDATE rounds SET facility_id = NULL WHERE facility_id = ?").run(facilityId);
+      db.prepare("DELETE FROM facilities WHERE facility_id = ?").run(facilityId);
+    }
   });
-  tx(rows);
+  tx(items);
 }
 
 export function openDatabase(filename: string): Database.Database {

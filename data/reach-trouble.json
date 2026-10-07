@@ -73,12 +73,6 @@
       "reason": "no-website"
     },
     {
-      "facilityId": "nb-par94-bar-and-lounge",
-      "name": "Par94 Bar & Lounge",
-      "province": "NB",
-      "reason": "no-website"
-    },
-    {
       "facilityId": "nb-rockwood-park-golf-club",
       "name": "Rockwood Park Golf Club",
       "province": "NB",
@@ -183,18 +177,6 @@
     {
       "facilityId": "ns-brule-point-golf-club",
       "name": "Brule Point Golf Club",
-      "province": "NS",
-      "reason": "no-website"
-    },
-    {
-      "facilityId": "ns-cabot-links",
-      "name": "Cabot Links",
-      "province": "NS",
-      "reason": "no-website"
-    },
-    {
-      "facilityId": "ns-cabot-the-nest",
-      "name": "Cabot The Nest",
       "province": "NS",
       "reason": "no-website"
     },
