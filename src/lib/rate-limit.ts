@@ -15,6 +15,7 @@ export const RATE_LIMITS = {
   "auth:verify-link": { limit: 5, windowMs: 60 * 60 * 1000 },
   "auth:reset": { limit: 5, windowMs: 60 * 60 * 1000 },
   "connect:golf-canada": { limit: 10, windowMs: 60 * 60 * 1000 },
+  "connect:birdies": { limit: 20, windowMs: 60 * 60 * 1000 },
 } as const satisfies Record<string, RateLimitRule>;
 
 export type RateLimitAction = keyof typeof RATE_LIMITS;

@@ -376,6 +376,7 @@ export async function connectGolfCanada(formData: FormData) {
 export async function uploadBirdies(formData: FormData) {
   const user = await currentUser();
   if (!user) redirect("/sign-in");
+  await rateLimitOrRedirect("connect:birdies", "/connect");
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0 || file.size > 2_000_000) redirect("/connect?error=bad_file");
   let parsed: unknown;

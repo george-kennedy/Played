@@ -34,7 +34,9 @@ Connect lists Golf Canada and 18Birdies. Live Golf Canada pulls stay closed unti
 
 ## Booking
 
-`data/reach.json` holds a booking link or a phone number for public courses, found from the club’s site. Each row stays off until `enabled` is true. The whole feature stays off until `BOOKING_ENABLED=1`. Private courses never show the action. `data/reach-trouble.json` lists public courses the scan could not resolve. Run `node scripts/scan-reach.mjs` to scan again. A rerun skips courses that already have both a link and a phone.
+`data/reach.json` holds a booking link or a phone number for public courses, found from the club’s site. Rows with usable data are enabled for launch. The whole feature still stays off until `BOOKING_ENABLED=1` on the host. Private courses never show the action. `data/reach-trouble.json` lists public courses the scan could not resolve. Run `node scripts/scan-reach.mjs` to scan again. A rerun skips courses that already have both a link and a phone.
+
+Copy `.env.example` before deploy. Full launch steps are in [DEPLOY.md](DEPLOY.md).
 
 ## Coverage
 
