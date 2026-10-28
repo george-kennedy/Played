@@ -6,8 +6,12 @@ import { currentLocale, currentUser } from "@/lib/session";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Played",
-  description: "A map of courses played across Canada.",
+  title: {
+    default: "Played",
+    template: "%s · Played",
+  },
+  description: "A free Canada golf atlas — mark courses you have played, track your percentage, and share your progress.",
+  applicationName: "Played",
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
